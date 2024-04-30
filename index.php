@@ -11,21 +11,21 @@
 
 <body>
     <form>
-        <fieldset disabled>
+        <fieldset>
             <legend>Clone-Wetransfer</legend>
             <div class="mb-3">
-                <label for="disabledTextInput" class="form-label">Fichier</label>
-                <input type="text" id="name" name="user_name" />
+                <label for="file_name" class="form-label">File</label>
+                <input type="file" id="file_name" name="file_name" />
 
                 <div class="mb-3">
-                    <label for="disabledSelect" class="form-label">Email destinataire</label>
-                    <input type="email" id="mail" name="user_email" />
+                    <label for="recipient-email" class="form-label">Email destinataire</label>
+                    <input type="email" id="recipient-email" name="recipient_email" />
 
                     <div class="mb-3">
                         <label for="disabledSelect" class="form-label">Email</label>
                         <input type="email" id="mail" name="user_email" />
                     </div>
-                    <button type="submit" class="btn btn-primary">Send</button>
+                    <button type="submit" class="btn btn-primary" value="Send">Send</button>
         </fieldset>
     </form>
 </body>
