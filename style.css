@@ -1,0 +1,13 @@
+* {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+form{
+    margin: 25px 50px;
+}
+
+legend{
+    font-size: 2.5em;
+    margin-left: 50px;
+    padding: 20px;
+}
