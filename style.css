@@ -17,6 +17,7 @@ form{
 
 .title {
     margin: auto;
+    width: -moz-fit-content;
     width: fit-content;
     text-align: center;
     color: antiquewhite;
