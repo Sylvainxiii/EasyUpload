@@ -23,6 +23,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <link rel="stylesheet" href="style.css">
 
     <script>
+        let spanTexts = document.getElementsByTagName("span");
+
+        window.onload = function() {
+
+            for (spanText of spanTexts) {
+                spanText.classList.add("active");
+            }
+        }
+
         function submitFormAndReload() {
             document.getElementById("uploadForm").action = "index.php";
             document.getElementById("uploadForm").submit();
@@ -34,28 +43,42 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </head>
 
 <body>
-    <form id="uploadForm" method="post" enctype="multipart/form-data">
-        <fieldset>
-            <legend>Clone-Wetransfer</legend>
-            <div class="mb-3">
-                <label for="fichier">Images</label>
-                <div class="input-group">
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="fichier" name="fichier" required>
-                        <label class="custom-file-label" for="fichier">Choisir un fichier</label>
+    <div class="background">
+        <form id="uploadForm" method="post" enctype="multipart/form-data">
+            <fieldset>
+                <div class="title">
+                    <h1>CLONE</h1>
+                    <div class="backgroundText">
+                        <span>T</span>
+                        <span>R</span>
+                        <span>A</span>
+                        <span>N</span>
+                        <span>S</span>
+                        <span>F</span>
+                        <span>E</span>
+                        <span>R</span>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="recipient-email" class="form-label">Email destinataire</label>
-                    <input type="email" id="recipient-email" name="recipient_email" value="celine.pro.morel@gmail.com" />
-                    <div class="mb-3">
-                        <label for="disabledSelect" class="form-label">Email</label>
-                        <input type="email" id="mail" name="user_email" value="celine.pro.morel@gmail.com" />
+                    <label for="fichier">Images</label>
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="fichier" name="fichier" required>
+                            <label class="custom-file-label" for="fichier">Choisir un fichier</label>
+                        </div>
                     </div>
-                    <button type="button" class="btn btn-primary" onclick="submitFormAndReload()">Send</button>
-                </div>
-        </fieldset>
-    </form>
+                    <div class="mb-3">
+                        <label for="recipient-email" class="form-label">Email destinataire</label>
+                        <input type="email" id="recipient-email" name="recipient_email" value="celine.pro.morel@gmail.com" />
+                        <div class="mb-3">
+                            <label for="disabledSelect" class="form-label">Email</label>
+                            <input type="email" id="mail" name="user_email" value="celine.pro.morel@gmail.com" />
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="submitFormAndReload()">Send</button>
+                    </div>
+            </fieldset>
+        </form>
+    </div>
 </body>
 
 </html>
