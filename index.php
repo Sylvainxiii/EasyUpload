@@ -1,31 +1,59 @@
+<?php
+$tmpName = isset($_FILES['fichier']['tmp_name']) ? $_FILES['fichier']['tmp_name'] : "";
+$name = isset($_FILES['fichier']['name']) ? $_FILES['fichier']['name'] : "";
+$chemin_dans_bdd = "";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if (!empty($tmpName) && is_uploaded_file($tmpName)) {
+        if (move_uploaded_file($tmpName, './uploads/' . $name)) {
+            $chemin_dans_bdd = 'uploads/' . $name;
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-<link rel="stylesheet" href="style.css">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+
+    <script>
+        function submitFormAndReload() {
+            document.getElementById("uploadForm").action = "index.php";
+            document.getElementById("uploadForm").submit();
+            setTimeout(function() {
+                location.reload();
+            }, 1000);
+        }
+    </script>
 </head>
 
 <body>
-    <form>
+    <form id="uploadForm" method="post" enctype="multipart/form-data">
         <fieldset>
             <legend>Clone-Wetransfer</legend>
             <div class="mb-3">
-                <label for="file_name" class="form-label">File</label>
-                <input type="file" id="file_name" name="file_name" />
-
+                <label for="fichier">Images</label>
+                <div class="input-group">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="fichier" name="fichier" required>
+                        <label class="custom-file-label" for="fichier">Choisir un fichier</label>
+                    </div>
+                </div>
                 <div class="mb-3">
                     <label for="recipient-email" class="form-label">Email destinataire</label>
-                    <input type="email" id="recipient-email" name="recipient_email" />
-
+                    <input type="email" id="recipient-email" name="recipient_email" value="celine.pro.morel@gmail.com" />
                     <div class="mb-3">
                         <label for="disabledSelect" class="form-label">Email</label>
-                        <input type="email" id="mail" name="user_email" />
+                        <input type="email" id="mail" name="user_email" value="celine.pro.morel@gmail.com" />
                     </div>
-                    <button type="submit" class="btn btn-primary" value="Send">Send</button>
+                    <button type="button" class="btn btn-primary" onclick="submitFormAndReload()">Send</button>
+                </div>
         </fieldset>
     </form>
 </body>
