@@ -1,5 +1,6 @@
 * {
-    font-family: 'Poppins'', sans-serif;
+    color: antiquewhite;
+    font-family: 'Poppins', sans-serif;
 }
 
 .background {
@@ -78,5 +79,67 @@ form{
 }
 
 .backgroundText:hover span{
-    -webkit-text-stroke-color: #abf5e1;
+    -webkit-text-stroke-color: #80b3a5;
+}
+
+.custom-input {
+    background-color: #292929;
+    color: antiquewhite;
+}
+
+.form{
+    padding: 75px 50px;
+}
+
+input.custom-input {
+    background-color: #292929;
+    color: antiquewhite;
+}
+
+input.custom-input:focus {
+    background-color: #292929;
+    color: antiquewhite; 
+}
+
+input[type="file"].custom-input {
+    background-color: #292929;
+    color: antiquewhite;
+}
+
+button.btn.btn-primary {
+    background-color: antiquewhite;
+    color: #292929;
+    border: none;
+}
+
+button.btn.btn-primary:hover {
+    background-color: lightgray;
+}
+
+.custom-file {
+    position: relative;
+    overflow: hidden;
+    background-color: #292929;
+    color: antiquewhite;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid antiquewhite;
+}
+
+.custom-file-input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.custom-file-label {
+    display: block;
+    padding: 10px 15px;
+    cursor: pointer;
 }

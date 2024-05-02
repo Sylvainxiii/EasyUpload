@@ -39,45 +39,66 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 location.reload();
             }, 1000);
         }
+
+        function updateFileName() {
+            const input = document.getElementById('fichier');
+            const label = document.getElementById('fileNameLabel');
+            const files = input.files;
+
+            if (files.length === 0) {
+                label.textContent = 'Choisir des fichiers';
+            } else if (files.length === 1) {
+                label.textContent = files[0].name;
+            } else {
+                let fileNameString = '';
+                for (let i = 0; i < files.length; i++) {
+                    fileNameString += files[i].name;
+                    if (i !== files.length - 1) {
+                        fileNameString += ', ';
+                    }
+                }
+                label.textContent = fileNameString;
+            }
+        }
     </script>
 </head>
 
 <body>
     <div class="background">
-        <form id="uploadForm" method="post" enctype="multipart/form-data">
-            <fieldset>
-                <div class="title">
-                    <h1>CLONE</h1>
-                    <div class="backgroundText">
-                        <span>T</span>
-                        <span>R</span>
-                        <span>A</span>
-                        <span>N</span>
-                        <span>S</span>
-                        <span>F</span>
-                        <span>E</span>
-                        <span>R</span>
+        <div class="title">
+            <h1>CLONE</h1>
+            <div class="backgroundText">
+                <span>T</span>
+                <span>R</span>
+                <span>A</span>
+                <span>N</span>
+                <span>S</span>
+                <span>F</span>
+                <span>E</span>
+                <span>R</span>
+            </div>
+        </div>
+        <div class="form">
+            <form id="uploadForm" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="fichier" name="fichier[]" multiple required onchange="updateFileName()">
+                        <label class="custom-file-label" for="fichier" id="fileNameLabel">Choisir des fichiers</label>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="fichier">Images</label>
-                    <div class="input-group">
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="fichier" name="fichier" required>
-                            <label class="custom-file-label" for="fichier">Choisir un fichier</label>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="recipient-email" class="form-label">Email destinataire</label>
-                        <input type="email" id="recipient-email" name="recipient_email" value="celine.pro.morel@gmail.com" />
-                        <div class="mb-3">
-                            <label for="disabledSelect" class="form-label">Email</label>
-                            <input type="email" id="mail" name="user_email" value="celine.pro.morel@gmail.com" />
-                        </div>
-                        <button type="button" class="btn btn-primary" onclick="submitFormAndReload()">Send</button>
-                    </div>
-            </fieldset>
-        </form>
+                    <label for="recipient-email" class="form-label">Email destinataire</label>
+                    <input type="email" class="form-control custom-input" id="recipient-email" name="recipient_email" value="celine.pro.morel@gmail.com" required>
+                </div>
+                <div class="mb-3">
+                    <label for="mail" class="form-label">Email</label>
+                    <input type="email" class="form-control custom-input" id="mail" name="user_email" value="celine.pro.morel@gmail.com" required>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-primary" value="send" onclick="submitFormAndReload()">Send</button>
+                </div>
+            </form>
+        </div>
     </div>
 </body>
 
