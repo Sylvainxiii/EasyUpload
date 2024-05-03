@@ -6,10 +6,8 @@ $chemin_dans_bdd = "";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     for ($i = 0; $i < count($tmpName); $i = $i + 1) {
         if (!empty($tmpName) && is_uploaded_file($tmpName[$i])) {
-            echo "Toto";
             if (move_uploaded_file($tmpName[$i], './uploads/' . $name[$i])) {
                 $chemin_dans_bdd = 'uploads/' . $name[$i];
-                echo $chemin_dans_bdd;
             }
         }
     }
