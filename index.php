@@ -3,10 +3,6 @@ $tmpName = isset($_FILES['fichier']['tmp_name']) ? $_FILES['fichier']['tmp_name'
 $name = isset($_FILES['fichier']['name']) ? $_FILES['fichier']['name'] : "";
 $chemin_dans_bdd = "";
 
-echo '<pre>';
-print_r($tmpName);
-echo '</pre>';
-
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     for ($i = 0; $i < count($tmpName); $i = $i + 1) {
         if (!empty($tmpName) && is_uploaded_file($tmpName[$i])) {
