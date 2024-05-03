@@ -111,10 +111,12 @@ button.btn.btn-primary {
     background-color: antiquewhite;
     color: #292929;
     border: none;
+    text-decoration: none;
 }
 
 button.btn.btn-primary:hover {
     background-color: lightgray;
+    text-decoration: none;
 }
 
 .custom-file {

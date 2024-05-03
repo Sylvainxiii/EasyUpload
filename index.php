@@ -3,10 +3,18 @@ $tmpName = isset($_FILES['fichier']['tmp_name']) ? $_FILES['fichier']['tmp_name'
 $name = isset($_FILES['fichier']['name']) ? $_FILES['fichier']['name'] : "";
 $chemin_dans_bdd = "";
 
+echo '<pre>';
+print_r($tmpName);
+echo '</pre>';
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    if (!empty($tmpName) && is_uploaded_file($tmpName)) {
-        if (move_uploaded_file($tmpName, './uploads/' . $name)) {
-            $chemin_dans_bdd = 'uploads/' . $name;
+    for ($i = 0; $i < count($tmpName); $i = $i + 1) {
+        if (!empty($tmpName) && is_uploaded_file($tmpName[$i])) {
+            echo "Toto";
+            if (move_uploaded_file($tmpName[$i], './uploads/' . $name[$i])) {
+                $chemin_dans_bdd = 'uploads/' . $name[$i];
+                echo $chemin_dans_bdd;
+            }
         }
     }
 }
@@ -82,8 +90,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <form id="uploadForm" method="post" enctype="multipart/form-data">
                 <div class="mb-3">
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="fichier" name="fichier[]" multiple required onchange="updateFileName()">
                         <label class="custom-file-label" for="fichier" id="fileNameLabel">Choisir des fichiers</label>
+                        <input type="file" class="custom-file-input" id="fichier" name="fichier[]" multiple required onchange="updateFileName()">
+
                     </div>
                 </div>
                 <div class="mb-3">
