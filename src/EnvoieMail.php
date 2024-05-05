@@ -8,6 +8,10 @@ use PHPMailer\PHPMailer\Exception;
 //Load Composer's autoloader
 require '../vendor/autoload.php';
 
+    echo '<pre>';
+    print_r($_GET);
+    echo '<pre>';
+    exit;
 //Create an instance; passing `true` enables exceptions
 $mail = new PHPMailer(true);
 
@@ -23,21 +27,28 @@ try {
     $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
     //Recipients
-    $mail->setFrom('from@example.com', 'Mailer');
-    $mail->addAddress('sylvainlacroix@protonmail.com', 'Sylvain LACROIX');     //Add a recipient
-    $mail->addAddress('celine.pro.morel@gmail.com');               //Name is optional
+    $mail->setFrom($_GET['user_email'], '');
+    $mail->addAddress($_GET['recipient_email'], '');     //Add a recipient
+    // $mail->addAddress('celine.pro.morel@gmail.com');               //Name is optional
     // $mail->addReplyTo('info@example.com', 'Information');
     // $mail->addCC('cc@example.com');
     // $mail->addBCC('bcc@example.com');
 
     //Attachments
-    $mail->addAttachment('../uploads/closetotheedge-yes.jpg');         //Add attachments
+
+    // for ($i=0; $i < count($_POST['fichier']); $i = $i + 1) {
+    //     $mail->addAttachment('./uploads/' . $_POST['fichier'][$i]); 
+    // }        //Add attachments
     // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
 
     //Content
+
+
+
+
     $mail->isHTML(true);                                  //Set email format to HTML
     $mail->Subject = 'Test Weetransfert Mailer';
-    $mail->Body    = 'TEST!!';
+    $mail->Body    = './uploads/' . $_GET['file'];
     $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
     //To load the French version

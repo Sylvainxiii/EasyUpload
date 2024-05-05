@@ -4,14 +4,18 @@ $name = isset($_FILES['fichier']['name']) ? $_FILES['fichier']['name'] : "";
 $chemin_dans_bdd = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $chemin_dans_bdd = md5($_POST['recipient_email'].$_POST['user_email'].date("Y-m-d H:i:s"), false);
+    echo ($chemin_dans_bdd);
+    mkdir('./uploads/' . $chemin_dans_bdd, 0777, true);
     for ($i = 0; $i < count($tmpName); $i = $i + 1) {
         if (!empty($tmpName) && is_uploaded_file($tmpName[$i])) {
-            if (move_uploaded_file($tmpName[$i], './uploads/' . $name[$i])) {
-                $chemin_dans_bdd = 'uploads/' . $name[$i];
+            if (move_uploaded_file($tmpName[$i], './uploads/'. $chemin_dans_bdd ."/". $name[$i])) {
             }
         }
     }
+    header("Location: src/EnvoieMail.php?recipient_email=" . $_POST['recipient_email']."&user_email=".$_POST['user_email'].'&file='.$chemin_dans_bdd);
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -91,11 +95,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 </div>
                 <div class="mb-3">
                     <label for="recipient-email" class="form-label">Email destinataire</label>
-                    <input type="email" class="form-control custom-input" id="recipient-email" name="recipient_email" value="celine.pro.morel@gmail.com" required>
+                    <input type="email" class="form-control custom-input" id="recipient-email" name="recipient_email" value="scaleautoperfect@gmail.com" required>
                 </div>
                 <div class="mb-3">
                     <label for="mail" class="form-label">Email</label>
-                    <input type="email" class="form-control custom-input" id="mail" name="user_email" value="celine.pro.morel@gmail.com" required>
+                    <input type="email" class="form-control custom-input" id="mail" name="user_email" value="sylvainlacroix@protonmail.com" required>
                 </div>
                 <div>
                     <button type="button" class="btn btn-primary" value="send" onclick="submitFormAndReload()">Send</button>
