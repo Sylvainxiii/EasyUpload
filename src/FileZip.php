@@ -17,7 +17,7 @@ for ($i =0; $i < count($files); $i = $i +1){
 }
 else
 {
-  echo 'Impossible d&#039;ouvrir &quot;Zip.zip&quot;';
+  echo 'Impossible d&#039;ouvrir &quot;'.$repositoryName.'.zip&quot;';
 }
 // Traitement des erreurs avec un switch(), par exemple.
 }

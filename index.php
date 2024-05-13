@@ -19,8 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     createZip($repositoryPath, $repositoryName, $files);
 
-
-    // header("Location: src/EnvoieMail.php?recipient_email=" . $_POST['recipient_email']."&user_email=".$_POST['user_email'].'&file='.$repositoryName);
+    header("Location: src/EnvoieMail.php?recipient_email=" . $_POST['recipient_email']."&user_email=".$_POST['user_email'].'&file='.$repositoryName);
 }
 
 ?>
