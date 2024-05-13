@@ -1,19 +1,26 @@
 <?php
+include ('src/FileZip.php');
+
 $tmpName = isset($_FILES['fichier']['tmp_name']) ? $_FILES['fichier']['tmp_name'] : "";
 $name = isset($_FILES['fichier']['name']) ? $_FILES['fichier']['name'] : "";
-$chemin_dans_bdd = "";
+$repositoryName = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $chemin_dans_bdd = md5($_POST['recipient_email'].$_POST['user_email'].date("Y-m-d H:i:s"), false);
-    echo ($chemin_dans_bdd);
-    mkdir('./uploads/' . $chemin_dans_bdd, 0777, true);
+    $repositoryName = md5($_POST['recipient_email'].$_POST['user_email'].date("Y-m-d H:i:s"), false);
+    $repositoryPath = './uploads/' . $repositoryName;
+    mkdir($repositoryPath, 0777, true);
     for ($i = 0; $i < count($tmpName); $i = $i + 1) {
         if (!empty($tmpName) && is_uploaded_file($tmpName[$i])) {
-            if (move_uploaded_file($tmpName[$i], './uploads/'. $chemin_dans_bdd ."/". $name[$i])) {
+            if (move_uploaded_file($tmpName[$i], $repositoryPath ."/". $name[$i])) {
             }
         }
     }
-    header("Location: src/EnvoieMail.php?recipient_email=" . $_POST['recipient_email']."&user_email=".$_POST['user_email'].'&file='.$chemin_dans_bdd);
+    $files = glob($repositoryPath ."/*");
+
+    createZip($repositoryPath, $repositoryName, $files);
+
+
+    // header("Location: src/EnvoieMail.php?recipient_email=" . $_POST['recipient_email']."&user_email=".$_POST['user_email'].'&file='.$repositoryName);
 }
 
 ?>
