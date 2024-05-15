@@ -47,7 +47,7 @@ try {
     // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
 
     //Content
-
+    $mail->CharSet = "UTF-8";
     $mail->isHTML(true);                                  //Set email format to HTML
     $mail->Subject = 'Test Weetransfert Mailer';
     $mail->Body    = $messageHead . "<br>" . $downloadLink . "<br>" . $messageFoot;
