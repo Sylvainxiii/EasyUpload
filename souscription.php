@@ -60,19 +60,14 @@ function nouvelUtilisateur($email, $hash, $pdo)
         <div class="form">
             <form method="POST" enctype="multipart/form-data">
                 <div class="mb-3">
-                    <div class="custom-file">
-                        <label class="custom-file-label" for="recipient-email">Email:</label>
-                        <input class="custom-file-input" type="email" id="recipient-email" name="recipient-email">
-                    </div>
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="email" class="form-control custom-input" id="email" name="email">
                 </div>
                 <div class="mb-3">
-                    <div class="custom-file">
-                        <label class="custom-file-label" for="mdp">Mot de passe:</label>
-                        <input class="custom-file-input" type="password" id="mdp" name="mdp">
-                    </div>
+                    <label for="mdp" class="form-label">Mot de passe:</label>
+                    <input type="password" class="form-control custom-input" id="mdp" name="mdp">
                 </div>
                 <button type="submit" class="btn btn-primary">S'inscrire</button>
-
             </form>
         </div>
     </div>

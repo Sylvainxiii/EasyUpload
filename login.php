@@ -50,23 +50,18 @@ if (count($_POST) > 0) {
             <div class="form">
                 <form action="login.php" method="post">
                     <div class="mb-3">
-                        <div class="custom-file">
-                            <label class="custom-file-label" for="exampleInputEmail1">Email</label>
-                            <input required type="email" class="custom-file-input" name="email" id="exampleInputEmail1" value="" aria-describedby="emailHelp">
-                        </div>
+                        <label for="exampleInputEmail1" class="form-label">Email:</label>
+                        <input required type="email" class="form-control custom-input" name="email" id="exampleInputEmail1" value="" aria-describedby="emailHelp">
                     </div>
                     <div class="mb-3">
-                        <div class="custom-file">
-                            <label class="custom-file-label" for="exampleInputPassword1">Password</label>
-                            <input required type="password" name="password" class="custom-file-input" id="exampleInputPassword1">
-                        </div>
+                        <label for="exampleInputPassword1" class="form-label">Mot de passe:</label>
+                        <input required type="password" name="password" class="form-control custom-input" id="exampleInputPassword1">
                     </div>
 
                     <button type="submit" class="btn btn-primary">Se connecter</button>
                     <button type="submit" class="btn btn-primary"><a href="souscription.php" style="color: #292929; text-decoration: none;">Création d'un compte</a></button>
                 </form>
             </div>
-        </div>
     </body>
 
     </html>
