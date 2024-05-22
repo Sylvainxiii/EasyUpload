@@ -45,7 +45,7 @@ if (count($_POST) > 0) {
             // include('includes/navbar.php');
             ?>
             <div class="title">
-                <h1>LOGIN</h1>
+                <h1>SE CONNECTER</h1>
             </div>
             <div class="form">
                 <form action="login.php" method="post">
