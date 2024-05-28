@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 
 function isValid($mail, $mdp, $pdo)
 {
@@ -37,7 +37,7 @@ if (count($_POST) > 0) {
     }
 } else {
 ?>
-    <!DOCTYPE html>
+    <!-- <!DOCTYPE html>
     <html lang="en">
 
     <head>
@@ -50,9 +50,6 @@ if (count($_POST) > 0) {
 
     <body>
         <div class="background">
-            <?php
-            // include('includes/navbar.php');
-            ?>
             <div class="title">
                 <h1>SE CONNECTER</h1>
             </div>
@@ -73,7 +70,7 @@ if (count($_POST) > 0) {
             </div>
     </body>
 
-    </html>
+    </html> -->
 
 <?php
-}
+} -->

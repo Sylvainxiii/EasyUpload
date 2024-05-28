@@ -1,51 +1,35 @@
-<?php
+<!-- <?php
 
-$db = new PDO('sqlite:bdd.db');
 
-$db->exec("INSERT INTO utilisateur ( mail, mdp) VALUES ( $mail, $mdp)");
 
-exit();
+        if (isset($_SESSION['id'])) {
+            header('Location: index.php');
+            exit();
+        }
 
-if (isset($_SESSION['id'])) {
-    header('Location: index.php');
-    exit();
-}
+        function nouvelUtilisateur($mail, $hash, $pdo)
+        {
+            $sqlCheck = "SELECT COUNT(*) FROM utilisateur WHERE mail = :mail";
+            $stmtCheck = $pdo->prepare($sqlCheck);
+            $stmtCheck->bindParam(':mail', $mail);
+            $stmtCheck->execute();
+            $count = $stmtCheck->fetchColumn();
 
-try {
-    $pdo = new PDO('sqlite:bdd.db');
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    echo "Erreur de connexion : " . $e->getMessage();
-    exit();
-}
+            if ($count > 0) {
+                echo "L'utilisateur existe déjà.";
+                return false;
+            }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $mail = $_POST['mail'];
-    $mdp = $_POST['mdp'];
+            $db = new PDO('sqlite:bdd.db');
 
-    if (!empty($mail) && !empty($mdp)) {
-        $hash = password_hash($mdp, PASSWORD_DEFAULT);
-        nouvelUtilisateur($mail, $hash, $pdo);
-    }
-}
+            $db->exec("INSERT INTO utilisateur ( mail, mdp) VALUES ( $mail, $mdp)");
 
-function nouvelUtilisateur($mail, $hash, $pdo)
-{
-    $sqlCheck = "SELECT COUNT(*) FROM utilisateur WHERE mail = :mail";
-    $stmtCheck = $pdo->prepare($sqlCheck);
-    $stmtCheck->bindParam(':mail', $mail);
-    $stmtCheck->execute();
-    $count = $stmtCheck->fetchColumn();
+            exit();
 
-    if ($count > 0) {
-        echo "L'utilisateur existe déjà.";
-        return false;
-    }
+            header('Location: index.php');
+        }
 
-    header('Location: index.php');
-}
-
-?>
+        ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -81,4 +65,4 @@ function nouvelUtilisateur($mail, $hash, $pdo)
 
 </body>
 
-</html>
+</html> -->
