@@ -1,42 +1,48 @@
 <?php
 
+$db = new PDO('sqlite:bdd.db');
+
+$db->exec("INSERT INTO utilisateur ( mail, mdp) VALUES ( $mail, $mdp)");
+
+exit();
 
 if (isset($_SESSION['id'])) {
-    header('Location: login.php');
+    header('Location: index.php');
+    exit();
+}
+
+try {
+    $pdo = new PDO('sqlite:bdd.db');
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo "Erreur de connexion : " . $e->getMessage();
+    exit();
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = $_POST['email'];
+    $mail = $_POST['mail'];
     $mdp = $_POST['mdp'];
 
-    if (!empty($email) && !empty($mdp)) {
+    if (!empty($mail) && !empty($mdp)) {
         $hash = password_hash($mdp, PASSWORD_DEFAULT);
-        nouvelUtilisateur($email, $hash, $pdo);
+        nouvelUtilisateur($mail, $hash, $pdo);
     }
 }
 
-function nouvelUtilisateur($email, $hash, $pdo)
+function nouvelUtilisateur($mail, $hash, $pdo)
 {
-    $sqlCheck = "SELECT COUNT(*) FROM utilisateurs WHERE email = :email";
+    $sqlCheck = "SELECT COUNT(*) FROM utilisateur WHERE mail = :mail";
     $stmtCheck = $pdo->prepare($sqlCheck);
-    $stmtCheck->bindParam(':email', $email);
+    $stmtCheck->bindParam(':mail', $mail);
     $stmtCheck->execute();
     $count = $stmtCheck->fetchColumn();
 
     if ($count > 0) {
         echo "L'utilisateur existe déjà.";
-        return;
+        return false;
     }
 
-    $sql = "INSERT INTO utilisateurs (email, password) 
-            VALUES (:email, :hash)";
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':hash', $hash);
-    $stmt->execute();
-
     header('Location: index.php');
-    exit();
 }
 
 ?>

@@ -1,27 +1,36 @@
 <?php
 
-function isValid($email, $password, $pdo)
+function isValid($mail, $mdp, $pdo)
 {
 
-    $sql = "SELECT email,password FROM utilisateurs WHERE email = :email";
+    $sql = "SELECT mail, mdp FROM utilisateur WHERE mail = :mail";
     $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':mail', $mail);
     $stmt->execute();
     $result = $stmt->fetchAll();
 
     if (count($result) > 0) {
 
-        if (password_verify($password, $result[0]['password'])) {
+        if (password_verify($mdp, $result[0]['mdp'])) {
             return true;
         }
     }
 
     return false;
 }
+try {
+
+    $pdo = new PDO('sqlite:bdd.db');
+
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo "Erreur de connexion : " . $e->getMessage();
+    exit();
+}
 
 if (count($_POST) > 0) {
-    if (isValid($_POST['email'], $_POST['password'], $pdo)) {
-        $_SESSION['email'] = $_POST['email'];
+    if (isValid($_POST['mail'], $_POST['mdp'], $pdo)) {
+        $_SESSION['mail'] = $_POST['mail'];
         header('Location: index.php');
     } else {
         header('Location: login.php');
