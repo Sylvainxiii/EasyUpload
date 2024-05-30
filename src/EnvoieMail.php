@@ -1,21 +1,25 @@
 <?php
 //Import PHPMailer classes into the global namespace
 //These must be at the top of your script, not inside a function
+use Dotenv\Dotenv;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
 
 //Load Composer's autoloader
 require '../vendor/autoload.php';
 
 $delais = 7;
-$sendFrom = $_GET['user_email'] ;
-$sendTo= $_GET['recipient_email'];
+$sendFrom = $_GET['user_email'];
+$sendTo = $_GET['recipient_email'];
 $downloadFile = $_GET['file'];
 $downloadLink = '<a href=http://localhost/Clone-Weetransfert/src/Download.php?file=' . $downloadFile . ">Télécharger</a>";
 
-$messageHead = 'Bonjour '. $sendTo . ', ' . $sendFrom. ' souhaite vous transmettre des documents. Pour les télécharger, veuillez cliquer sur le lien suivant:';
-$messageFoot = 'Veillez noter que ce lien sera valide pendant '. $delais. 'jours. Passé ce délais, vos documents ne seront plus disponibles. Merci.';
+$messageHead = 'Bonjour ' . $sendTo . ', ' . $sendFrom . ' souhaite vous transmettre des documents. Pour les télécharger, veuillez cliquer sur le lien suivant:';
+$messageFoot = 'Veillez noter que ce lien sera valide pendant ' . $delais . 'jours. Passé ce délais, vos documents ne seront plus disponibles. Merci.';
 
 //Create an instance; passing `true` enables exceptions
 $mail = new PHPMailer(true);

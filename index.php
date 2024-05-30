@@ -1,8 +1,15 @@
 <?php
 include('src/FileZip.php');
 
+require 'vendor/autoload.php';
+
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 try {
-    $db = new PDO('sqlite:bdd.db');
+    $db = new PDO($_ENV['DB_CONNECTION'] . ':' . $_ENV['DB_DATABASE']);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
