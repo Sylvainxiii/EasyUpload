@@ -19,7 +19,7 @@ $downloadFile = $_GET['file'];
 $downloadLink = '<a href=http://localhost/Clone-Weetransfert/src/Download.php?file=' . $downloadFile . ">Télécharger</a>";
 
 $messageHead = 'Bonjour ' . $sendTo . ', ' . $sendFrom . ' souhaite vous transmettre des documents. Pour les télécharger, veuillez cliquer sur le lien suivant:';
-$messageFoot = 'Veillez noter que ce lien sera valide pendant ' . $delais . 'jours. Passé ce délais, vos documents ne seront plus disponibles. Merci.';
+$messageFoot = 'Veuillez noter que ce lien sera valide pendant ' . $delais . 'jours. Passé ce délai, vos documents ne seront plus disponibles. Merci.';
 
 //Create an instance; passing `true` enables exceptions
 $mail = new PHPMailer(true);
@@ -28,17 +28,17 @@ try {
     //Server settings
     $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
     $mail->isSMTP();                                            //Send using SMTP
-    $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+    $mail->Host       = $_ENV['MAIL_HOST'];                     //Set the SMTP server to send through
     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Username   = 'scaleautoperfect@gmail.com';                     //SMTP username
-    $mail->Password   = 'hfjjcunhgurckcag';                               //SMTP password
+    $mail->Username   = $_ENV['MAIL_USERNAME'];                    //SMTP username
+    $mail->Password   = $_ENV['MAIL_PASSWORD'];                              //SMTP password
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-    $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+    $mail->Port       = $_ENV['MAIL_PORT'];                                  //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
     //Recipients
     $mail->setFrom($sendFrom, '');
     $mail->addAddress($sendTo, '');     //Add a recipient
-    // $mail->addAddress('celine.pro.morel@gmail.com');               //Name is optional
+    // $mail->addAddress('');               //Name is optional
     // $mail->addReplyTo('info@example.com', 'Information');
     // $mail->addCC('cc@example.com');
     // $mail->addBCC('bcc@example.com');
