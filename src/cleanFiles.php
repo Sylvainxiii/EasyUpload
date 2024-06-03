@@ -29,3 +29,7 @@ $stmt->bindParam(':expirationDate', $expirationDate);
 $stmt->execute();
 
 echo "Les enregistrements ont été supprimés avec succès.";
+
+$handle = fopen('log.txt', 'a+');
+fwrite($handle, date('Y-m-d H:i:s') . " Les enregistrements ont été supprimés avec succès.\n");
+fclose($handle);
