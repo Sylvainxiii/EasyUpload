@@ -1,25 +1,81 @@
 <?php
-include ('src/FileZip.php');
+include('src/FileZip.php');
 
-$tmpName = isset($_FILES['fichier']['tmp_name']) ? $_FILES['fichier']['tmp_name'] : "";
-$name = isset($_FILES['fichier']['name']) ? $_FILES['fichier']['name'] : "";
-$repositoryName = "";
+require 'vendor/autoload.php';
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $repositoryName = md5($_POST['recipient_email'].$_POST['user_email'].date("Y-m-d H:i:s"), false);
-    $repositoryPath = './uploads/' . $repositoryName;
-    mkdir($repositoryPath, 0777, true);
-    for ($i = 0; $i < count($tmpName); $i = $i + 1) {
-        if (!empty($tmpName) && is_uploaded_file($tmpName[$i])) {
-            if (move_uploaded_file($tmpName[$i], $repositoryPath ."/". $name[$i])) {
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+try {
+    $db = new PDO($_ENV['DB_CONNECTION'] . ':' . $_ENV['DB_DATABASE']);
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+    exit;
+}
+
+// Sécuriser les données entrantes
+function securize($data)
+{
+    return htmlspecialchars(stripslashes(trim($data)));
+}
+
+// CREATE
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['action'] === 'create') {
+    $emmeteur = securize($_POST['user_email']);
+    $destinataire = securize($_POST['recipient_email']);
+    $date = date("Y-m-d H:i:s");
+    $chemin = './uploads/' . md5($destinataire . $emmeteur . $date, false);
+
+    $stmt = $db->prepare("INSERT INTO piece_jointe (email_emmeteur, email_destinataire, date_creation, chemin) VALUES (:emmeteur, :destinataire, :date_creation, :chemin)");
+    $stmt->bindParam(':emmeteur', $emmeteur);
+    $stmt->bindParam(':destinataire', $destinataire);
+    $stmt->bindParam(':date_creation', $date);
+    $stmt->bindParam(':chemin', $chemin);
+
+    if ($stmt->execute()) {
+        mkdir($chemin, 0777, true);
+        $tmpName = $_FILES['fichier']['tmp_name'];
+        $name = $_FILES['fichier']['name'];
+        for ($i = 0; $i < count($tmpName); $i++) {
+            if (!empty($tmpName[$i]) && is_uploaded_file($tmpName[$i])) {
+                move_uploaded_file($tmpName[$i], $chemin . "/" . $name[$i]);
             }
         }
+        $files = glob($chemin . "/*");
+        createZip($chemin, $chemin, $files);
+        header("Location: src/EnvoieMail.php?recipient_email=" . $destinataire . "&user_email=" . $emmeteur . '&file=' . md5($destinataire . $emmeteur . $date, false));
     }
-    $files = glob($repositoryPath ."/*");
+}
 
-    createZip($repositoryPath, $repositoryName, $files);
+// READ
+$stmt = $db->query("SELECT * FROM piece_jointe");
+$pieces_jointes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    header("Location: src/EnvoieMail.php?recipient_email=" . $_POST['recipient_email']."&user_email=".$_POST['user_email'].'&file='.$repositoryName);
+// UPDATE
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['action'] === 'update') {
+    $id = securize($_POST['id']);
+    $emmeteur = securize($_POST['user_email']);
+    $destinataire = securize($_POST['recipient_email']);
+
+    $stmt = $db->prepare("UPDATE piece_jointe SET email_emmeteur = :emmeteur, email_destinataire = :destinataire WHERE id = :id");
+    $stmt->bindParam(':emmeteur', $emmeteur);
+    $stmt->bindParam(':destinataire', $destinataire);
+    $stmt->bindParam(':id', $id);
+
+    $stmt->execute();
+}
+
+// DELETE
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['action'] === 'delete') {
+    $id = securize($_POST['id']);
+
+    $stmt = $db->prepare("DELETE FROM piece_jointe WHERE id = :id");
+    $stmt->bindParam(':id', $id);
+
+    $stmt->execute();
 }
 
 ?>
@@ -92,6 +148,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </div>
         <div class="form">
             <form id="uploadForm" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="action" value="create">
                 <div class="mb-3">
                     <div class="custom-file">
                         <label class="custom-file-label" for="fichier" id="fileNameLabel">Choisir des fichiers</label>
@@ -104,7 +161,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <input type="email" class="form-control custom-input" id="recipient-email" name="recipient_email" value="sylvainlacroix@protonmail.com" required>
                 </div>
                 <div class="mb-3">
-                    <label for="mail" class="form-label">Email</label>
+                    <label for="mail" class="form-label">Votre Email</label>
                     <input type="email" class="form-control custom-input" id="mail" name="user_email" value="scaleautoperfect@gmail.com" required>
                 </div>
                 <div>

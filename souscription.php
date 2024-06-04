@@ -1,45 +1,35 @@
-<?php
+<!-- <?php
 
 
-if (isset($_SESSION['id'])) {
-    header('Location: login.php');
-}
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = $_POST['email'];
-    $mdp = $_POST['mdp'];
+        if (isset($_SESSION['id'])) {
+            header('Location: index.php');
+            exit();
+        }
 
-    if (!empty($email) && !empty($mdp)) {
-        $hash = password_hash($mdp, PASSWORD_DEFAULT);
-        nouvelUtilisateur($email, $hash, $pdo);
-    }
-}
+        function nouvelUtilisateur($mail, $hash, $pdo)
+        {
+            $sqlCheck = "SELECT COUNT(*) FROM utilisateur WHERE mail = :mail";
+            $stmtCheck = $pdo->prepare($sqlCheck);
+            $stmtCheck->bindParam(':mail', $mail);
+            $stmtCheck->execute();
+            $count = $stmtCheck->fetchColumn();
 
-function nouvelUtilisateur($email, $hash, $pdo)
-{
-    $sqlCheck = "SELECT COUNT(*) FROM utilisateurs WHERE email = :email";
-    $stmtCheck = $pdo->prepare($sqlCheck);
-    $stmtCheck->bindParam(':email', $email);
-    $stmtCheck->execute();
-    $count = $stmtCheck->fetchColumn();
+            if ($count > 0) {
+                echo "L'utilisateur existe déjà.";
+                return false;
+            }
 
-    if ($count > 0) {
-        echo "L'utilisateur existe déjà.";
-        return;
-    }
+            $db = new PDO('sqlite:bdd.db');
 
-    $sql = "INSERT INTO utilisateurs (email, password) 
-            VALUES (:email, :hash)";
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':hash', $hash);
-    $stmt->execute();
+            $db->exec("INSERT INTO utilisateur ( mail, mdp) VALUES ( $mail, $mdp)");
 
-    header('Location: index.php');
-    exit();
-}
+            exit();
 
-?>
+            header('Location: index.php');
+        }
+
+        ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -75,4 +65,4 @@ function nouvelUtilisateur($email, $hash, $pdo)
 
 </body>
 
-</html>
+</html> -->
