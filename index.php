@@ -27,26 +27,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['
     $emmeteur = securize($_POST['user_email']);
     $destinataire = securize($_POST['recipient_email']);
     $date = date("Y-m-d H:i:s");
-    $chemin = './uploads/' . md5($destinataire . $emmeteur . $date, false);
+    $repositoryName = md5($_POST['recipient_email'].$_POST['user_email'].date("Y-m-d H:i:s"), false);
+    $repositoryPath = './uploads/' . $repositoryName;
 
     $stmt = $db->prepare("INSERT INTO piece_jointe (email_emmeteur, email_destinataire, date_creation, chemin) VALUES (:emmeteur, :destinataire, :date_creation, :chemin)");
     $stmt->bindParam(':emmeteur', $emmeteur);
     $stmt->bindParam(':destinataire', $destinataire);
     $stmt->bindParam(':date_creation', $date);
-    $stmt->bindParam(':chemin', $chemin);
+    $stmt->bindParam(':chemin', $repositoryPath);
 
     if ($stmt->execute()) {
-        mkdir($chemin, 0777, true);
+        mkdir($repositoryPath, 0777, true);
         $tmpName = $_FILES['fichier']['tmp_name'];
         $name = $_FILES['fichier']['name'];
         for ($i = 0; $i < count($tmpName); $i++) {
             if (!empty($tmpName[$i]) && is_uploaded_file($tmpName[$i])) {
-                move_uploaded_file($tmpName[$i], $chemin . "/" . $name[$i]);
+                move_uploaded_file($tmpName[$i], $repositoryPath . "/" . $name[$i]);
             }
         }
-        $files = glob($chemin . "/*");
-        createZip($chemin, $chemin, $files);
-        header("Location: src/EnvoieMail.php?recipient_email=" . $destinataire . "&user_email=" . $emmeteur . '&file=' . md5($destinataire . $emmeteur . $date, false));
+        $files = glob($repositoryPath . "/*");
+        createZip($repositoryPath, $repositoryName, $files);
+        header("Location: src/EnvoieMail.php?recipient_email=" . $_POST['recipient_email']."&user_email=".$_POST['user_email'].'&file='.$repositoryName);
     }
 }
 

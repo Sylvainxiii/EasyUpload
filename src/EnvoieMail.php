@@ -6,11 +6,12 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-$dotenv = Dotenv::createImmutable(__DIR__ . '/../git');
-$dotenv->load();
-
 //Load Composer's autoloader
 require '../vendor/autoload.php';
+
+$dotenv = Dotenv::createImmutable('../');
+$dotenv->load();
+
 
 $delais = 7;
 $sendFrom = $_GET['user_email'];
