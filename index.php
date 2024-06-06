@@ -159,11 +159,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['
                 </div>
                 <div class="mb-3">
                     <label for="recipient-email" class="form-label">Email destinataire</label>
-                    <input type="email" class="form-control custom-input" id="recipient-email" name="recipient_email" value="sylvainlacroix@protonmail.com" required>
+                    <input type="email" class="form-control custom-input" id="recipient-email" name="recipient_email" required>
                 </div>
                 <div class="mb-3">
                     <label for="mail" class="form-label">Votre Email</label>
-                    <input type="email" class="form-control custom-input" id="mail" name="user_email" value="scaleautoperfect@gmail.com" required>
+                    <input type="email" class="form-control custom-input" id="mail" name="user_email" required>
                 </div>
                 <div>
                     <button type="button" class="btn btn-primary" value="send" onclick="submitFormAndReload()">Send</button>
