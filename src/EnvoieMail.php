@@ -19,10 +19,9 @@ $downloadLink = '<a href=http://localhost/Clone-Weetransfert/src/Download.php?fi
 
 $messageHead = 'Bonjour ' . $sendTo . ', ' . $sendFrom . ' souhaite vous transmettre des documents. Pour les télécharger, veuillez cliquer sur le lien suivant:';
 $messageFoot = 'Veuillez noter que ce lien sera valide pendant ' . $delais . 'jours. Passé ce délai, vos documents ne seront plus disponibles. Merci.';
-$messageBody = 'Bonjour ' . $sendFrom . ', le lien de téléchargement de vos fichiers à bien été envoyé à ' . $sendTo . '.<br>Merci d\'avoir utilisé CloneTransfert.';
 
 //Create an instance; passing `true` enables exceptions
-    $mail = new PHPMailService;
+$mail = new PHPMailService;
 
     $mail->addAddress($sendTo, '');     //Add a recipient
     //Content
@@ -34,20 +33,30 @@ $messageBody = 'Bonjour ' . $sendFrom . ', le lien de téléchargement de vos fi
     $mail->setLanguage('fr', '/optional/path/to/language/directory/');
 
     if (!$mail->send()) {
-        echo 'Erreur lors de l\'envoi du premier e-mail : ' . $mail->ErrorInfo;
+        $error = $mail->ErrorInfo;
     } else {
         echo 'E-mail envoyée avec succès !';
     }
 
+    if($error == ""){
+        $messageSubject = 'Vos fichiers ont été correctement transférés!';
+        $messageBody = 'Bonjour ' . $sendFrom . ', le lien de téléchargement de vos fichiers à bien été envoyé à ' . $sendTo . '.<br>Merci d\'avoir utilisé CloneTransfert.';
+    }else{
+        $messageSubject = 'Vos fichiers n\'ont pus être transférés!';
+        $messageBody = 'Bonjour ' . $sendFrom . ', suite à une erreur, le lien de téléchargement de vos fichiers n\'à pas pu être envoyé à ' . $sendTo . 
+        '.<br>Merci de bien vouloir réessayer ou de contacter notre service technique.';
+    }
+    
     //Envoie du second mail
     $mail->clearAllRecipients();
     $mail->addAddress($sendFrom, '');
-    $mail->Subject = 'Vos fichiers ont été correctement trnasférés!';
+    $mail->Subject = $messageSubject ;
     $mail->Body = $messageBody;
-
+    
     if (!$mail->send()) {
         echo 'Erreur lors de l\'envoi du deuxième e-mail : ' . $mail->ErrorInfo;
     } else {
         echo 'E-mail envoyée avec succès !';
     }
-
+    
+    
