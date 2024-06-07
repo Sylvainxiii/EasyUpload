@@ -12,16 +12,6 @@ require '../vendor/autoload.php';
 $dotenv = Dotenv::createImmutable('../');
 $dotenv->load();
 
-
-$delais = 7;
-$sendFrom = $_GET['user_email'];
-$sendTo = $_GET['recipient_email'];
-$downloadFile = $_GET['file'];
-$downloadLink = '<a href=http://localhost/Clone-Weetransfert/src/Download.php?file=' . $downloadFile . ">Télécharger</a>";
-
-$messageHead = 'Bonjour ' . $sendTo . ', ' . $sendFrom . ' souhaite vous transmettre des documents. Pour les télécharger, veuillez cliquer sur le lien suivant:';
-$messageFoot = 'Veuillez noter que ce lien sera valide pendant ' . $delais . 'jours. Passé ce délai, vos documents ne seront plus disponibles. Merci.';
-
 //Create an instance; passing `true` enables exceptions
 $mail = new PHPMailer(true);
 
@@ -37,8 +27,8 @@ try {
     $mail->Port       = $_ENV['MAIL_PORT'];                                  //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
     //Recipients
-    $mail->setFrom('sylvainlacroix@protonmail.com', '');
-    $mail->addAddress('yvon.huynh@gmail.com', '');     //Add a recipient
+    $mail->setFrom('noreply@clonetransfert.sc3czkq9370.universe.wf', 'CloneTranfert');
+    $mail->addAddress('sylvainlacroix@protonmail.com', '');     //Add a recipient
     // $mail->addAddress('');               //Name is optional
     // $mail->addReplyTo('info@example.com', 'Information');
     // $mail->addCC('cc@example.com');

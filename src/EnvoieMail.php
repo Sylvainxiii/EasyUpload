@@ -37,7 +37,7 @@ try {
     $mail->Port       = $_ENV['MAIL_PORT'];                                  //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
     //Recipients
-    $mail->setFrom($sendFrom, '');
+    $mail->setFrom($_ENV['MAIL_FROM'], $_ENV['MAIL_FROM_NAME']);
     $mail->addAddress($sendTo, '');     //Add a recipient
     // $mail->addAddress('');               //Name is optional
     // $mail->addReplyTo('info@example.com', 'Information');
@@ -45,7 +45,6 @@ try {
     // $mail->addBCC('bcc@example.com');
 
     //Attachments
-
     // for ($i=0; $i < count($_POST['fichier']); $i = $i + 1) {
     //     $mail->addAttachment('./uploads/' . $_POST['fichier'][$i]); 
     // }        //Add attachments
