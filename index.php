@@ -1,5 +1,8 @@
 <?php
+
+
 include('src/FileZip.php');
+include('src/EnvoieMail.php');
 
 require 'vendor/autoload.php';
 
@@ -47,7 +50,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['
         }
         $files = glob($repositoryPath . "/*");
         createZip($repositoryPath, $repositoryName, $files);
-        header("Location: src/EnvoieMail.php?recipient_email=" . $_POST['recipient_email']."&user_email=".$_POST['user_email'].'&file='.$repositoryName);
+        envoieMail($destinataire, $emmeteur, $repositoryName);
+        // header("location: http://localhost/Clone-Weetransfert/src/EnvoieMail.php?recipient_email=" . $_POST['recipient_email']."&user_email=".$_POST['user_email'].'&file='.$repositoryName);
     }
 }
 
