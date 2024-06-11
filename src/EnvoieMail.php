@@ -22,6 +22,7 @@ $messageFoot = 'Veuillez noter que ce lien sera valide pendant ' . $delais . 'jo
 
 //Create an instance; passing `true` enables exceptions
 $mail = new PHPMailService;
+    $error = 'noerror';
 
     $mail->addAddress($sendTo, '');     //Add a recipient
     //Content
@@ -36,7 +37,7 @@ $mail = new PHPMailService;
         $error = $mail->ErrorInfo;
     }
 
-    if($error == null){
+    if($error == 'noerror'){
         $messageSubject = 'Vos fichiers ont été correctement transférés!';
         $messageBody = 'Bonjour ' . $sendFrom . ', le lien de téléchargement de vos fichiers à bien été envoyé à ' . $sendTo . '.<br>Merci d\'avoir utilisé CloneTransfert.';
     }else{
