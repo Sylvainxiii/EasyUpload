@@ -34,11 +34,9 @@ $mail = new PHPMailService;
 
     if (!$mail->send()) {
         $error = $mail->ErrorInfo;
-    } else {
-        echo 'E-mail envoyée avec succès !';
     }
 
-    if($error == ""){
+    if($error == null){
         $messageSubject = 'Vos fichiers ont été correctement transférés!';
         $messageBody = 'Bonjour ' . $sendFrom . ', le lien de téléchargement de vos fichiers à bien été envoyé à ' . $sendTo . '.<br>Merci d\'avoir utilisé CloneTransfert.';
     }else{
@@ -55,8 +53,6 @@ $mail = new PHPMailService;
     
     if (!$mail->send()) {
         echo 'Erreur lors de l\'envoi du deuxième e-mail : ' . $mail->ErrorInfo;
-    } else {
-        echo 'E-mail envoyée avec succès !';
     }
     
     
