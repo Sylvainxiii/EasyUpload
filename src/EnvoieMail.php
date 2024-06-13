@@ -6,15 +6,17 @@ use PHPMailer\PHPMailer\Exception;
 
 
 //Load Composer's autoloader
-require '../vendor/autoload.php';
+require './vendor/autoload.php';
 
-$dotenv = Dotenv::createImmutable('../');
+$dotenv = Dotenv::createImmutable('./');
 $dotenv->load();
 
+
+function envoieMail($sendTo, $sendFrom, $downloadFile){
 $delais = 7;
-$sendFrom = $_GET['user_email'];
-$sendTo = $_GET['recipient_email'];
-$downloadFile = $_GET['file'];
+// $sendFrom = $_GET['user_email'];
+// $sendTo = $_GET['recipient_email'];
+// $downloadFile = $_GET['file'];
 $downloadLink = '<a href=http://localhost/Clone-Weetransfert/src/Download.php?file=' . $downloadFile . ">Télécharger</a>";
 
 $messageHead = 'Bonjour ' . $sendTo . ', ' . $sendFrom . ' souhaite vous transmettre des documents. Pour les télécharger, veuillez cliquer sur le lien suivant:';
@@ -22,6 +24,7 @@ $messageFoot = 'Veuillez noter que ce lien sera valide pendant ' . $delais . 'jo
 
 //Create an instance; passing `true` enables exceptions
 $mail = new PHPMailService;
+    $error = 'noerror';
 
     $mail->addAddress($sendTo, '');     //Add a recipient
     //Content
@@ -34,11 +37,9 @@ $mail = new PHPMailService;
 
     if (!$mail->send()) {
         $error = $mail->ErrorInfo;
-    } else {
-        echo 'E-mail envoyée avec succès !';
     }
 
-    if($error == ""){
+    if($error == 'noerror'){
         $messageSubject = 'Vos fichiers ont été correctement transférés!';
         $messageBody = 'Bonjour ' . $sendFrom . ', le lien de téléchargement de vos fichiers à bien été envoyé à ' . $sendTo . '.<br>Merci d\'avoir utilisé CloneTransfert.';
     }else{
@@ -55,8 +56,6 @@ $mail = new PHPMailService;
     
     if (!$mail->send()) {
         echo 'Erreur lors de l\'envoi du deuxième e-mail : ' . $mail->ErrorInfo;
-    } else {
-        echo 'E-mail envoyée avec succès !';
     }
-    
+    }
     
