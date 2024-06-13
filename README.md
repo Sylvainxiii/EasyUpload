@@ -14,6 +14,6 @@ blabla...
 
 ~~> Windows : [tutorial](./documents/windows/install.md)~~
 
-> Linux : [tutorial](./documents/windows/install.md)
+> Linux : [tutorial](./documents/linux/install.md)
 
-~~> Mac : [tutorial](./documents/windows/install.md)~~
+~~> Mac : [tutorial](./documents/mac/install.md)~~
