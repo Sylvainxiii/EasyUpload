@@ -17,7 +17,7 @@ $delais = 7;
 // $sendFrom = $_GET['user_email'];
 // $sendTo = $_GET['recipient_email'];
 // $downloadFile = $_GET['file'];
-$downloadLink = '<a href=http://localhost/Clone-Weetransfert/src/Download.php?file=' . $downloadFile . ">Télécharger</a>";
+$downloadLink = '<a href=http://localhost/Clone-Weetransfert/src/download.php?file=' . $downloadFile . ">Télécharger</a>";
 
 $messageHead = 'Bonjour ' . $sendTo . ', ' . $sendFrom . ' souhaite vous transmettre des documents. Pour les télécharger, veuillez cliquer sur le lien suivant:';
 $messageFoot = 'Veuillez noter que ce lien sera valide pendant ' . $delais . 'jours. Passé ce délai, vos documents ne seront plus disponibles. Merci.';
