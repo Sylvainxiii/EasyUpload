@@ -87,7 +87,7 @@ $dotenv->load();
                 <div class="mb-3">
                     <div class="custom-file">
                         <label class="custom-file-label" for="fichier" id="fileNameLabel">Choisir des fichiers</label>
-                        <input type="file" class="custom-file-input" id="fichier" name="files[]" multiple required>
+                        <input type="file" class="custom-file-input" id="fichier" name="files[]" multiple required onchange='updateFileName()'>
 
                     </div>
                 </div>
@@ -106,6 +106,6 @@ $dotenv->load();
         </div>
     </div>
 </body>
-
+<script src='index.js'></script>
 <script src='uploads.js'></script>
 </html>
