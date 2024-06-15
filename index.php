@@ -92,20 +92,19 @@ $dotenv->load();
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="recipient-email" class="form-label">Email destinataire</label>
-                    <input type="email" class="form-control custom-input" id="recipient-email" name="recipient_email" required>
+                    <label for="destEmail" class="form-label">Email destinataire</label>
+                    <input type="email" class="form-control custom-input" id="destEmail" name="recipient_email" required>
                 </div>
                 <div class="mb-3">
-                    <label for="mail" class="form-label">Votre Email</label>
-                    <input type="email" class="form-control custom-input" id="mail" name="user_email" required>
+                    <label for="sourceEmail" class="form-label">Votre Email</label>
+                    <input type="email" class="form-control custom-input" id="sourceEmail" name="user_email" required>
                 </div>
                 <div>
-                    <button type="submit" class="btn btn-primary"  name="submit" value="send">Send</button>
+                    <button type="submit" class="btn btn-primary" id="send" name="submit" value="send" disabled>Send</button>
                 </div>
             </form>
         </div>
     </div>
 </body>
 <script src='index.js'></script>
-<script src='uploads.js'></script>
 </html>
