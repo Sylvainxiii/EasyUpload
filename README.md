@@ -9,3 +9,4 @@ Linux : installez la stack LAMP
 *PHP 8.2
 *vérifier avec phpinfo() que le module sqlite est présent
 *vérifier sur le module zip est présent
+
