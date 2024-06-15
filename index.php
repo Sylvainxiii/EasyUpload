@@ -182,6 +182,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['
     const sendBtn = document.querySelector("#send")
     const form = document.querySelector('#uploadForm')
 
+    const isEmailValid = (email) => {
+
+        return email.toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    }
+
+
+
+
     form.addEventListener('change', (event) => {
         console.log('toto')
         let fichier = null
@@ -189,12 +200,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['
         let sourceEmail = null
         // if emails and files are all filled enable
         fichier = document.querySelector("#fichier").files[0] // monofichier
-        destEmail = document.querySelector('#destEmail')
-        sourceEmail = document.querySelector('#sourceEmail')
+        destEmail = document.querySelector('#destEmail').value
+        sourceEmail = document.querySelector('#sourceEmail').value
 
-
-        console.log(fichier)
-        if (fichier && destEmail && sourceEmail) {
+        if (fichier && isEmailValid(destEmail) && isEmailValid(sourceEmail)) {
             sendBtn.disabled = false
         }
 
