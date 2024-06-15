@@ -1,8 +1,8 @@
-installer la stack LAMP ou WAMP 
+#installer la stack LAMP ou WAMP 
 Windows :  installer Laragon
 Linux : installez la stack LAMP
 
-Windows :
+#Windows :
 git clone url de votre fork
 télécharger sqlite pour votre OS
 télécharger DBBrowser pour explorer votre fichier base de données bdd.db
