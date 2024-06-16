@@ -12,18 +12,19 @@ $dotenv = Dotenv::createImmutable('./');
 $dotenv->load();
 
 
-function envoieMail($sendTo, $sendFrom, $downloadFile){
-$delais = 7;
-// $sendFrom = $_GET['user_email'];
-// $sendTo = $_GET['recipient_email'];
-// $downloadFile = $_GET['file'];
-$downloadLink = '<a href=http://localhost/Clone-Weetransfert/src/Download.php?file=' . $downloadFile . ">Télécharger</a>";
+function envoieMail($sendTo, $sendFrom, $downloadFile)
+{
+    $delais = 7;
+    // $sendFrom = $_GET['user_email'];
+    // $sendTo = $_GET['recipient_email'];
+    // $downloadFile = $_GET['file'];
+    $downloadLink = '<a href=' . $_ENV['WEB_URL'] . '/src/Download.php?file=' . $downloadFile . ">Télécharger</a>";
 
-$messageHead = 'Bonjour ' . $sendTo . ', ' . $sendFrom . ' souhaite vous transmettre des documents. Pour les télécharger, veuillez cliquer sur le lien suivant:';
-$messageFoot = 'Veuillez noter que ce lien sera valide pendant ' . $delais . 'jours. Passé ce délai, vos documents ne seront plus disponibles. Merci.';
+    $messageHead = 'Bonjour ' . $sendTo . ', ' . $sendFrom . ' souhaite vous transmettre des documents. Pour les télécharger, veuillez cliquer sur le lien suivant:';
+    $messageFoot = 'Veuillez noter que ce lien sera valide pendant ' . $delais . 'jours. Passé ce délai, vos documents ne seront plus disponibles. Merci.';
 
-//Create an instance; passing `true` enables exceptions
-$mail = new PHPMailService;
+    //Create an instance; passing `true` enables exceptions
+    $mail = new PHPMailService;
     $error = 'noerror';
 
     $mail->addAddress($sendTo, '');     //Add a recipient
@@ -39,23 +40,22 @@ $mail = new PHPMailService;
         $error = $mail->ErrorInfo;
     }
 
-    if($error == 'noerror'){
+    if ($error == 'noerror') {
         $messageSubject = 'Vos fichiers ont été correctement transférés!';
         $messageBody = 'Bonjour ' . $sendFrom . ', le lien de téléchargement de vos fichiers à bien été envoyé à ' . $sendTo . '.<br>Merci d\'avoir utilisé CloneTransfert.';
-    }else{
+    } else {
         $messageSubject = 'Vos fichiers n\'ont pus être transférés!';
-        $messageBody = 'Bonjour ' . $sendFrom . ', suite à une erreur, le lien de téléchargement de vos fichiers n\'à pas pu être envoyé à ' . $sendTo . 
-        '.<br>Merci de bien vouloir réessayer ou de contacter notre service technique.';
+        $messageBody = 'Bonjour ' . $sendFrom . ', suite à une erreur, le lien de téléchargement de vos fichiers n\'à pas pu être envoyé à ' . $sendTo .
+            '.<br>Merci de bien vouloir réessayer ou de contacter notre service technique.';
     }
-    
+
     //Envoie du second mail
     $mail->clearAllRecipients();
     $mail->addAddress($sendFrom, '');
-    $mail->Subject = $messageSubject ;
+    $mail->Subject = $messageSubject;
     $mail->Body = $messageBody;
-    
+
     if (!$mail->send()) {
         echo 'Erreur lors de l\'envoi du deuxième e-mail : ' . $mail->ErrorInfo;
     }
-    }
-    
+}

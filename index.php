@@ -1,5 +1,6 @@
 <?php
 
+ini_set('display_errors', '1');
 
 include('src/FileZip.php');
 include('src/EnvoieMail.php');
@@ -30,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['
     $emmeteur = securize($_POST['user_email']);
     $destinataire = securize($_POST['recipient_email']);
     $date = date("Y-m-d H:i:s");
-    $repositoryName = md5($_POST['recipient_email'].$_POST['user_email'].date("Y-m-d H:i:s"), false);
+    $repositoryName = md5($_POST['recipient_email'] . $_POST['user_email'] . date("Y-m-d H:i:s"), false);
     $repositoryPath = './uploads/' . $repositoryName;
 
     $stmt = $db->prepare("INSERT INTO piece_jointe (email_emmeteur, email_destinataire, date_creation, chemin) VALUES (:emmeteur, :destinataire, :date_creation, :chemin)");
@@ -162,19 +163,52 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="recipient-email" class="form-label">Email destinataire</label>
-                    <input type="email" class="form-control custom-input" id="recipient-email" name="recipient_email" required>
+                    <label for="destEmail" class="form-label">Email destinataire</label>
+                    <input type="email" class="form-control custom-input" id="destEmail" name="recipient_email" required value="yvon.huynh@gmail.com">
                 </div>
                 <div class="mb-3">
-                    <label for="mail" class="form-label">Votre Email</label>
-                    <input type="email" class="form-control custom-input" id="mail" name="user_email" required>
+                    <label for="sourceEmail" class="form-label">Email Expéditeur</label>
+                    <input type="email" class="form-control custom-input" id="sourceEmail" name="user_email" required value="referencementschool@gmail.com">
                 </div>
                 <div>
-                    <button type="button" class="btn btn-primary" value="send" onclick="submitFormAndReload()">Send</button>
+                    <button type="button" class="btn btn-primary" id="send" value="send" onclick="submitFormAndReload()" disabled>Send</button>
                 </div>
             </form>
         </div>
     </div>
 </body>
+<script>
+    // TODO : check email with regex
+
+    const sendBtn = document.querySelector("#send")
+    const form = document.querySelector('#uploadForm')
+
+    const isEmailValid = (email) => {
+
+        return email.toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    }
+
+
+
+
+    form.addEventListener('change', (event) => {
+        console.log('toto')
+        let fichier = null
+        let destEmail = null
+        let sourceEmail = null
+        // if emails and files are all filled enable
+        fichier = document.querySelector("#fichier").files[0] // monofichier
+        destEmail = document.querySelector('#destEmail').value
+        sourceEmail = document.querySelector('#sourceEmail').value
+
+        if (fichier && isEmailValid(destEmail) && isEmailValid(sourceEmail)) {
+            sendBtn.disabled = false
+        }
+
+    })
+</script>
 
 </html>

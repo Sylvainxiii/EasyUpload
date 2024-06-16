@@ -1,7 +1,5 @@
 # Configuration d'Environnement de Développement Windows :
 
-## installez la stack WAMP
-
 1. installer stack WAMP, (plus/ou?) Laragon
 
 2. git clone url de votre fork
