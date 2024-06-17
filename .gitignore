@@ -1,3 +1,4 @@
-
+vendor/
 /uploads/*
 .env
+bdd.db
