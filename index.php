@@ -1,57 +1,11 @@
 <?php
 
-include('src/fileZip.php');
-include('src/envoieMail.php');
-
 require 'vendor/autoload.php';
 
 use Dotenv\Dotenv;
 
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
-
-// try {
-//     $db = new PDO($_ENV['DB_CONNECTION'] . ':' . $_ENV['DB_DATABASE']);
-//     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-// } catch (PDOException $e) {
-//     echo "Connection failed: " . $e->getMessage();
-//     exit;
-// }
-
-// // Sécuriser les données entrantes
-// function securize($data)
-// {
-//     return htmlspecialchars(stripslashes(trim($data)));
-// }
-
-// // CREATE
-// if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['action'] === 'create') {
-//     $emmeteur = securize($_POST['user_email']);
-//     $destinataire = securize($_POST['recipient_email']);
-//     $date = date("Y-m-d H:i:s");
-//     $repositoryName = md5($_POST['recipient_email'].$_POST['user_email'].date("Y-m-d H:i:s"), false);
-//     $repositoryPath = './uploads/' . $repositoryName;
-
-//     $stmt = $db->prepare("INSERT INTO piece_jointe (email_emmeteur, email_destinataire, date_creation, chemin) VALUES (:emmeteur, :destinataire, :date_creation, :chemin)");
-//     $stmt->bindParam(':emmeteur', $emmeteur);
-//     $stmt->bindParam(':destinataire', $destinataire);
-//     $stmt->bindParam(':date_creation', $date);
-//     $stmt->bindParam(':chemin', $repositoryPath);
-
-//     if ($stmt->execute()) {
-//         mkdir($repositoryPath, 0777, true);
-//         $tmpName = $_FILES['fichier']['tmp_name'];
-//         $name = $_FILES['fichier']['name'];
-//         for ($i = 0; $i < count($tmpName); $i++) {
-//             if (!empty($tmpName[$i]) && is_uploaded_file($tmpName[$i])) {
-//                 move_uploaded_file($tmpName[$i], $repositoryPath . "/" . $name[$i]);
-//             }
-//         }
-//         $files = glob($repositoryPath . "/*");
-//         createZip($repositoryPath, $repositoryName, $files);
-//         envoieMail($destinataire, $emmeteur, $repositoryName);
-//     }
-// }
 
 ?>
 
@@ -93,11 +47,11 @@ $dotenv->load();
                 </div>
                 <div class="mb-3">
                     <label for="destEmail" class="form-label">Email destinataire</label>
-                    <input type="email" class="form-control custom-input" id="destEmail" name="recipient_email" required>
+                    <input type="email" class="form-control custom-input" id="destEmail" name="destEmail" required>
                 </div>
                 <div class="mb-3">
                     <label for="sourceEmail" class="form-label">Votre Email</label>
-                    <input type="email" class="form-control custom-input" id="sourceEmail" name="user_email" required>
+                    <input type="email" class="form-control custom-input" id="sourceEmail" name="sourceEmail" required>
                 </div>
                 <div>
                     <button type="submit" class="btn btn-primary" id="send" name="submit" value="send" disabled>Send</button>

@@ -49,16 +49,22 @@ form.addEventListener('change', (event) => {
 // Listener sur la soumission du formulaire
 form.addEventListener('submit', (event) => {
     event.preventDefault()
+    const destEmail = document.querySelector('#destEmail').value
+    const sourceEmail = document.querySelector('#sourceEmail').value
     const files = document.querySelector('[type=file]').files;
     const formData = new FormData();
+    
+    formData.append('destEmail', destEmail);
+    formData.append('sourceEmail', sourceEmail);
 
     // Ajoute chaque fichier dans la variable files
     for (let i = 0; i < files.length; i++) {
         let file = files[i]
     
-        formData.append('files[]', file)
+        formData.append('files[]', file);
     }
 
+    console.log(formData);
     fetch(url, {
         method: 'POST',
         body: formData,

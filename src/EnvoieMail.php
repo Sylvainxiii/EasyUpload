@@ -2,13 +2,11 @@
 
 use Dotenv\Dotenv;
 use App\Service\PHPMailService;
-use PHPMailer\PHPMailer\Exception;
-
 
 //Load Composer's autoloader
-require './vendor/autoload.php';
+require '../vendor/autoload.php';
 
-$dotenv = Dotenv::createImmutable('./');
+$dotenv = Dotenv::createImmutable('../');
 $dotenv->load();
 
 
@@ -18,7 +16,6 @@ $delais = 7;
 // $sendTo = $_GET['recipient_email'];
 // $downloadFile = $_GET['file'];
 $downloadLink = '<a href=http://localhost/Clone-Weetransfert/src/download.php?file=' . $downloadFile . ">Télécharger</a>";
-
 $messageHead = 'Bonjour ' . $sendTo . ', ' . $sendFrom . ' souhaite vous transmettre des documents. Pour les télécharger, veuillez cliquer sur le lien suivant:';
 $messageFoot = 'Veuillez noter que ce lien sera valide pendant ' . $delais . 'jours. Passé ce délai, vos documents ne seront plus disponibles. Merci.';
 
