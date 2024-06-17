@@ -64,11 +64,14 @@ form.addEventListener('submit', (event) => {
         formData.append('files[]', file);
     }
 
-    console.log(formData);
     fetch(url, {
         method: 'POST',
         body: formData,
     }).then((response) => {
         console.log(response)
     })
+    
+    document.querySelector('#destEmail').value = "";
+    document.querySelector('#sourceEmail').value = "";
+    document.getElementById('fileNameLabel').textContent = "Choisir des fichiers";
 })
