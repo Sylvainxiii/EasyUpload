@@ -3,3 +3,4 @@ vendor/
 .env
 bdd.db
 dev_local/
+
