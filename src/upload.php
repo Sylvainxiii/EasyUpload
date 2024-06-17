@@ -8,7 +8,7 @@ $dotenv->load();
 
 include('fileZip.php');
 include('bddCrud.php');
-include('envoieMail.php');
+include('EnvoieMail.php');
 
 // Sécuriser les données entrantes
 function securize($data)
