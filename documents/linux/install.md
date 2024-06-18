@@ -3,7 +3,7 @@
 Ce guide est est réalisé sur une distribution Fedora 40.
 D'une distribution a une autre il existe des subtilités :
 
-- package management (ici dnf)
+- package management (ici dnf) [un tableau pour afficher la correspondance des commandes](https://wiki.archlinux.org/title/Pacman/Rosetta)
 - les nom des pakages
 - le chemin des répertoires et des fichiers 
 - ? configuration: Apache / Httpd
@@ -14,7 +14,7 @@ A vous de les adapter.
 ## installez la stack LAMP
 
 1. Préparation de l'Environnement 
-
+    
     * Mise à Jour du Système
 
       Avant de commencer, mettez à jour votre système pour vous assurer que tous les paquets existants sont à jour.
