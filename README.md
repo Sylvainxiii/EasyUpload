@@ -34,6 +34,14 @@ Ce projet a pour vocation de nous présenter et d'appréhender le côté concept
   <div class="tag">GIT</div>
   <div class="tag">Composer</div>
   <div class="tag">Kanban</div>
+  <div class="tag">Apache</div>
+  <div class="tag">Windows</div>
+  <div class="tag">Linux</div>
+  <div class="tag">...</div>
+</div>
+<div class="wrap_tag">
+  <div class="tag">SEO</div>
+  <div class="tag">Design</div>
   <div class="tag">...</div>
 </div>
 
