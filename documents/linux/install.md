@@ -1,12 +1,3 @@
-<style>
-  .bg-red {
-    border-top: red solid 3px;
-  }
-  .bg-green {
-    border-top: green solid 3px;
-  }
-</style>
-
 # Configuration d'Environnement de Développement Linux :
 
 Ce guide est est réalisé sur une distribution Fedora 40.
@@ -22,62 +13,35 @@ A vous de les adapter.
 
 ## installez la stack LAMP
 
-<table>
-  <tr>
-  <td>
-<div class="bg-red">
+***command ROOT*** : ![command ROOT](../../assets/command_red.svg) 
 
-```
-command ROOT
-```
+***command USER*** : ![command USER](../../assets/command_green.svg)
 
-</div>
-  </td>
-  <td>
-<div class="bg-green">
-
-```
-command USER
-```
-
-</div>
-  </td>
-  </tr>
-</table> 
-
-1. Installation du serveur & CO
-
-    <div class="bg-red">
+1. Installation du serveur & CO ![command ROOT](../../assets/command_red.svg)
 
     ```sh
     dnf install httpd sqlite sqlitebrowser php php-fpm php-pdo composer
     ```
 
-    </div>
-
-1. enable start service
+1. enable start service ![command ROOT](../../assets/command_red.svg)
 
     * php-fpm : 
 
       <table>
         <tr>
         <td>
-        <div class="bg-red">
 
         ```sh
         systemctl enable php-fpm
         ```
 
-        </div>
         </td>
         <td>
-        <div class="bg-red">
 
         ```sh
         systemctl start php-fpm
         ```
 
-        </div>
         </td>
         </tr>
       </table>
@@ -87,45 +51,35 @@ command USER
       <table>
         <tr>
         <td>
-        <div class="bg-red">
 
         ```sh
         systemctl enable httpd
         ```
 
-        </div>
         </td>
         <td>
-        <div class="bg-red">
 
         ```sh
         systemctl start httpd
         ```
 
-        </div>
         </td>
         </tr>
       </table>
 
-1. Vérification de l'Installation
+1. Vérification de l'Installation ![command ROOT](../../assets/command_red.svg)
 
     * Assurez-vous que Httpd est correctement installé et fonctionne en accédant à [http://localhost](http://localhost) dans votre navigateur web. Vous devriez voir la page par défaut.
-
-      <div class="bg-red">
 
         ```sh
         systemctl status httpd
         ```
-      </div>
 
     * Créez un fichier info.php pour vérifier que PHP fonctionne correctement avec Apache :
-
-      <div class="bg-red">
 
         ```sh
         echo "<?php phpinfo(); ?>" > /var/www/html/info.php
         ```
-      </div>
  
       Accédez à http://localhost/info.php dans votre navigateur web. Vous devriez voir une page avec des informations sur votre installation PHP.
 
@@ -137,46 +91,33 @@ command USER
 
 1. Configuration Finale
 
-    * Pour des raisons de sécurité, supprimez le fichier que vous avez créé :
+    * Pour des raisons de sécurité, supprimez le fichier que vous avez créé : ![command ROOT](../../assets/command_red.svg)
 
-      <div class="bg-red">
 
         ```sh
         rm -f /var/www/html/info.php
         ```
-      </div>
 
-    * votre architecture dossier /$HOME/www-ct
-
-      <div class="bg-green">
+    * votre architecture dossier /$HOME/www-ct ![command USER](../../assets/command_green.svg)
 
         ```sh
         mkdir www-ct www-ct/html www-ct/cgi-bin www-ct/ftp www-ct/mail
         ```
-      </div>
 
-    * Git Clone
-
-      <div class="bg-green">
+    * Git Clone ![command USER](../../assets/command_green.svg)
 
       ```sh
       cd /$HOME/www-ct/html/
       git clone https://github.com/Sylvainxiii/Clone-Weetransfert.git .
       ```
-      </div>
 
-    * Composer
-
-      <div class="bg-green">
+    * Composer ![command USER](../../assets/command_green.svg)
 
       ```sh
       composer update
       ```
-      </div>
 
-    * create dotenv
-
-      <div class="bg-green">
+    * Fichier DotEnv (.env) ![command USER](../../assets/command_green.svg)
 
       ```sh
       DB_CONNECTION=sqlite
@@ -191,12 +132,8 @@ command USER
 
       WEB_URL=http://localhost
       ```
-      </div>
-    
 
-    * create vhost www-ct.conf
-
-      <div class="bg-green">
+    * create vhost www-ct.conf : $HOME![command USER](../../assets/command_green.svg) sudo ![command ROOT](../../assets/command_red.svg)
 
         ```sh
         echo "<VirtualHost *:80>
@@ -223,40 +160,27 @@ command USER
 
         ```
 
-        </div>
-
-    * Selinux
-
-      <div class="bg-red">
+    * Selinux ![command ROOT](../../assets/command_red.svg)
 
       ```sh
       chcon -R -t httpd_user_rw_content_t /$HOME/www-ct
       setsebool -P httpd_enable_homedirs on
       setsebool -P httpd_setrlimit 1
       ```
-      </div>
 
-    * ACL
-
-      <div class="bg-green">
+    * ACL ![command USER](../../assets/command_green.svg)
 
       ```sh
       setfacl -m u:apache:rx /$HOME
       setfacl -m u:apache:rx /$HOME/www-ct
       setfacl -R -m u:apache:rwx /$HOME/www-ct/html/
       ```
-      </div>
 
-    * Restart 
-
-      <div class="bg-red">
+    * Restart ![command ROOT](../../assets/command_red.svg)
 
       ```sh
       systemctl restart httpd
       ```
-      </div>
-
-    
 
 1. Ressources et Support
     * Liens Utiles
@@ -269,23 +193,3 @@ command USER
       * [?](#)
 
     En suivant ces étapes, vous devriez avoir une stack LAMP entièrement fonctionnelle sur votre machine Linux. N'hésitez pas à explorer les documentations officielles pour approfondir vos connaissances et optimiser votre configuration.
-
-
-  <!-- * Créez un script testdb.php PHP pour tester la connexion à Sqlite :
-
-    > /var/www/html/testdb.php
-
-    ```php
-    <?php
-    try {
-      $db = new PDO('sqlite:bdd.db');
-      $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      echo "Connexion réussie";
-    } catch (PDOException $e) {
-        echo "Connection failed: " . $e->getMessage();
-        exit;
-    }
-    ?>
-    ```
-
-    Enregistrez ce fichier dans /var/www/html sous le nom de testdb.php et accédez à [http://localhost/testdb.php](http://localhost/testdb.php) dans votre navigateur web. Vous devriez voir le message "Connexion réussie". -->
