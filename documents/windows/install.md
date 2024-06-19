@@ -2,12 +2,50 @@
 
 1. installer stack WAMP, (plus/ou?) Laragon
 
-2. git clone url de votre fork
+    * install sqlite [www.sqlite.org/download](https://www.sqlite.org/download.html#win32)
+    * install PHP 8.2 [windows.php.net/download](https://windows.php.net/download/)
+    * install DBBrowser pour explorer votre fichier base de données bdd.db [sqlitebrowser.org/dl](https://sqlitebrowser.org/dl/)
 
-2. install sqlite
 
-3. install DBBrowser pour explorer votre fichier base de données bdd.db
+1. git clone url de votre fork:
 
-4. install PHP 8.2
+    ```shell
+    git clone url_repo
+    cd dir_project/
+    composer update
+    ```
 
-5. vérifier avec phpinfo() que le module sqlite est présent
+1. vérifier avec phpinfo() que le module sqlite est présent:
+
+    ```php
+    <?php 
+      phpinfo(); 
+    ?>
+    ```
+1. Fichier DotEnv (.env)
+
+    ```sh
+    DB_CONNECTION=sqlite
+    DB_DATABASE=bdd.db
+
+    MAIL_HOST=XXXXXXXXXXXXXXX
+    MAIL_USERNAME=XXXXXXXXXXXXXXX
+    MAIL_PASSWORD=XXXXXXXXXXXXXXX
+    MAIL_PORT=465
+    MAIL_FROM=XXXXXXXXXXXXXXX
+    MAIL_FROM_NAME=CloneTranfert
+
+    WEB_URL=http://localhost
+    ```
+
+1. Ressources et Support
+    * Liens Utiles
+      * [Documentation Apache / Httpd](https://httpd.apache.org/docs/)
+      * [Documentation Sqlite](https://sqlite.org/docs.html)
+      * [Documentation PHP](https://www.php.net/docs.php)
+
+    * Communautés et Forums d'Entraide
+      * [Stack Overflow](https://stackoverflow.com/)
+      * [?](#)
+
+    En suivant ces étapes, vous devriez avoir une stack WAMP entièrement fonctionnelle sur votre machine Windows. N'hésitez pas à explorer les documentations officielles pour approfondir vos connaissances et optimiser votre configuration.
