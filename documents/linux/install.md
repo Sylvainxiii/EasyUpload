@@ -1,3 +1,12 @@
+<style>
+  .bg-red {
+    border-top: red solid 3px;
+  }
+  .bg-green {
+    border-top: green solid 3px;
+  }
+</style>
+
 # Configuration d'Environnement de Développement Linux :
 
 Ce guide est est réalisé sur une distribution Fedora 40.
@@ -13,124 +22,243 @@ A vous de les adapter.
 
 ## installez la stack LAMP
 
-1. Préparation de l'Environnement 
-    
-    * Mise à Jour du Système
+<table>
+  <tr>
+  <td>
+<div class="bg-red">
 
-      Avant de commencer, mettez à jour votre système pour vous assurer que tous les paquets existants sont à jour.
+```
+command ROOT
+```
 
-      ```shell
-      dnf update
-      ```
+</div>
+  </td>
+  <td>
+<div class="bg-green">
 
-2. Installation du serveur
+```
+command USER
+```
 
-    * Httpd
+</div>
+  </td>
+  </tr>
+</table> 
 
-      Est installez par défaut, si ce n'est pas le cas installez le serveur web Httpd en utilisant la commande suivante :
+1. Installation du serveur & CO
 
-      ```shell
-      dnf install httpd
-      ```
+    <div class="bg-red">
 
-    * Démarrage permanent
+    ```sh
+    dnf install httpd sqlite sqlitebrowser php php-fpm php-pdo composer
+    ```
 
-      ```shell
-      systemctl enable httpd
-      ```
+    </div>
 
-    * Démarrer le service
+1. enable start service
 
-      ```shell
-      systemctl start httpd
-      ```
+    * php-fpm : 
 
-    * Vérification de l'Installation
+      <table>
+        <tr>
+        <td>
+        <div class="bg-red">
 
-      Assurez-vous que Httpd est correctement installé et fonctionne en accédant à [http://localhost](http://localhost) dans votre navigateur web. Vous devriez voir la page par défaut.
+        ```sh
+        systemctl enable php-fpm
+        ```
 
-      ```shell
-      systemctl status httpd
-      ```
+        </div>
+        </td>
+        <td>
+        <div class="bg-red">
 
-3. Sqlite et SqliteBrowser
+        ```sh
+        systemctl start php-fpm
+        ```
 
-    * Installez le système de gestion de bases de données Sqlite et SqliteBrowser explorer de fichiers base de données :
+        </div>
+        </td>
+        </tr>
+      </table>
 
-      ```shell
-      dnf install sqlite sqlitebrowser
-      ```
+    * httpd : 
 
-4. PHP & CO
+      <table>
+        <tr>
+        <td>
+        <div class="bg-red">
 
-    * install
+        ```sh
+        systemctl enable httpd
+        ```
 
-      ```shell
-      dnf install php php-fpm php-pdo
-      ```
+        </div>
+        </td>
+        <td>
+        <div class="bg-red">
 
+        ```sh
+        systemctl start httpd
+        ```
 
-    * Vérification de l'Installation
+        </div>
+        </td>
+        </tr>
+      </table>
 
-      Créez un fichier info.php pour vérifier que PHP fonctionne correctement avec Apache :
+1. Vérification de l'Installation
 
-      ```
-      echo "<?php phpinfo(); ?>" | sudo tee /var/www/html/info.php
-      ```
+    * Assurez-vous que Httpd est correctement installé et fonctionne en accédant à [http://localhost](http://localhost) dans votre navigateur web. Vous devriez voir la page par défaut.
+
+      <div class="bg-red">
+
+        ```sh
+        systemctl status httpd
+        ```
+      </div>
+
+    * Créez un fichier info.php pour vérifier que PHP fonctionne correctement avec Apache :
+
+      <div class="bg-red">
+
+        ```sh
+        echo "<?php phpinfo(); ?>" > /var/www/html/info.php
+        ```
+      </div>
+ 
       Accédez à http://localhost/info.php dans votre navigateur web. Vous devriez voir une page avec des informations sur votre installation PHP.
 
-      Vérifier si `php-fpm` et `php-pdo` son `enable`
+      Vérifier si `php-fpm` et `php-pdo` : 
 
-5. Configuration Finale
+      * [PDO](http://localhost/info.php#module_pdo) `support enable active` `drivers	sqlite`
 
-    * Redémarrage d'Apache
+      * [FPM](http://localhost/info.php#module_cgi-fcgi) `support enable active`
 
-      Après l'installation de PHP, redémarrez Httpd pour que les modifications prennent effet :
+1. Configuration Finale
 
-      ```shell
+    * Pour des raisons de sécurité, supprimez le fichier que vous avez créé :
+
+      <div class="bg-red">
+
+        ```sh
+        rm -f /var/www/html/info.php
+        ```
+      </div>
+
+    * votre architecture dossier /$HOME/www-ct
+
+      <div class="bg-green">
+
+        ```sh
+        mkdir www-ct www-ct/html www-ct/cgi-bin www-ct/ftp www-ct/mail
+        ```
+      </div>
+
+    * Git Clone
+
+      <div class="bg-green">
+
+      ```sh
+      cd /$HOME/www-ct/html/
+      git clone https://github.com/Sylvainxiii/Clone-Weetransfert.git .
+      ```
+      </div>
+
+    * Composer
+
+      <div class="bg-green">
+
+      ```sh
+      composer update
+      ```
+      </div>
+
+    * create dotenv
+
+      <div class="bg-green">
+
+      ```sh
+      DB_CONNECTION=sqlite
+      DB_DATABASE=bdd.db
+
+      MAIL_HOST=XXXXXXXXXXXXXXX
+      MAIL_USERNAME=XXXXXXXXXXXXXXX
+      MAIL_PASSWORD=XXXXXXXXXXXXXXX
+      MAIL_PORT=465
+      MAIL_FROM=XXXXXXXXXXXXXXX
+      MAIL_FROM_NAME=CloneTranfert
+
+      WEB_URL=http://localhost
+      ```
+      </div>
+    
+
+    * create vhost www-ct.conf
+
+      <div class="bg-green">
+
+        ```sh
+        echo "<VirtualHost *:80>
+          DocumentRoot /$HOME/www-ct/html/
+          ScriptAlias /cgi-bin/ /$HOME/www-ct/cgi-bin/
+              ServerName localhost
+              ServerAlias www.localhost
+
+              <Directory /$HOME/www-ct/html/ >
+                  Options Indexes FollowSymLinks ExecCGI
+                  AddHandler cgi-script .cgi .pl
+                  AllowOverride All
+                  Require all granted
+              </Directory>
+
+              <Directory /$HOME/www-ct/cgi-bin/ >
+                  Options ExecCGI Indexes FollowSymLinks
+                  SetHandler cgi-script
+                  AllowOverride All
+                  Require all granted
+              </Directory>
+
+          </VirtualHost>" | sudo tee /etc/httpd/conf.d/www-ct.conf
+
+        ```
+
+        </div>
+
+    * Selinux
+
+      <div class="bg-red">
+
+      ```sh
+      chcon -R -t httpd_user_rw_content_t /$HOME/www-ct
+      setsebool -P httpd_enable_homedirs on
+      setsebool -P httpd_setrlimit 1
+      ```
+      </div>
+
+    * ACL
+
+      <div class="bg-green">
+
+      ```sh
+      setfacl -m u:apache:rx /$HOME
+      setfacl -m u:apache:rx /$HOME/www-ct
+      setfacl -R -m u:apache:rwx /$HOME/www-ct/html/
+      ```
+      </div>
+
+    * Restart 
+
+      <div class="bg-red">
+
+      ```sh
       systemctl restart httpd
       ```
+      </div>
 
-    * Suppression du Fichier de Test PHP
+    
 
-      Pour des raisons de sécurité, supprimez le fichier info.php que vous avez créé :
-
-      ```shell
-      rm /var/www/html/info.php
-      ```
-
-6. Test et Validation
-
-    * Test des Composants
-
-      Créez un script testdb.php PHP pour tester la connexion à Sqlite :
-
-      ```php
-      <?php
-      try {
-        $db = new PDO('sqlite:bdd.db');
-        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        echo "Connexion réussie";
-      } catch (PDOException $e) {
-          echo "Connection failed: " . $e->getMessage();
-          exit;
-      }
-      ?>
-      ```
-
-      Enregistrez ce fichier dans /var/www/html sous le nom de testdb.php et accédez à [http://localhost/testdb.php](http://localhost/testdb.php) dans votre navigateur web. Vous devriez voir le message "Connexion réussie".
-
-7. Maintenance et Mise à Jour
-
-    * Mise à Jour des Paquets
-      
-      Mettez régulièrement à jour votre système et les paquets installés :
-
-      ```shell
-      dnf update
-      ```
-
-8. Ressources et Support
+1. Ressources et Support
     * Liens Utiles
       * [Documentation Apache / Httpd](https://httpd.apache.org/docs/)
       * [Documentation Sqlite](https://sqlite.org/docs.html)
@@ -141,3 +269,23 @@ A vous de les adapter.
       * [?](#)
 
     En suivant ces étapes, vous devriez avoir une stack LAMP entièrement fonctionnelle sur votre machine Linux. N'hésitez pas à explorer les documentations officielles pour approfondir vos connaissances et optimiser votre configuration.
+
+
+  <!-- * Créez un script testdb.php PHP pour tester la connexion à Sqlite :
+
+    > /var/www/html/testdb.php
+
+    ```php
+    <?php
+    try {
+      $db = new PDO('sqlite:bdd.db');
+      $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      echo "Connexion réussie";
+    } catch (PDOException $e) {
+        echo "Connection failed: " . $e->getMessage();
+        exit;
+    }
+    ?>
+    ```
+
+    Enregistrez ce fichier dans /var/www/html sous le nom de testdb.php et accédez à [http://localhost/testdb.php](http://localhost/testdb.php) dans votre navigateur web. Vous devriez voir le message "Connexion réussie". -->
