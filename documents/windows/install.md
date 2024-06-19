@@ -48,4 +48,4 @@
       * [Stack Overflow](https://stackoverflow.com/)
       * [?](#)
 
-    En suivant ces étapes, vous devriez avoir une stack LAMP entièrement fonctionnelle sur votre machine Linux. N'hésitez pas à explorer les documentations officielles pour approfondir vos connaissances et optimiser votre configuration.
+    En suivant ces étapes, vous devriez avoir une stack WAMP entièrement fonctionnelle sur votre machine Windows. N'hésitez pas à explorer les documentations officielles pour approfondir vos connaissances et optimiser votre configuration.
