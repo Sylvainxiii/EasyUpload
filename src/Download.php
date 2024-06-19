@@ -10,7 +10,7 @@ if (isset($_REQUEST["file"])) {
 		// echo "Chemin complet du fichier : $filepath<br>";
 
 		if (file_exists($filepath)) {
-			// Désactiver la sortie buffer
+			// Désactiver la sortie buffer pour télécharger le fichier zip
 			if (ob_get_level()) {
 				ob_end_clean();
 			}
