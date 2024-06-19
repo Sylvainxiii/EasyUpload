@@ -1,13 +1,4 @@
-<?php
-if (isset($_REQUEST["file"])) {
-	$file = urldecode($_REQUEST["file"]);
 
-	// echo "Nom de fichier décodé : $file<br>";
-
-	if (preg_match('/^[^.][-a-z0-9_.]*$/i', $file)) {
-		$filepath = "../uploads/" . $file . '/' . $file . '.zip';
-
-		// echo "Chemin complet du fichier : $filepath<br>";
 
 		if (file_exists($filepath)) {
 			// Désactiver la sortie buffer pour télécharger le fichier zip
@@ -35,3 +26,18 @@ if (isset($_REQUEST["file"])) {
 		die("Le téléchargement ne peut aboutir : format de nom de fichier invalide.");
 	}
 }
+=======
+<?php
+$filepath = '../uploads/'.$_GET['file'].'/'.$_GET['file'].'.zip';
+
+header('Content-Description: File Transfer');
+	header('Content-Type: application/octet-stream');
+	header('Content-Disposition: attachment; filename="' . basename($filepath) . '"');
+	header('Expires: 0');
+	header('Cache-Control: must-revalidate');
+	header('Pragma: public');
+	header('Content-Length: ' . filesize($filepath));
+	readfile($filepath);
+
+?>
+
