@@ -14,6 +14,7 @@
     * {
         color: antiquewhite;
         font-family: 'Poppins', sans-serif;
+
     }
 
     .background {
