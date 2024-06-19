@@ -14,7 +14,7 @@
   }
 </style>
 
-# Clone Transfert
+# Clone Transfert!
 
 Clone Transfert est une application de transfert de fichiers en ligne, conçue pour faciliter l'envoi de gros fichiers jusqu'à 2 Go gratuitement. Elle permet le partage de documents, de photos, de vidéos et d'autres types de fichiers via une simple interface web. L'utilisateur télécharge ses fichiers, entre l'adresse e-mail du destinataire, et Clone Transfert envoie un lien de téléchargement. Les fichiers sont disponibles pour une durée limitée (généralement sept jours). L'application est appréciée pour sa simplicité d'utilisation et sa fiabilité.
 
