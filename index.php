@@ -21,6 +21,8 @@ $dotenv->load();
 </head>
 
 <body>
+
+
     <div class="background">
         <div class="title">
             <h1>CLONE</h1>
@@ -47,11 +49,11 @@ $dotenv->load();
                 </div>
                 <div class="mb-3">
                     <label for="destEmail" class="form-label">Email destinataire</label>
-                    <input type="email" class="form-control custom-input" id="destEmail" name="destEmail" required>
+                    <input type="email" value=''class="form-control custom-input" id="destEmail" name="destEmail" required>
                 </div>
                 <div class="mb-3">
                     <label for="sourceEmail" class="form-label">Votre Email</label>
-                    <input type="email" class="form-control custom-input" id="sourceEmail" name="sourceEmail" required>
+                    <input type="email" value='' class="form-control custom-input" id="sourceEmail" name="sourceEmail" required>
                 </div>
                 <div>
                     <button type="submit" class="btn btn-primary" id="send" name="submit" value="send" disabled>Send</button>
@@ -59,6 +61,28 @@ $dotenv->load();
             </form>
         </div>
     </div>
+
+    <div class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 </body>
 <script src='index.js'></script>
 </html>

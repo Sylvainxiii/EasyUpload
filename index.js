@@ -7,7 +7,7 @@ const isEmailValid = (email) => {
         );
     }
 // Défini l'URL et le formulaire
-const url = 'http://localhost/Clone-Weetransfert/src/upload.php';
+const url = 'http://Wetransfert.test/src/upload.php';
 const form = document.querySelector('form');
 
 function updateFileName() {
