@@ -6,7 +6,7 @@ use Dotenv\Dotenv;
 $dotenv = Dotenv::createImmutable('../');
 $dotenv->load();
 
-include('fileZip.php');
+include('FileZip.php');
 include('bddCrud.php');
 include('EnvoieMail.php');
 
