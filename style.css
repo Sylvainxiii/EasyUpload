@@ -146,3 +146,16 @@ button.btn.btn-primary:hover {
     padding: 10px 15px;
     cursor: pointer;
 }
+
+.modals {
+    position: absolute;
+    background-color: red;
+    top: 50%;
+    left: 50%;  
+    height: 8vh;
+}
+
+#spin {
+    position: relative;
+    top: 30px;
+}
