@@ -21,18 +21,25 @@ $dotenv->load();
 </head>
 
 <body>
+ 
+<div class='modals'>
+  <div hidden id="spin" class="spinner-border" role="status">
+    <span class="sr-only"></span>
+  </div>
+</div> 
+
     <div class="background">
         <div class="title">
             <h1>CLONE</h1>
             <div class="backgroundText">
-                <span class='active' >T</span>
-                <span class='active' >R</span>
-                <span class='active' >A</span>
-                <span class='active' >N</span>
-                <span class='active' >S</span>
-                <span class='active' >F</span>
-                <span class='active' >E</span>
-                <span class='active' >R</span>
+                <span class='active'>T</span>
+                <span class='active'>R</span>
+                <span class='active'>A</span>
+                <span class='active'>N</span>
+                <span class='active'>S</span>
+                <span class='active'>F</span>
+                <span class='active'>E</span>
+                <span class='active'>R</span>
             </div>
         </div>
         <div class="form">
@@ -47,18 +54,24 @@ $dotenv->load();
                 </div>
                 <div class="mb-3">
                     <label for="destEmail" class="form-label">Email destinataire</label>
-                    <input type="email" class="form-control custom-input" id="destEmail" name="destEmail" required>
+                    <input type="email" value='' class="form-control custom-input" id="destEmail" name="destEmail" required>
                 </div>
                 <div class="mb-3">
                     <label for="sourceEmail" class="form-label">Votre Email</label>
-                    <input type="email" class="form-control custom-input" id="sourceEmail" name="sourceEmail" required>
+                    <input type="email" value='' class="form-control custom-input" id="sourceEmail" name="sourceEmail" required>
                 </div>
                 <div>
-                    <button type="submit" class="btn btn-primary" id="send" name="submit" value="send" disabled>Send</button>
+                    <button type="submit"  class="btn btn-primary" id="send" name="submit" value="send" disabled>Send</button>
                 </div>
+              
             </form>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src='index.js'></script>
+    <script src='script.js'></script>
 </body>
-<script src='index.js'></script>
+
 </html>

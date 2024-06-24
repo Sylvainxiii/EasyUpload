@@ -43,17 +43,19 @@ form.addEventListener('change', (event) => {
     if (fichier && isEmailValid(destEmail) && isEmailValid(sourceEmail)) {
         sendBtn.disabled = false
     }
-
 })
 
 // Listener sur la soumission du formulaire
 form.addEventListener('submit', async (event) => {
-    event.preventDefault()
+    event.preventDefault();
+    
+    displaySpinner();
+ 
     const destEmail = document.querySelector('#destEmail').value
     const sourceEmail = document.querySelector('#sourceEmail').value
     const files = document.querySelector('[type=file]').files;
     const formData = new FormData();
-
+      
     formData.append('destEmail', destEmail);
     formData.append('sourceEmail', sourceEmail);
 
@@ -74,4 +76,6 @@ form.addEventListener('submit', async (event) => {
     document.querySelector('#destEmail').value = "";
     document.querySelector('#sourceEmail').value = "";
     document.getElementById('fileNameLabel').textContent = "Choisir des fichiers";
+  
+    
 })
