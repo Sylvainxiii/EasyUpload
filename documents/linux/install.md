@@ -163,7 +163,14 @@ A vous de les adapter.
     * Selinux ![command ROOT](../../assets/command_red.svg)
 
       ```sh
-      chcon -R -t httpd_user_rw_content_t /$HOME/www-ct
+      chcon -R -t httpd_user_content_t /$HOME/www-ct
+
+      chcon -t httpd_user_rw_content_t /$HOME/www-ct
+      chcon -t httpd_user_rw_content_t /$HOME/www-ct/html
+
+      chcon -t httpd_user_rw_content_t /$HOME/www-ct/html/bdd.db
+      chcon -R -t httpd_user_rw_content_t /$HOME/www-ct/html/uploads
+      
       setsebool -P httpd_enable_homedirs on
       setsebool -P httpd_setrlimit 1
       ```
@@ -171,9 +178,12 @@ A vous de les adapter.
     * ACL ![command USER](../../assets/command_green.svg)
 
       ```sh
-      setfacl -m u:apache:rx /$HOME
-      setfacl -m u:apache:rx /$HOME/www-ct
-      setfacl -R -m u:apache:rwx /$HOME/www-ct/html/
+      setfacl -m u:apache:rwx /$HOME
+      setfacl -m u:apache:rwx /$HOME/www-ct
+      setfacl -m u:apache:rwx /$HOME/www-ct/html/
+
+      setfacl -m u:apache:rwx /$HOME/www-ct/html/bdd.db
+      setfacl -R -m u:apache:rwx /$HOME/www-ct/html/uploads
       ```
 
     * Restart ![command ROOT](../../assets/command_red.svg)
