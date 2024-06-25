@@ -1,4 +1,11 @@
+// Déclarations des variables
 const sendBtn = document.querySelector("#send")
+
+// Défini l'URL et le formulaire
+const url = `${location.origin}/src/upload.php`;
+const form = document.querySelector('form');
+
+// Vérifie si l'email est correct
 const isEmailValid = (email) => {
 
     return email.toLowerCase()
@@ -6,9 +13,14 @@ const isEmailValid = (email) => {
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         );
 }
-// Défini l'URL et le formulaire
-const url = `${location.origin}/src/upload.php`;
-const form = document.querySelector('form');
+
+function isEmptyFile(){
+    const file = document.getElementById('fichier');
+    
+    if (file.files.length == 0) {
+        $('#modalEmptyFile1').modal('show');
+    }
+}
 
 function updateFileName() {
     const input = document.getElementById('fichier');
@@ -31,6 +43,7 @@ function updateFileName() {
     }
 }
 
+// Evènements
 form.addEventListener('change', (event) => {
     let fichier = null
     let destEmail = null
@@ -48,14 +61,13 @@ form.addEventListener('change', (event) => {
 // Listener sur la soumission du formulaire
 form.addEventListener('submit', async (event) => {
     event.preventDefault();
-    
-    displaySpinner();
- 
+
+    // Déclaration des variables    
     const destEmail = document.querySelector('#destEmail').value
     const sourceEmail = document.querySelector('#sourceEmail').value
     const files = document.querySelector('[type=file]').files;
     const formData = new FormData();
-      
+
     formData.append('destEmail', destEmail);
     formData.append('sourceEmail', sourceEmail);
 
@@ -73,9 +85,12 @@ form.addEventListener('submit', async (event) => {
         console.log(response)
     })
 
+    // Reset le formulaire
     document.querySelector('#destEmail').value = "";
     document.querySelector('#sourceEmail').value = "";
     document.getElementById('fileNameLabel').textContent = "Choisir des fichiers";
-  
+
     
+    displaySpinner();
+    isEmptyFile();
 })

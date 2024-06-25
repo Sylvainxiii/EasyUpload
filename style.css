@@ -147,12 +147,22 @@ button.btn.btn-primary:hover {
     cursor: pointer;
 }
 
+#mesModals {
+    background-color : #292929;
+    border: 1px white solid;
+}
+
 .modals {
     position: absolute; 
     top: 50%;
     left: 47%;  
     height: 8vh;
     z-index: 1;
+}
+
+.button-modal{
+    background-color: antiquewhite !important;
+    color: #292929 !important;
 }
 
 #spin {
