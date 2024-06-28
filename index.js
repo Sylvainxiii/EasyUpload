@@ -76,6 +76,4 @@ form.addEventListener('submit', async (event) => {
     document.querySelector('#destEmail').value = "";
     document.querySelector('#sourceEmail').value = "";
     document.getElementById('fileNameLabel').textContent = "Choisir des fichiers";
-
-
 })

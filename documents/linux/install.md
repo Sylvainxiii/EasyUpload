@@ -13,14 +13,12 @@ A vous de les adapter.
 
 ## installez la stack LAMP
 
-***command ROOT*** : ![command ROOT](../../assets/command_red.svg) 
-
-***command USER*** : ![command USER](../../assets/command_green.svg)
+***command ROOT*** : ![command ROOT](../../assets/command_red.svg) ***command USER*** : ![command USER](../../assets/command_green.svg)
 
 1. Installation du serveur & CO ![command ROOT](../../assets/command_red.svg)
 
     ```sh
-    dnf install httpd sqlite sqlitebrowser php php-fpm php-pdo composer
+    dnf install httpd sqlite sqlitebrowser php php-fpm php-pdo composer git
     ```
 
 1. enable start service ![command ROOT](../../assets/command_red.svg)
@@ -157,7 +155,14 @@ A vous de les adapter.
     * Selinux ![command ROOT](../../assets/command_red.svg)
 
       ```sh
-      chcon -R -t httpd_user_rw_content_t /$HOME/www-ct
+      chcon -R -t httpd_user_content_t /$HOME/www-ct
+
+      chcon -t httpd_user_rw_content_t /$HOME/www-ct
+      chcon -t httpd_user_rw_content_t /$HOME/www-ct/html
+
+      chcon -t httpd_user_rw_content_t /$HOME/www-ct/html/bdd.db
+      chcon -R -t httpd_user_rw_content_t /$HOME/www-ct/html/uploads
+      
       setsebool -P httpd_enable_homedirs on
       setsebool -P httpd_setrlimit 1
       ```
@@ -165,9 +170,12 @@ A vous de les adapter.
     * ACL ![command USER](../../assets/command_green.svg)
 
       ```sh
-      setfacl -m u:apache:rx /$HOME
-      setfacl -m u:apache:rx /$HOME/www-ct
-      setfacl -R -m u:apache:rwx /$HOME/www-ct/html/
+      setfacl -m u:apache:rwx /$HOME
+      setfacl -m u:apache:rwx /$HOME/www-ct
+      setfacl -m u:apache:rwx /$HOME/www-ct/html/Clone-Weetransfer/
+
+      setfacl -m u:apache:rwx /$HOME/www-ct/html/Clone-Weetransfer/bdd.db
+      setfacl -R -m u:apache:rwx /$HOME/www-ct/html/Clone-Weetransfer/uploads
       ```
 
     * Restart ![command ROOT](../../assets/command_red.svg)
@@ -175,6 +183,30 @@ A vous de les adapter.
       ```sh
       systemctl restart httpd
       ```
+
+1. Bonus, gain de temps pour crée une nouvelle structure dossier, script Shell Selinux context / ACL
+
+    ```sh
+    #!/usr/bin/env -S "${SHELL}" --posix
+
+    file="$(dirname $(realpath ${0}))"
+    BASE_URL_NAME="/Clone-Weetransfert"
+
+    echo "$file"
+
+    chcon -t httpd_user_rw_content_t "${file}/html${BASE_URL_NAME}/bdd.db"
+    chcon -R -t httpd_user_rw_content_t "${file}/html${BASE_URL_NAME}/uploads"
+
+    setfacl -m u:apache:rwx "${file}/html${BASE_URL_NAME}/bdd.db"
+    setfacl -R -m u:apache:rwx "${file}/html${BASE_URL_NAME}/uploads"
+
+    systemctl restart httpd
+
+    ls -alZ $file
+
+    getfacl "${file}/html${BASE_URL_NAME}/bdd.db"
+    getfacl "${file}/html${BASE_URL_NAME}/uploads"
+    ```
 
 1. Ressources et Support
     * Liens Utiles
