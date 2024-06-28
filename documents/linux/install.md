@@ -122,7 +122,7 @@ A vous de les adapter.
       MAIL_FROM=XXXXXXXXXXXXXXX
       MAIL_FROM_NAME=CloneTranfert
 
-      WEB_URL=http://localhost
+      WEB_URL=http://localhost/Clone-Weetransfer/
       ```
 
     * create vhost www-ct.conf : $HOME![command USER](../../assets/command_green.svg) sudo ![command ROOT](../../assets/command_red.svg)
@@ -160,8 +160,8 @@ A vous de les adapter.
       chcon -t httpd_user_rw_content_t /$HOME/www-ct
       chcon -t httpd_user_rw_content_t /$HOME/www-ct/html
 
-      chcon -t httpd_user_rw_content_t /$HOME/www-ct/html/bdd.db
-      chcon -R -t httpd_user_rw_content_t /$HOME/www-ct/html/uploads
+      chcon -t httpd_user_rw_content_t /$HOME/www-ct/html/Clone-Weetransfer/bdd.db
+      chcon -R -t httpd_user_rw_content_t /$HOME/www-ct/html/Clone-Weetransfer/uploads
       
       setsebool -P httpd_enable_homedirs on
       setsebool -P httpd_setrlimit 1
