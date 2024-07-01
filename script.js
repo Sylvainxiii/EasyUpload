@@ -1,3 +1,4 @@
+
 // Affiche un spinner
 function displaySpinner(){
 
@@ -8,5 +9,5 @@ function displaySpinner(){
     setTimeout(function(){
         document.getElementById("spin").hidden = true;
     }, 5000);
-}
 
+}

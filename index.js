@@ -1,10 +1,6 @@
 // Déclarations des variables
 const sendBtn = document.querySelector("#send")
 
-// Défini l'URL et le formulaire
-const url = `${location.origin}/src/upload.php`;
-const form = document.querySelector('form');
-
 // Vérifie si l'email est correct
 const isEmailValid = (email) => {
 
@@ -13,6 +9,11 @@ const isEmailValid = (email) => {
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         );
 }
+
+// Défini l'URL et le formulaire
+const url = `${location.origin}/Clone-Weetransfert/src/upload.php`;
+const form = document.querySelector('form');
+
 
 function isEmptyFile(){
     const file = document.getElementById('fichier');
@@ -61,8 +62,9 @@ form.addEventListener('change', (event) => {
 // Listener sur la soumission du formulaire
 form.addEventListener('submit', async (event) => {
     event.preventDefault();
-
+  
     // Déclaration des variables    
+
     const destEmail = document.querySelector('#destEmail').value
     const sourceEmail = document.querySelector('#sourceEmail').value
     const files = document.querySelector('[type=file]').files;
