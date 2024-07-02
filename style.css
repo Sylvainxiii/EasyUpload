@@ -1,3 +1,7 @@
+:root {
+    --placeholder-color: var(--bs-secondary);
+}
+
 * {
     color: antiquewhite;
     font-family: 'Poppins', sans-serif;
@@ -79,14 +83,6 @@ form {
     transition-delay: 1.5s;
 }
 
-.backgroundText span:nth-child(7) {
-    transition-delay: 1.75s;
-}
-
-.backgroundText span:nth-child(8) {
-    transition-delay: 2s;
-}
-
 .backgroundText:hover span {
     -webkit-text-stroke-color: #80b3a5;
 }
@@ -94,6 +90,22 @@ form {
 .custom-input {
     background-color: #292929;
     color: antiquewhite;
+}
+
+.custom-input:placeholder-shown {
+    color: var(--placeholder-color);
+}
+
+.custom-input::placeholder {
+    color: var(--placeholder-color);
+}
+
+.custom-input:-webkit-input-placeholder {
+    color: var(--placeholder-color);
+}
+
+.custom-input::-ms-input-placeholder {
+    color: var(--placeholder-color);
 }
 
 .form {
@@ -156,26 +168,63 @@ button.btn.btn-primary:hover {
 }
 
 #mesModals {
-    background-color : #292929;
+    background-color: #292929;
     border: 1px white solid;
 }
 
 .modals {
-    position: absolute; 
-    top: 50%;
-    left: 47%;  
-    height: 8vh;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    position: absolute !important;
+    width: 100% !important;
+    height: 100% !important;
     z-index: 1;
+    background-color: #00000096;
 }
 
-.button-modal{
+.button-modal {
     background-color: antiquewhite !important;
     color: #292929 !important;
 }
 
-#spin {
+#spin .spinner-border {
     position: relative;
     top: 30px;
     height: 5rem;
-    width:5rem;
+    width: 5rem;
+}
+
+.email-wrap,
+.email-add {
+    display: flex;
+    gap: .2em;
+    max-width: fit-content;
+    padding: .2em;
+    border: solid 1px #20c997;
+    border-radius: .2em;
+    margin-bottom: .2em;
+}
+
+.email-wrap:hover {
+    outline: solid 2px #20c997;
+}
+
+.email-del:hover {
+    cursor: pointer;
+    outline: solid 1px red;
+}
+
+.email-add {
+    width: 2em;
+    height: 2em;
+    color: #20c997;
+    background-color: antiquewhite;
+    max-width: inherit;
+    justify-content: center;
+}
+
+.email-add:hover {
+    cursor: pointer;
+    outline: solid 1px red;
 }

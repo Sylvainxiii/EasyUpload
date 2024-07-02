@@ -100,7 +100,7 @@ A vous de les adapter.
 
       ```sh
       cd /$HOME/www-ct/html/
-      git clone https://github.com/Sylvainxiii/Clone-Weetransfert.git .
+      git clone https://github.com/Sylvainxiii/EasyUpload.git
       ```
 
     * Composer ![command USER](../../assets/command_green.svg)
@@ -120,35 +120,35 @@ A vous de les adapter.
       MAIL_PASSWORD=XXXXXXXXXXXXXXX
       MAIL_PORT=465
       MAIL_FROM=XXXXXXXXXXXXXXX
-      MAIL_FROM_NAME=CloneTranfert
+      MAIL_FROM_NAME=EasyUpload
 
-      WEB_URL=http://localhost/Clone-Weetransfer/
+      WEB_URL=http://EasyUpload.test/
       ```
 
     * create vhost www-ct.conf : $HOME![command USER](../../assets/command_green.svg) sudo ![command ROOT](../../assets/command_red.svg)
 
         ```sh
         echo "<VirtualHost *:80>
-          DocumentRoot /$HOME/www-ct/html/
-          ScriptAlias /cgi-bin/ /$HOME/www-ct/cgi-bin/
-              ServerName localhost
-              ServerAlias www.localhost
+          DocumentRoot /$HOME/www-ct/html/EasyUpload/
+          ScriptAlias /cgi-bin/ /$HOME/www-ct/cgi-bin/EasyUpload/
+              ServerName EasyUpload.test
+              ServerAlias www.EasyUpload.test
 
-              <Directory /$HOME/www-ct/html/ >
+              <Directory /$HOME/www-ct/html/EasyUpload/ >
                   Options Indexes FollowSymLinks ExecCGI
                   AddHandler cgi-script .cgi .pl
                   AllowOverride All
                   Require all granted
               </Directory>
 
-              <Directory /$HOME/www-ct/cgi-bin/ >
+              <Directory /$HOME/www-ct/cgi-bin/EasyUpload/ >
                   Options ExecCGI Indexes FollowSymLinks
                   SetHandler cgi-script
                   AllowOverride All
                   Require all granted
               </Directory>
 
-          </VirtualHost>" | sudo tee /etc/httpd/conf.d/www-ct.conf
+          </VirtualHost>" | sudo tee /etc/httpd/conf.d/EasyUpload.test.conf
 
         ```
 
@@ -159,9 +159,10 @@ A vous de les adapter.
 
       chcon -t httpd_user_rw_content_t /$HOME/www-ct
       chcon -t httpd_user_rw_content_t /$HOME/www-ct/html
+      chcon -t httpd_user_rw_content_t /$HOME/www-ct/html/EasyUpload
 
-      chcon -t httpd_user_rw_content_t /$HOME/www-ct/html/Clone-Weetransfer/bdd.db
-      chcon -R -t httpd_user_rw_content_t /$HOME/www-ct/html/Clone-Weetransfer/uploads
+      chcon -t httpd_user_rw_content_t /$HOME/www-ct/html/EasyUpload/bdd.db
+      chcon -R -t httpd_user_rw_content_t /$HOME/www-ct/html/EasyUpload/uploads
       
       setsebool -P httpd_enable_homedirs on
       setsebool -P httpd_setrlimit 1
@@ -172,10 +173,11 @@ A vous de les adapter.
       ```sh
       setfacl -m u:apache:rwx /$HOME
       setfacl -m u:apache:rwx /$HOME/www-ct
-      setfacl -m u:apache:rwx /$HOME/www-ct/html/Clone-Weetransfer/
+      setfacl -m u:apache:rwx /$HOME/www-ct/html/
+      setfacl -m u:apache:rwx /$HOME/www-ct/html/EasyUpload/
 
-      setfacl -m u:apache:rwx /$HOME/www-ct/html/Clone-Weetransfer/bdd.db
-      setfacl -R -m u:apache:rwx /$HOME/www-ct/html/Clone-Weetransfer/uploads
+      setfacl -m u:apache:rwx /$HOME/www-ct/html/EasyUpload/bdd.db
+      setfacl -R -m u:apache:rwx /$HOME/www-ct/html/EasyUpload/uploads
       ```
 
     * Restart ![command ROOT](../../assets/command_red.svg)
@@ -190,7 +192,7 @@ A vous de les adapter.
     #!/usr/bin/env -S "${SHELL}" --posix
 
     file="$(dirname $(realpath ${0}))"
-    BASE_URL_NAME="/Clone-Weetransfert"
+    BASE_URL_NAME="/EasyUpload
 
     echo "$file"
 
