@@ -64,8 +64,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $zipFiles = glob($repositoryPath . "/*");
         createZip($repositoryPath, $repositoryName, $zipFiles);
         insertBdd($emmeteur, $destinataire, $date, $repositoryPath);
-        envoieMail($destinataire, $emmeteur, $repositoryName);
 
+        envoieMail($destinataire, $emmeteur, $repositoryName);
+        
         if ($errors) print_r($errors);
     }
 }

@@ -33,9 +33,9 @@
     MAIL_PASSWORD=XXXXXXXXXXXXXXX
     MAIL_PORT=465
     MAIL_FROM=XXXXXXXXXXXXXXX
-    MAIL_FROM_NAME=CloneTranfert
+    MAIL_FROM_NAME=EasyUpload
 
-    WEB_URL=http://localhost
+    WEB_URL=http://EasyUpload.test/
     ```
 
 1. Ressources et Support

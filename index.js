@@ -1,9 +1,11 @@
 // Déclarations des variables
-const sendBtn = document.querySelector("#send")
+const sendBtn = document.querySelector("#send");
+const eMailDom = document.querySelector('#destEmail');
+const eMailListDom = document.querySelector('.email-list');
+const eMailAddDom = document.querySelector('.email-add');
 
 // Vérifie si l'email est correct
 const isEmailValid = (email) => {
-
     return email.toLowerCase()
         .match(
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -11,13 +13,12 @@ const isEmailValid = (email) => {
 }
 
 // Défini l'URL et le formulaire
-const url = `${location.origin}/Clone-Weetransfert/src/upload.php`;
+const url = `${location.origin}/src/upload.php`;
 const form = document.querySelector('form');
 
-
-function isEmptyFile(){
+function isEmptyFile() {
     const file = document.getElementById('fichier');
-    
+
     if (file.files.length == 0) {
         $('#modalEmptyFile1').modal('show');
     }
@@ -46,26 +47,85 @@ function updateFileName() {
 
 // Evènements
 form.addEventListener('change', (event) => {
+    event.preventDefault();
+
+    if (event.target.id === 'destEmail') { return };
     let fichier = null
     let destEmail = null
     let sourceEmail = null
     // if emails and files are all filled enable
     fichier = document.querySelector("#fichier").files[0] // monofichier
-    destEmail = document.querySelector('#destEmail').value
+    destEmail = document.querySelector('.email-list').childNodes.length > 0 ? true : false
     sourceEmail = document.querySelector('#sourceEmail').value
 
-    if (fichier && isEmailValid(destEmail) && isEmailValid(sourceEmail)) {
+    if (fichier && destEmail && isEmailValid(sourceEmail)) {
         sendBtn.disabled = false
     }
-})
+});
+
+// `Enter` event add email to list
+eMailDom.addEventListener('keydown', (event) => {
+    if (event.code === 'Enter' && isEmailValid(eMailDom.value)) {
+        eMailListUpdate(event);
+    } else if (event.code === 'Enter') {
+        eMailDom.reportValidity();
+    }
+});
+
+eMailAddDom.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    if (isEmailValid(eMailDom.value)) {
+        eMailListUpdate(event);
+    } else {
+        eMailDom.reportValidity();
+    }
+});
+
+// updade list email
+function eMailListUpdate(event) {
+    let eMailDiv = document.createElement('div');
+    eMailDiv.textContent = eMailDom.value;
+
+    let eMailDel = document.createElement('div');
+    eMailDel.setAttribute('class', 'email-del');
+    eMailDel.textContent = '❌';
+
+    let eMailWrap = document.createElement('div');
+    eMailWrap.setAttribute('class', 'email-wrap');
+    eMailWrap.append(eMailDiv, eMailDel);
+
+    eMailListDom.append(eMailWrap);
+
+    eMailCountDomUpdate();
+
+    eMailDom.value = '';
+}
+
+// delete email in list
+eMailListDom.addEventListener('click', (event) => {
+    if (event.target.className === 'email-del') {
+        event.target.parentNode.remove();
+        eMailCountDomUpdate();
+    }
+});
+
+// update eMailCountDom
+function eMailCountDomUpdate() {
+    document.querySelector('.email-count').parentElement.innerHTML = eMailListDom.childNodes.length > 1 ?
+        `Email destinataires: <span class="email-count">${eMailListDom.childNodes.length}</span>` :
+        `Email destinataire: <span class="email-count">${eMailListDom.childNodes.length}</span>`;
+}
 
 // Listener sur la soumission du formulaire
 form.addEventListener('submit', async (event) => {
     event.preventDefault();
-  
+
     // Déclaration des variables    
 
-    const destEmail = document.querySelector('#destEmail').value
+    const destEmail = [...document.querySelector('.email-list').childNodes].map((value) => {
+        return [...value.childNodes][0].textContent;
+    });
     const sourceEmail = document.querySelector('#sourceEmail').value
     const files = document.querySelector('[type=file]').files;
     const formData = new FormData();
@@ -91,8 +151,9 @@ form.addEventListener('submit', async (event) => {
     document.querySelector('#destEmail').value = "";
     document.querySelector('#sourceEmail').value = "";
     document.getElementById('fileNameLabel').textContent = "Choisir des fichiers";
+    eMailListDom.replaceChildren();
+    eMailCountDomUpdate();
 
-    
     displaySpinner();
     isEmptyFile();
 })
