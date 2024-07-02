@@ -48,16 +48,14 @@ $dotenv->load();
 	</div>
 	<div class="background">
 		<div class="title">
-			<h1>CLONE</h1>
+			<h1>EASY</h1>
 			<div class="backgroundText">
-				<span class='active'>T</span>
-				<span class='active'>R</span>
-				<span class='active'>A</span>
-				<span class='active'>N</span>
-				<span class='active'>S</span>
-				<span class='active'>F</span>
-				<span class='active'>E</span>
-				<span class='active'>R</span>
+				<span>U</span>
+				<span>P</span>
+				<span>L</span>
+				<span>O</span>
+				<span>A</span>
+				<span>D</span>
 			</div>
 		</div>
 		<div class="form">

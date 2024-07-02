@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -136,16 +135,14 @@
 <body>
     <div class="background">
         <div class="title">
-            <h1>CLONE</h1>
+            <h1>EASY</h1>
             <div class="backgroundText">
-                <span>T</span>
-                <span>R</span>
+                <span>U</span>
+                <span>P</span>
+                <span>L</span>
+                <span>O</span>
                 <span>A</span>
-                <span>N</span>
-                <span>S</span>
-                <span>F</span>
-                <span>E</span>
-                <span>R</span>
+                <span>D</span>
             </div>
         </div>
         <div class="form">
@@ -162,15 +159,7 @@
             ?>
         </div>
     </div>
-    <script>
-        let spanTexts = document.getElementsByTagName("span");
-
-        window.onload = function() {
-            for (spanText of spanTexts) {
-                spanText.classList.add("active");
-            }
-        }
-    </script>
+    <script src='script.js'></script>
 </body>
 </body>
 
