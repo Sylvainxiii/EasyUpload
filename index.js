@@ -25,6 +25,21 @@ function isEmptyFile() {
     }
 }
 
+// Affiche un spinner
+function displaySpinner(){
+
+    setTimeout(function(){
+        document.getElementById("spin").hidden = false;
+    });
+
+    setTimeout(function(){
+        document.getElementById("spin").hidden = true;
+    }, 5000);
+
+}
+
+ 
+
 function updateFileName() {
     const input = document.getElementById('fichier');
     const label = document.getElementById('fileNameLabel');
