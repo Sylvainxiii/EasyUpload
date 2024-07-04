@@ -74,8 +74,7 @@ $dotenv->load();
 					<label for="destEmail" class="form-label">Email destinataire: <span class="email-count">0</span></label>
 					<div class="email-list"></div>
 
-					<button class="email-add">🞦</button>
-					<!-- use attribute `multiple` ? -->
+					<input type="button" class="email-add" value="🞦">
 					<input type="email" placeholder="example@example.com Enter" value='' class="form-control custom-input" id="destEmail" name="destEmail">
 				</div>
 				<div class="mb-3">

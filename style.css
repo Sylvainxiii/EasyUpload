@@ -188,7 +188,7 @@ button.btn.btn-primary:hover {
     color: #292929 !important;
 }
 
-#spin {
+#spin .spinner-border {
     position: relative;
     top: 30px;
     height: 5rem;
