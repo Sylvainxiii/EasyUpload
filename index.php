@@ -23,8 +23,8 @@ $dotenv->load();
 <body>
 	<div>
 		<!-- Modal Spinner -->
-		<div class='modals'>
-			<div hidden id="spin" class="spinner-border" role="status">
+		<div hidden id="spin" class='modals'>
+			<div class="spinner-border" role="status">
 				<span class="sr-only"></span>
 			</div>
 		</div>

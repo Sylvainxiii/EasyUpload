@@ -49,7 +49,7 @@ function updateFileName() {
 form.addEventListener('change', (event) => {
     event.preventDefault();
 
-    if (event.target.id === 'destEmail') { return };
+    // if (event.target.id === 'destEmail') { return };
     let fichier = null
     let destEmail = null
     let sourceEmail = null

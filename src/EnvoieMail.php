@@ -33,7 +33,7 @@ function envoieMail($sendTo, $sendFrom, $downloadFile)
     if($countFail === 0){
         $messageSubject = 'Vos fichiers ont été correctement transférés!';
         $messageBody = 'Bonjour ' . $sendFrom . ', le lien de téléchargement de vos fichiers à bien été envoyé à ' . $sendTo . '.<br>Merci d\'avoir utilisé CloneTransfert.';
-    } else if ($countFail === $sendTo.count()) {
+    } else if ($countFail === count($sendTo)) {
         $messageSubject = 'Vos fichiers n\'ont pus être transférés!';
         $messageBody = 'Bonjour ' . $sendFrom . ', suite à une erreur, le lien de téléchargement de vos fichiers n\'à pas pu être envoyé à ' . $sendTo . 
         '.<br>Merci de bien vouloir réessayer ou de contacter notre service technique.';
