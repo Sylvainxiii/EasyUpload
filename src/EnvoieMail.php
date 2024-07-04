@@ -61,7 +61,7 @@ function sendToDestinataire($mail, $sendTo, $sendFrom, $downloadFile)
     // $sendTo = $_GET['recipient_email'];
     // $downloadFile = $_GET['file'];
 
-    $downloadLink = '<a href=' . $_ENV['WEB_URL'] . 'src/downloadPage.php?file=' . $downloadFile . ">Télécharger</a>";
+    $downloadLink = '<a href=' . $_ENV['WEB_URL'] . '/src/downloadPage.php?file=' . $downloadFile . ">Télécharger</a>";
 
     $messageHead = 'Bonjour ' . $sendTo . ', ' . $sendFrom . ' souhaite vous transmettre des documents. Pour les télécharger, veuillez cliquer sur le lien suivant:';
     $messageFoot = 'Veuillez noter que ce lien sera valide pendant ' . $delais . 'jours. Passé ce délai, vos documents ne seront plus disponibles. Merci.';

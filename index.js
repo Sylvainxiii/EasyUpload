@@ -3,7 +3,6 @@ const sendBtn = document.querySelector("#send");
 const eMailDom = document.querySelector('#destEmail');
 const eMailListDom = document.querySelector('.email-list');
 const eMailAddDom = document.querySelector('.email-add');
-const weburl = document.getElementById('weburl').value;
 
 // Vérifie si l'email est correct
 const isEmailValid = (email) => {
@@ -14,7 +13,7 @@ const isEmailValid = (email) => {
 }
 
 // Défini l'URL et le formulaire
-const url = weburl + `/src/upload.php`;
+const url = `${location.origin}/src/upload.php`;
 const form = document.querySelector('form');
 
 function isEmptyFile() {
