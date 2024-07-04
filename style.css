@@ -1,3 +1,7 @@
+:root {
+    --placeholder-color: var(--bs-secondary);
+}
+
 * {
     color: antiquewhite;
     font-family: 'Poppins', sans-serif;
@@ -88,6 +92,22 @@ form {
     color: antiquewhite;
 }
 
+.custom-input:placeholder-shown {
+    color: var(--placeholder-color);
+}
+
+.custom-input::placeholder {
+    color: var(--placeholder-color);
+}
+
+.custom-input:-webkit-input-placeholder {
+    color: var(--placeholder-color);
+}
+
+.custom-input::-ms-input-placeholder {
+    color: var(--placeholder-color);
+}
+
 .form {
     padding: 75px 50px;
 }
@@ -148,19 +168,19 @@ button.btn.btn-primary:hover {
 }
 
 #mesModals {
-    background-color : #292929;
+    background-color: #292929;
     border: 1px white solid;
 }
 
 .modals {
-    position: absolute; 
+    position: absolute;
     top: 50%;
-    left: 47%;  
+    left: 47%;
     height: 8vh;
     z-index: 1;
 }
 
-.button-modal{
+.button-modal {
     background-color: antiquewhite !important;
     color: #292929 !important;
 }
@@ -169,5 +189,39 @@ button.btn.btn-primary:hover {
     position: relative;
     top: 30px;
     height: 5rem;
-    width:5rem;
+    width: 5rem;
+}
+
+.email-wrap,
+.email-add {
+    display: flex;
+    gap: .2em;
+    max-width: fit-content;
+    padding: .2em;
+    border: solid 1px #20c997;
+    border-radius: .2em;
+    margin-bottom: .2em;
+}
+
+.email-wrap:hover {
+    outline: solid 2px #20c997;
+}
+
+.email-del:hover {
+    cursor: pointer;
+    outline: solid 1px red;
+}
+
+.email-add {
+    width: 2em;
+    height: 2em;
+    color: #20c997;
+    background-color: antiquewhite;
+    max-width: inherit;
+    justify-content: center;
+}
+
+.email-add:hover {
+    cursor: pointer;
+    outline: solid 1px red;
 }

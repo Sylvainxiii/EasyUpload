@@ -1,6 +1,6 @@
-# Clone Transfert!
+# EasyUpload!
 
-Clone Transfert est une application de transfert de fichiers en ligne, conçue pour faciliter l'envoi de gros fichiers jusqu'à 2 Go gratuitement. Elle permet le partage de documents, de photos, de vidéos et d'autres types de fichiers via une simple interface web. L'utilisateur télécharge ses fichiers, entre l'adresse e-mail du destinataire, et Clone Transfert envoie un lien de téléchargement. Les fichiers sont disponibles pour une durée limitée (généralement sept jours). L'application est appréciée pour sa simplicité d'utilisation et sa fiabilité.
+EasyUpload est une application de transfert de fichiers en ligne, conçue pour faciliter l'envoi de gros fichiers jusqu'à 2 Go gratuitement. Elle permet le partage de documents, de photos, de vidéos et d'autres types de fichiers via une simple interface web. L'utilisateur télécharge ses fichiers, entre l'adresse e-mail du destinataire, et EasyUpload envoie un lien de téléchargement. Les fichiers sont disponibles pour une durée limitée (généralement sept jours). L'application est appréciée pour sa simplicité d'utilisation et sa fiabilité.
 
 Cette application est développée par des étudiants en fin formation de développeur web, mettant à contribution leurs compétences tout en répondant à un besoin pratique et contemporain de partage de fichiers en ligne.
 
@@ -10,7 +10,7 @@ Ce projet a pour vocation de nous présenter et d'appréhender le côté concept
 
 ---
 
-![Clone Transfert image](./assets/images/clonetransfert.png)
+![EasyUpload image](./assets/images/clonetransfert.png)
 
 ## Guide Utilisateur Final :
 
