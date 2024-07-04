@@ -83,14 +83,6 @@ form {
     transition-delay: 1.5s;
 }
 
-.backgroundText span:nth-child(7) {
-    transition-delay: 1.75s;
-}
-
-.backgroundText span:nth-child(8) {
-    transition-delay: 2s;
-}
-
 .backgroundText:hover span {
     -webkit-text-stroke-color: #80b3a5;
 }
