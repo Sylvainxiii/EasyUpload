@@ -15,7 +15,7 @@ $dotenv->load();
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title><?php echo $_ENV['MAIL_FROM_NAME'] ?></title>
+	<title><?= $_ENV['MAIL_FROM_NAME'] ?></title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 	<link rel="stylesheet" href="style.css">
 </head>
@@ -60,11 +60,13 @@ $dotenv->load();
 		</div>
 		<div class="form">
 			<form id="uploadForm" method="post" enctype="multipart/form-data">
+				<!-- stockage du chemin du dossier racine pour utilisation en js -->
+				<input type="hidden" id="weburl" value="<?= $_ENV['WEB_URL'] ?>">
 				<input type="hidden" name="action" value="create">
 				<div class="mb-3">
 					<div class="custom-file">
 						<label class="custom-file-label" for="fichier" id="fileNameLabel">Choisir des fichiers</label>
-						<input type="file" class="custom-file-input" id="fichier" name="files[]" multiple required onchange='updateFileName()' >
+						<input type="file" class="custom-file-input" id="fichier" name="files[]" multiple required onchange='updateFileName()'>
 
 					</div>
 				</div>
