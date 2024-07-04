@@ -26,9 +26,8 @@ function isEmptyFile() {
 }
 
 function updateFileName() {
-    const input = document.getElementById('fichier');
     const label = document.getElementById('fileNameLabel');
-    const files = input.files;
+    const files = fichierDom.files;
 
     if (files.length === 0) {
         label.textContent = 'Choisir des fichiers';
@@ -51,10 +50,6 @@ function updateFileName() {
  */
 form.addEventListener('change', (event) => {
     event.preventDefault();
-
-    // if emails and files are all filled enable
-    destEmail = document.querySelector('.email-list').childNodes.length > 0 ? true : false
-
     enableSendBtn();
 });
 
@@ -79,10 +74,10 @@ form.addEventListener('click', async (event) => {
 
     if (event.target.type === 'submit') {
         // Déclaration des variables    
-        const destEmail = [...document.querySelector('.email-list').childNodes].map((value) => {
+        const destEmail = [...eMailListDom.childNodes].map((value) => {
             return [...value.childNodes][0].textContent;
         });
-        const files = document.querySelector('[type=file]').files;
+        const files = fichierDom.files;
         const formData = new FormData();
 
         formData.append('destEmail', destEmail);
