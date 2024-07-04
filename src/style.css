@@ -6,20 +6,32 @@
     color: antiquewhite;
     font-family: 'Poppins', sans-serif;
 }
-
-.background {
+.background{
     background-color: #292929;
     height: 100vh;
     width: 100%;
     padding-top: 200px;
     padding-bottom: 200px;
 }
-
-form {
+form{
     margin: 25px 50px;
 }
-
-.title {
+.button-container{
+    display: flex;
+    justify-content: center;
+}
+button.btn.btn-primary{
+    background-color: antiquewhite;
+    color: #292929;
+    border: none;
+    text-decoration: none;
+    margin-top: 20px;
+}
+p{
+    margin-top: 50px;
+    text-align: center;
+}
+.title{
     margin: auto;
     width: -moz-fit-content;
     width: fit-content;
@@ -27,23 +39,20 @@ form {
     color: antiquewhite;
     position: relative;
 }
-
-.title h1 {
+.title h1{
     font-size: 70px;
     font-weight: 500;
     position: relative;
     z-index: 10;
 }
-
-.backgroundText {
+.backgroundText{
     width: max-content;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
-
-.backgroundText span {
+.backgroundText span{
     display: inline-block;
     font-size: 150px;
     font-weight: 700;
@@ -53,41 +62,33 @@ form {
     transform: translateY(100px);
     transition: transform 1s, opacity 0.25s, -webkit-text-stroke-color 0.25s;
 }
-
-.backgroundText span.active {
+.backgroundText span.active{
     transform: translateY(0px);
     opacity: 1;
 }
-
-.backgroundText span:nth-child(1) {
+.backgroundText span:nth-child(1){
     transition-delay: 0.25s;
 }
-
-.backgroundText span:nth-child(2) {
+.backgroundText span:nth-child(2){
     transition-delay: 0.5s;
 }
-
-.backgroundText span:nth-child(3) {
+.backgroundText span:nth-child(3){
     transition-delay: 0.75s;
 }
-
-.backgroundText span:nth-child(4) {
+.backgroundText span:nth-child(4){
     transition-delay: 1s;
 }
-
-.backgroundText span:nth-child(5) {
+.backgroundText span:nth-child(5){
     transition-delay: 1.25s;
 }
-
-.backgroundText span:nth-child(6) {
+.backgroundText span:nth-child(6){
     transition-delay: 1.5s;
 }
 
 .backgroundText:hover span {
     -webkit-text-stroke-color: #80b3a5;
 }
-
-.custom-input {
+.custom-input{
     background-color: #292929;
     color: antiquewhite;
 }
@@ -111,35 +112,29 @@ form {
 .form {
     padding: 75px 50px;
 }
-
-input.custom-input {
+input.custom-input{
     background-color: #292929;
     color: antiquewhite;
 }
-
-input.custom-input:focus {
+input.custom-input:focus{
     background-color: #292929;
     color: antiquewhite;
 }
-
-input[type="file"].custom-input {
+input[type="file"].custom-input{
     background-color: #292929;
     color: antiquewhite;
 }
-
-button.btn.btn-primary {
+button.btn.btn-primary{
     background-color: antiquewhite;
     color: #292929;
     border: none;
     text-decoration: none;
 }
-
-button.btn.btn-primary:hover {
+button.btn.btn-primary:hover{
     background-color: lightgray;
     text-decoration: none;
 }
-
-.custom-file {
+.custom-file{
     position: relative;
     overflow: hidden;
     background-color: #292929;
@@ -148,8 +143,7 @@ button.btn.btn-primary:hover {
     cursor: pointer;
     border: 1px solid antiquewhite;
 }
-
-.custom-file-input {
+.custom-file-input{
     position: absolute;
     top: 0;
     right: 0;
@@ -160,8 +154,7 @@ button.btn.btn-primary:hover {
     opacity: 0;
     cursor: pointer;
 }
-
-.custom-file-label {
+.custom-file-label{
     display: block;
     padding: 10px 15px;
     cursor: pointer;
@@ -184,8 +177,7 @@ button.btn.btn-primary:hover {
     background-color: antiquewhite !important;
     color: #292929 !important;
 }
-
-#spin {
+#spin{
     position: relative;
     top: 30px;
     height: 5rem;
