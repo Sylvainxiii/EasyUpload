@@ -58,7 +58,7 @@ include 'src/_header.php';
 				<div class="mb-3">
 					<div class="custom-file">
 						<label class="custom-file-label" for="fichier" id="fileNameLabel">Choisir des fichiers</label>
-						<input type="file" class="custom-file-input" id="fichier" name="files[]" multiple required onchange='updateFileName()'>
+						<input type="file" class="custom-file-input" id="fichier" name="files[]" multiple required onchange='updateFileLabel()'>
 
 					</div>
 				</div>

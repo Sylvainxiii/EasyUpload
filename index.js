@@ -1,8 +1,8 @@
 // Déclarations des variables
 const sendBtn = document.querySelector("#send");
-const eMailDom = document.querySelector('#destEmail');
-const eMailListDom = document.querySelector('.email-list');
-const eMailAddDom = document.querySelector('.email-add');
+const emailDom = document.querySelector('#destEmail');
+const emailListDom = document.querySelector('.email-list');
+const emailAddDom = document.querySelector('.email-add');
 
 // Vérifie si l'email est correct
 const isEmailValid = (email) => {
@@ -25,38 +25,29 @@ function isEmptyFile() {
 }
 
 // Affiche un spinner
-function displaySpinner(){
+function displaySpinner() {
+    const spinner = document.getElementById("spin");
+    
+    spinner.hidden = false;
 
-    setTimeout(function(){
-        document.getElementById("spin").hidden = false;
-    });
-
-    setTimeout(function(){
-        document.getElementById("spin").hidden = true;
+    setTimeout(() => {
+        spinner.hidden = true;
     }, 5000);
-
 }
 
- 
-
-function updateFileName() {
+// Affiche l'État de l'input File
+function updateFileLabel() {
     const input = document.getElementById('fichier');
-    const label = document.getElementById('fileNameLabel');
+    const fileLabel = document.getElementById('fileNameLabel');
     const files = input.files;
 
     if (files.length === 0) {
-        label.textContent = 'Choisir des fichiers';
+        fileLabel.textContent = 'Choisir des fichiers';
     } else if (files.length === 1) {
-        label.textContent = files[0].name;
+        fileLabel.textContent = files[0].name;
     } else {
-        let fileNameString = '';
-        for (let i = 0; i < files.length; i++) {
-            fileNameString += files[i].name;
-            if (i !== files.length - 1) {
-                fileNameString += ', ';
-            }
-        }
-        label.textContent = fileNameString;
+        const fileNames = Array.from(files).map(file => file.name).join(', ');
+        fileLabel.textContent = fileNames;
     }
 }
 
@@ -79,57 +70,57 @@ form.addEventListener('change', (event) => {
 });
 
 // `Enter` event add email to list
-eMailDom.addEventListener('keydown', (event) => {
-    if (event.code === 'Enter' && isEmailValid(eMailDom.value)) {
-        eMailListUpdate(event);
+emailDom.addEventListener('keydown', (event) => {
+    if (event.code === 'Enter' && isEmailValid(emailDom.value)) {
+        emailListUpdate(event);
     } else if (event.code === 'Enter') {
-        eMailDom.reportValidity();
+        emailDom.reportValidity();
     }
 });
 
-eMailAddDom.addEventListener('click', (event) => {
+emailAddDom.addEventListener('click', (event) => {
     event.preventDefault();
 
-    if (isEmailValid(eMailDom.value)) {
-        eMailListUpdate(event);
+    if (isEmailValid(emailDom.value)) {
+        emailListUpdate(event);
     } else {
-        eMailDom.reportValidity();
+        emailDom.reportValidity();
     }
 });
 
 // updade list email
-function eMailListUpdate(event) {
-    let eMailDiv = document.createElement('div');
-    eMailDiv.textContent = eMailDom.value;
+function emailListUpdate(event) {
+    let emailDiv = document.createElement('div');
+    emailDiv.textContent = emailDom.value;
 
-    let eMailDel = document.createElement('div');
-    eMailDel.setAttribute('class', 'email-del');
-    eMailDel.textContent = '❌';
+    let emailDel = document.createElement('div');
+    emailDel.setAttribute('class', 'email-del');
+    emailDel.textContent = '❌';
 
-    let eMailWrap = document.createElement('div');
-    eMailWrap.setAttribute('class', 'email-wrap');
-    eMailWrap.append(eMailDiv, eMailDel);
+    let emailWrap = document.createElement('div');
+    emailWrap.setAttribute('class', 'email-wrap');
+    emailWrap.append(emailDiv, emailDel);
 
-    eMailListDom.append(eMailWrap);
+    emailListDom.append(emailWrap);
 
-    eMailCountDomUpdate();
+    emailCountDomUpdate();
 
-    eMailDom.value = '';
+    emailDom.value = '';
 }
 
 // delete email in list
-eMailListDom.addEventListener('click', (event) => {
+emailListDom.addEventListener('click', (event) => {
     if (event.target.className === 'email-del') {
         event.target.parentNode.remove();
-        eMailCountDomUpdate();
+        emailCountDomUpdate();
     }
 });
 
-// update eMailCountDom
-function eMailCountDomUpdate() {
-    document.querySelector('.email-count').parentElement.innerHTML = eMailListDom.childNodes.length > 1 ?
-        `Email destinataires: <span class="email-count">${eMailListDom.childNodes.length}</span>` :
-        `Email destinataire: <span class="email-count">${eMailListDom.childNodes.length}</span>`;
+// update emailCountDom
+function emailCountDomUpdate() {
+    document.querySelector('.email-count').parentElement.innerHTML = emailListDom.childNodes.length > 1 ?
+        `Email destinataires: <span class="email-count">${emailListDom.childNodes.length}</span>` :
+        `Email destinataire: <span class="email-count">${emailListDom.childNodes.length}</span>`;
 }
 
 // Listener sur la soumission du formulaire
@@ -168,8 +159,8 @@ form.addEventListener('submit', async (event) => {
     document.querySelector('#destEmail').value = "";
     document.querySelector('#sourceEmail').value = "";
     document.getElementById('fileNameLabel').textContent = "Choisir des fichiers";
-    eMailListDom.replaceChildren();
-    eMailCountDomUpdate();
+    emailListDom.replaceChildren();
+    emailCountDomUpdate();
 
 
 })
