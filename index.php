@@ -11,19 +11,7 @@ include 'src/_header.php';
 ?>
 
 
-
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title><?= $_ENV['MAIL_FROM_NAME'] ?></title>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-	<link rel="stylesheet" href="style.css">
-</head>
+ 
 
 <body>
 	<div>
@@ -81,11 +69,11 @@ include 'src/_header.php';
 
 					<button class="email-add">🞦</button>
 					<!-- use attribute `multiple` ? -->
-					<input type="email" placeholder="example@example.com" value='' class="form-control custom-input" id="destEmail" name="destEmail">
+					<input type="email" placeholder="example@example.com" value='johntchen.mos@gmail.com' class="form-control custom-input" id="destEmail" name="destEmail">
 				</div>
 				<div class="mb-3">
 					<label for="sourceEmail" class="form-label">Votre Email</label>
-					<input type="email" value='' class="form-control custom-input" id="sourceEmail" name="sourceEmail" required>
+					<input type="email" value='screfield@gmail.com' class="form-control custom-input" id="sourceEmail" name="sourceEmail" required>
 				</div>
 				<div>
 					<button type="submit" class="btn btn-primary" id="send" name="submit" value="send" disabled>Send</button>

@@ -3,19 +3,18 @@ $title = 'Document';
 include '_header.php';
 ?>
 
-<body>
 <div class="background">
-        <div class="title">
-            <h1>EASY</h1>
-            <div class="backgroundText">
-                <span>U</span>
-                <span>P</span>
-                <span>L</span>
-                <span>O</span>
-                <span>A</span>
-                <span>D</span>
-            </div>
-        </div>
+		<div class="title">
+			<h1>EASY</h1>
+			<div class="backgroundText">
+				<span>U</span>
+				<span>P</span>
+				<span>L</span>
+				<span>O</span>
+				<span>A</span>
+				<span>D</span>
+			</div>
+		</div>
         <div class="form">
             <?php
             if (isset($_GET['file'])) {
@@ -30,7 +29,15 @@ include '_header.php';
             ?>
         </div>
     </div>
-    <script src='script.js'></script>
+    <script>
+        let spanTexts = document.getElementsByTagName("span");
+
+        window.onload = function() {
+            for (spanText of spanTexts) {
+                spanText.classList.add("active");
+            }
+        }
+    </script>
 </body>
 </body>
 

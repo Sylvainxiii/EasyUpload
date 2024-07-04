@@ -1,12 +1,8 @@
-<<<<<<< HEAD:style.css
 :root {
     --placeholder-color: var(--bs-secondary);
 }
 
 * {
-=======
-*{
->>>>>>> 316e477 (Add refactoring home js):src/style.css
     color: antiquewhite;
     font-family: 'Poppins', sans-serif;
 }
@@ -88,25 +84,14 @@ p{
 .backgroundText span:nth-child(6){
     transition-delay: 1.5s;
 }
-<<<<<<< HEAD:style.css
 
 .backgroundText:hover span {
-=======
-.backgroundText span:nth-child(7){
-    transition-delay: 1.75s;
-}
-.backgroundText span:nth-child(8){
-    transition-delay: 2s;
-}
-.backgroundText:hover span{
->>>>>>> 316e477 (Add refactoring home js):src/style.css
     -webkit-text-stroke-color: #80b3a5;
 }
 .custom-input{
     background-color: #292929;
     color: antiquewhite;
 }
-<<<<<<< HEAD:style.css
 
 .custom-input:placeholder-shown {
     color: var(--placeholder-color);
@@ -125,9 +110,6 @@ p{
 }
 
 .form {
-=======
-.form{
->>>>>>> 316e477 (Add refactoring home js):src/style.css
     padding: 75px 50px;
 }
 input.custom-input{
@@ -177,7 +159,6 @@ button.btn.btn-primary:hover{
     padding: 10px 15px;
     cursor: pointer;
 }
-<<<<<<< HEAD:style.css
 
 #mesModals {
     background-color: #292929;
@@ -185,25 +166,14 @@ button.btn.btn-primary:hover{
 }
 
 .modals {
-=======
-#mesModals{
-    background-color: #292929;
-    border: 1px white solid;
-}
-.modals{
->>>>>>> 316e477 (Add refactoring home js):src/style.css
     position: absolute;
     top: 50%;
     left: 47%;
     height: 8vh;
     z-index: 1;
 }
-<<<<<<< HEAD:style.css
 
 .button-modal {
-=======
-.button-modal{
->>>>>>> 316e477 (Add refactoring home js):src/style.css
     background-color: antiquewhite !important;
     color: #292929 !important;
 }
@@ -212,7 +182,6 @@ button.btn.btn-primary:hover{
     top: 30px;
     height: 5rem;
     width: 5rem;
-<<<<<<< HEAD:style.css
 }
 
 .email-wrap,
@@ -247,6 +216,4 @@ button.btn.btn-primary:hover{
 .email-add:hover {
     cursor: pointer;
     outline: solid 1px red;
-=======
->>>>>>> 316e477 (Add refactoring home js):src/style.css
 }
