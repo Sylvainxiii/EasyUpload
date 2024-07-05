@@ -225,3 +225,29 @@ button.btn.btn-primary:hover {
     cursor: pointer;
     outline: solid 1px red;
 }
+
+
+/***DOWNLOAD PAGE****/
+
+.button-container {
+    display: flex;
+    justify-content: center;
+}
+
+button.btn.btn-primary {
+    background-color: antiquewhite;
+    color: #292929;
+    border: none;
+    text-decoration: none;
+    margin-top: 20px;
+}
+
+button.btn.btn-primary:hover {
+    background-color: lightgray;
+    text-decoration: none;
+}
+
+p {
+    margin-top: 50px;
+    text-align: center;
+}
