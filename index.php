@@ -29,7 +29,7 @@ include 'src/_header.php';
 
 					<button class="email-add">🞦</button>
 					<!-- use attribute `multiple` ? -->
-					<input type="email" placeholder="example@example.com Enter" value='' class="form-control custom-input" id="destEmail" name="destEmail">
+					<input type="email" placeholder="example@example.com" value='' class="form-control custom-input" id="destEmail" name="destEmail">
 				</div>
 				<div class="mb-3">
 					<label for="sourceEmail" class="form-label">Votre Email</label>
