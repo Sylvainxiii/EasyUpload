@@ -121,6 +121,8 @@ function eMailCountDomUpdate() {
 form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
+    displaySpinner();
+    isEmptyFile();
     // Déclaration des variables    
 
     const destEmail = [...document.querySelector('.email-list').childNodes].map((value) => {
@@ -154,8 +156,7 @@ form.addEventListener('submit', async (event) => {
     eMailListDom.replaceChildren();
     eMailCountDomUpdate();
 
-    displaySpinner();
-    isEmptyFile();
+   
 })
 
 // Effet du nom du site
