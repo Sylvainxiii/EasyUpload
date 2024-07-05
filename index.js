@@ -1,3 +1,6 @@
+import displaySpinner from "./script.js";
+import "./titleAnimation.js";
+
 window.addEventListener('load', () => {
     main();
 });
@@ -23,8 +26,6 @@ function main() {
      * Evènements
      */
     form.addEventListener('change', (event) => {
-        console.log('change: ', event.target);
-
         event.preventDefault();
 
         if (event.target.type === 'file') {
@@ -43,7 +44,7 @@ function main() {
     });
 
     form.addEventListener('click', async (event) => {
-        console.log('click: ', event.target);
+        if (event.target.type === 'submit') { return };
 
         if (event.target.className === 'email-del') {
             event.target.parentNode.remove();
@@ -51,61 +52,53 @@ function main() {
             enableSendBtn();
             return;
         }
-
-        if (event.target.type === 'submit') {
-            event.preventDefault();
-
-            // Déclaration des variables    
-            const destEmail = [...eMailListDom.childNodes].map((value) => {
-                return [...value.childNodes][0].textContent;
-            });
-            const files = fichierDom.files;
-            const formData = new FormData();
-
-            formData.append('destEmail', destEmail);
-            formData.append('sourceEmail', sourceEmailDom.value);
-
-            // Ajoute chaque fichier dans la variable files
-            for (let i = 0; i < files.length; i++) {
-                let file = files[i]
-                formData.append('files[]', file);
-            }
-
-            await fetch(url, {
-                method: 'POST',
-                body: formData,
-            }).then((response) => {
-                console.log(response)
-            })
-
-            resetForm();
-            displaySpinner();
-            isEmptyFile();
-            return;
-        }
     });
 
     // `Enter` event add email to list
     eMailDom.addEventListener('keydown', (event) => {
-        console.log('keydown: ', event.target);
         const evCode = event.code === 'Enter' || event.code === 'NumpadEnter';
         if (evCode && isEmailValid(eMailDom.value)) {
+            event.preventDefault();
             eMailListUpdate(event);
         } else if (evCode) {
+            event.preventDefault();
             eMailDom.reportValidity();
         }
+
         enableSendBtn();
     });
 
-    // Effet du nom du site
-    document.addEventListener('DOMContentLoaded', () => {
-        const spans = document.querySelectorAll('.backgroundText span');
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
 
-        spans.forEach((span, index) => {
-            setTimeout(() => {
-                span.classList.add('active');
-            }, (index + 1) * 250); // L'ajustement du délai d'animation pour chaque span
+        // Déclaration des variables    
+        const destEmail = [...eMailListDom.childNodes].map((value) => {
+            return [...value.childNodes][0].textContent;
         });
+        const files = fichierDom.files;
+        const formData = new FormData();
+
+        formData.append('destEmail', destEmail);
+        formData.append('sourceEmail', sourceEmailDom.value);
+
+        // Ajoute chaque fichier dans la variable files
+        for (let i = 0; i < files.length; i++) {
+            let file = files[i]
+            formData.append('files[]', file);
+        }
+
+        resetForm();
+        displaySpinner();
+        isEmptyFile();
+
+        await fetch(url, {
+            method: 'POST',
+            body: formData,
+        }).then((response) => {
+            console.log(response)
+        });
+
+        return;
     });
 
     // Vérifie si l'email est correct
@@ -172,10 +165,8 @@ function main() {
     function enableSendBtn() {
         if (fichierDom.files[0] && sourceEmailDom.value && eMailListDom.childNodes.length > 0) {
             sendBtn.disabled = false;
-            return true;
         } else {
             sendBtn.disabled = true;
-            return false;
         }
     }
 }

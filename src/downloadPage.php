@@ -1,3 +1,14 @@
+<?php
+
+use Dotenv\Dotenv;
+require '../vendor/autoload.php';
+$dotenv = Dotenv::createImmutable('../');
+$dotenv->load();
+
+include('titleAnimation.php');
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -134,17 +145,9 @@
 
 <body>
     <div class="background">
-        <div class="title">
-            <h1>EASY</h1>
-            <div class="backgroundText">
-                <span>U</span>
-                <span>P</span>
-                <span>L</span>
-                <span>O</span>
-                <span>A</span>
-                <span>D</span>
-            </div>
-        </div>
+
+        <?= titleAnimation() ?>
+        
         <div class="form">
             <?php
             if (isset($_GET['file'])) {
@@ -159,7 +162,7 @@
             ?>
         </div>
     </div>
-    <script src='script.js'></script>
+    <script src='../titleAnimation.js'></script>
 </body>
 </body>
 

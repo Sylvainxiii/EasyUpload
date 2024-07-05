@@ -1,12 +1,12 @@
 
 // Affiche un spinner
-function displaySpinner(){
+export default function displaySpinner() {
 
-    setTimeout(function(){
+    setTimeout(function () {
         document.getElementById("spin").hidden = false;
     });
 
-    setTimeout(function(){
+    setTimeout(function () {
         document.getElementById("spin").hidden = true;
     }, 5000);
 
