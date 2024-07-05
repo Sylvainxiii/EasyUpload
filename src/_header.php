@@ -19,11 +19,11 @@
 		</div>
 
 		<!-- Modal Empty File -->
-		<div class="modal fade" id="modalEmptyFile1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal fade" id="modalEmptyFile1" tabindex="-1" role="dialog" aria-labelledby="modalEmptyFileLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content" id='mesModals'>
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Erreur d'upload de fichiers</h5>
+						<h5 class="modal-title" id="modalEmptyFileLabel">Erreur d'upload de fichiers</h5>
 					</div>
 					<div class="modal-body">
 						Veuillez uploader un fichier
