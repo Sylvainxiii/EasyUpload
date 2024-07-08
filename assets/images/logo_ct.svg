@@ -24,20 +24,32 @@
      borderopacity="0.25"
      inkscape:showpageshadow="2"
      inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
+     inkscape:pagecheckerboard="false"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
-     inkscape:zoom="0.37548828"
-     inkscape:cx="233.02991"
-     inkscape:cy="374.17946"
+     inkscape:zoom="1.0620412"
+     inkscape:cx="175.60523"
+     inkscape:cy="225.50913"
      inkscape:window-width="1920"
      inkscape:window-height="975"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="layer1"
+     showborder="false"
+     showguides="true"
+     labelstyle="default"
+     inkscape:export-bgcolor="#ffffff00" />
   <defs
      id="defs1">
+    <linearGradient
+       id="swatch6"
+       inkscape:swatch="solid">
+      <stop
+         style="stop-color:#faebd7;stop-opacity:1;"
+         offset="0"
+         id="stop6" />
+    </linearGradient>
     <linearGradient
        id="swatch9"
        inkscape:swatch="solid">
@@ -125,19 +137,19 @@
        inkscape:collect="always"
        style="color-interpolation-filters:sRGB"
        id="filter3"
-       x="-0.087062499"
-       y="-0.087062499"
-       width="1.174125"
-       height="1.174125">
+       x="-0.016944141"
+       y="-0.016939454"
+       width="1.0338883"
+       height="1.0338789">
       <feGaussianBlur
          inkscape:collect="always"
-         stdDeviation="10.24"
+         stdDeviation="0.001 0"
          id="feGaussianBlur3" />
     </filter>
     <linearGradient
        inkscape:collect="always"
        xlink:href="#swatch9"
-       id="linearGradient23"
+       id="linearGradient7"
        gradientUnits="userSpaceOnUse"
        x1="-754.42766"
        y1="-117.55695"
@@ -149,48 +161,34 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="opacity:1;mix-blend-mode:normal;fill:#292929;fill-opacity:1;stroke:#faebd7;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill;filter:url(#filter3)"
+       style="opacity:1;mix-blend-mode:normal;fill:#292929;fill-opacity:1;stroke:#faebd7;stroke-width:17.346;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill;filter:url(#filter3)"
        id="rect1"
        width="512"
        height="512"
        x="-1.4210855e-14"
-       y="2.1316282e-14" />
-    <text
-       xml:space="preserve"
-       id="text4"
-       style="white-space:pre;shape-inside:url(#rect4);display:inline;opacity:1;fill:#9000ff;fill-opacity:0.985455;stroke:#fed300;stroke-width:30;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill" />
-    <text
-       xml:space="preserve"
-       id="text1"
-       style="white-space:pre;shape-inside:url(#rect2);display:inline;fill:#292929;fill-opacity:1;stroke:#faebd7;stroke-width:30;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;paint-order:stroke markers fill" />
-    <text
-       xml:space="preserve"
-       style="fill:#292929;fill-opacity:1;stroke:#faebd7;stroke-width:30;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;paint-order:stroke markers fill"
-       x="165.11835"
-       y="-189.08713"
-       id="text3"><tspan
-         sodipodi:role="line"
-         id="tspan3"
-         x="165.11835"
-         y="-189.08713" /></text>
+       y="2.1316282e-14"
+       ry="84.321556"
+       inkscape:label="rect1"
+       rx="171.25755"
+       transform="matrix(0.96722233,0,0,0.96723136,8.3910798,8.3887584)" />
     <text
        xml:space="preserve"
        id="text7"
-       style="font-size:192px;white-space:pre;shape-inside:url(#rect8);display:inline;fill:#292929;fill-opacity:1;stroke:url(#linearGradient23);stroke-width:10.5055;stroke-linecap:square;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
-       transform="matrix(1.6511457,0,0,1.6511457,1518.343,443.58722)"><tspan
+       style="font-size:192px;white-space:pre;shape-inside:url(#rect8);display:inline;fill:#292929;fill-opacity:1;stroke:url(#linearGradient7);stroke-width:10.5054;stroke-linecap:square;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+       transform="matrix(1.597025,0,0,1.5970399,1471.163,437.44023)"><tspan
          x="-756.34766"
          y="-49.012949"
-         id="tspan1">T</tspan></text>
+         id="tspan3">U</tspan></text>
     <text
        xml:space="preserve"
        id="text8"
        style="font-size:192px;white-space:pre;shape-inside:url(#rect9);display:inline;fill:#faebd7;fill-opacity:1;stroke:none;stroke-width:30;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;paint-order:stroke markers fill"
-       transform="matrix(1.6511457,0,0,1.6511457,1319.5696,-225.50101)"
+       transform="matrix(1.597025,0,0,1.5970399,1278.905,-209.72289)"
        inkscape:export-filename="./text8.png"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96"><tspan
          x="-772.32812"
          y="355.79369"
-         id="tspan2">C</tspan></text>
+         id="tspan4">E</tspan></text>
   </g>
 </svg>

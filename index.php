@@ -6,7 +6,8 @@ use Dotenv\Dotenv;
 
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
-$title = 'EasyUpload';
+
+$title = $_ENV['MAIL_FROM_NAME'];
 include 'src/_header.php';
 
 

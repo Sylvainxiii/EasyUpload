@@ -10,7 +10,7 @@ Ce projet a pour vocation de nous présenter et d'appréhender le côté concept
 
 ---
 
-![EasyUpload image](./assets/images/clonetransfert.png)
+![EasyUpload image](./assets/images/eu.png)
 
 ## Guide Utilisateur Final :
 
