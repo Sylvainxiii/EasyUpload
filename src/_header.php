@@ -12,8 +12,8 @@
 <body>
 	<div>
 		<!-- Modal Spinner -->
-		<div class='modals'>
-			<div hidden id="spin" class="spinner-border" role="status">
+		<div hidden id="spin" class='modals'>
+			<div class="spinner-border" role="status">
 				<span class="sr-only"></span>
 			</div>
 		</div>
@@ -38,13 +38,13 @@
     <!-- DEBUT div background -->
     <div class="background">
 		<div class="title">
-			<h1>EASY</h1>
-			<div class="backgroundText">
-				<span>U</span>
-				<span>P</span>
-				<span>L</span>
-				<span>O</span>
-				<span>A</span>
-				<span>D</span>
-			</div>
-		</div>
+      <h1><?= $_ENV['FIRST_NAME'] ?></h1>
+      <div class="backgroundText">
+        <?php 
+          foreach (str_split($_ENV['LAST_NAME']) as $char) {
+            echo "<span>$char</span>";
+          };
+        ?>
+      </div>
+    </div>
+		

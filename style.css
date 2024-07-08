@@ -127,13 +127,6 @@ input[type="file"].custom-input {
     color: antiquewhite;
 }
 
-button.btn.btn-primary {
-    background-color: antiquewhite;
-    color: #292929;
-    border: none;
-    text-decoration: none;
-}
-
 button.btn.btn-primary:hover {
     background-color: lightgray;
     text-decoration: none;
@@ -173,11 +166,14 @@ button.btn.btn-primary:hover {
 }
 
 .modals {
-    position: absolute;
-    top: 50%;
-    left: 47%;
-    height: 8vh;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    position: absolute !important;
+    width: 100% !important;
+    height: 100% !important;
     z-index: 1;
+    background-color: #00000096;
 }
 
 .button-modal {
@@ -185,7 +181,7 @@ button.btn.btn-primary:hover {
     color: #292929 !important;
 }
 
-#spin {
+#spin .spinner-border {
     position: relative;
     top: 30px;
     height: 5rem;
@@ -226,7 +222,6 @@ button.btn.btn-primary:hover {
     outline: solid 1px red;
 }
 
-
 /***DOWNLOAD PAGE****/
 
 .button-container {
@@ -240,11 +235,6 @@ button.btn.btn-primary {
     border: none;
     text-decoration: none;
     margin-top: 20px;
-}
-
-button.btn.btn-primary:hover {
-    background-color: lightgray;
-    text-decoration: none;
 }
 
 p {
