@@ -8,39 +8,30 @@ $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 $title = 'EasyUpload';
 include 'src/_header.php';
+
+
+$url = $_SERVER['REQUEST_URI'];
+if(!empty($url) && $url[-1] === "/"){
+    // Retire le /
+    $url = substr($url, 0, -1);
+    echo($url);
+    // Envoie code de redirection permanente
+    http_response_code(301);
+
+    // Redirige vers l'URL w/o /
+    header('Location: '.  $url);
+}
+
+ 
+
+if ($url == 'http://wetransfert.test'){
+
+	include 'src/accueil.php';
+}
 ?>
 
 
-		<div class="form">
-			<form id="uploadForm" method="post" enctype="multipart/form-data">
-				<!-- stockage du chemin du dossier racine pour utilisation en js -->
-				<input type="hidden" id="weburl" value="<?= $_ENV['WEB_URL'] ?>">
-				<input type="hidden" name="action" value="create">
-				<div class="mb-3">
-					<div class="custom-file">
-						<label class="custom-file-label" for="fichier" id="fileNameLabel">Choisir des fichiers</label>
-						<input type="file" class="custom-file-input" id="fichier" name="files[]" multiple required onchange='updateFileName()'>
-
-					</div>
-				</div>
-				<div class="mb-3">
-					<label for="destEmail" class="form-label">Email destinataire: <span class="email-count">0</span></label>
-					<div class="email-list"></div>
-
-					<button class="email-add">🞦</button>
-					<!-- use attribute `multiple` ? -->
-					<input type="email" placeholder="example@example.com" value='' class="form-control custom-input" id="destEmail" name="destEmail">
-				</div>
-				<div class="mb-3">
-					<label for="sourceEmail" class="form-label">Votre Email</label>
-					<input type="email" value='' class="form-control custom-input" id="sourceEmail" name="sourceEmail" required>
-				</div>
-				<div>
-					<button type="submit" class="btn btn-primary" id="send" name="submit" value="send" disabled>Send</button>
-				</div>
-
-			</form>
-		</div>
+	
 
 <?php
 include 'src/_footer.php';
