@@ -1,3 +1,8 @@
+/* SOMMAIRE 
+ * GENERAL
+ * MODALS
+ *
+ */
 :root {
     --placeholder-color: var(--bs-secondary);
 }
@@ -5,6 +10,37 @@
 * {
     color: antiquewhite;
     font-family: 'Poppins', sans-serif;
+}
+
+
+/* *MODALS* */
+#mesModals {
+    background-color: #292929;
+    border: 1px white solid;
+}
+
+.modals {
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    position: absolute !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 1;
+    background-color: #00000096;
+}
+
+.button-modal {
+    background-color: antiquewhite !important;
+    color: #292929 !important;
+}
+
+/* *Loader* */
+#spin .spinner-border {
+    position: relative;
+    top: 30px;
+    height: 5rem;
+    width: 5rem;
 }
 
 .background {
@@ -15,10 +51,70 @@
     padding-bottom: 200px;
 }
 
+/* *Formulaire* */
 form {
     margin: 25px 50px;
 }
 
+.form {
+    padding: 75px 50px;
+}
+
+/* *Email* */
+.custom-input {
+    background-color: #292929;
+    color: antiquewhite;
+}
+
+.custom-input::placeholder,
+.custom-input:-webkit-input-placeholder,
+.custom-input::-ms-input-placeholder,
+.custom-input:placeholder-shown {
+    color: var(--placeholder-color);
+}
+
+
+input.custom-input,
+input.custom-input:focus,
+input[type="file"].custom-input {
+    background-color: #292929;
+    color: antiquewhite;
+}
+
+button.btn.btn-primary:hover {
+    background-color: lightgray;
+    text-decoration: none;
+}
+
+.custom-file {
+    position: relative;
+    overflow: hidden;
+    background-color: #292929;
+    color: antiquewhite;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid antiquewhite;
+}
+
+.custom-file-input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.custom-file-label {
+    display: block;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+/* *Titre premier plan* */
 .title {
     margin: auto;
     width: -moz-fit-content;
@@ -35,6 +131,7 @@ form {
     z-index: 10;
 }
 
+/* *Titre deuxieme plan* */
 .backgroundText {
     width: max-content;
     position: absolute;
@@ -87,107 +184,6 @@ form {
     -webkit-text-stroke-color: #80b3a5;
 }
 
-.custom-input {
-    background-color: #292929;
-    color: antiquewhite;
-}
-
-.custom-input:placeholder-shown {
-    color: var(--placeholder-color);
-}
-
-.custom-input::placeholder {
-    color: var(--placeholder-color);
-}
-
-.custom-input:-webkit-input-placeholder {
-    color: var(--placeholder-color);
-}
-
-.custom-input::-ms-input-placeholder {
-    color: var(--placeholder-color);
-}
-
-.form {
-    padding: 75px 50px;
-}
-
-input.custom-input {
-    background-color: #292929;
-    color: antiquewhite;
-}
-
-input.custom-input:focus {
-    background-color: #292929;
-    color: antiquewhite;
-}
-
-input[type="file"].custom-input {
-    background-color: #292929;
-    color: antiquewhite;
-}
-
-button.btn.btn-primary:hover {
-    background-color: lightgray;
-    text-decoration: none;
-}
-
-.custom-file {
-    position: relative;
-    overflow: hidden;
-    background-color: #292929;
-    color: antiquewhite;
-    border-radius: 5px;
-    cursor: pointer;
-    border: 1px solid antiquewhite;
-}
-
-.custom-file-input {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
-}
-
-.custom-file-label {
-    display: block;
-    padding: 10px 15px;
-    cursor: pointer;
-}
-
-#mesModals {
-    background-color: #292929;
-    border: 1px white solid;
-}
-
-.modals {
-    display: grid;
-    justify-content: center;
-    align-content: center;
-    position: absolute !important;
-    width: 100% !important;
-    height: 100% !important;
-    z-index: 1;
-    background-color: #00000096;
-}
-
-.button-modal {
-    background-color: antiquewhite !important;
-    color: #292929 !important;
-}
-
-#spin .spinner-border {
-    position: relative;
-    top: 30px;
-    height: 5rem;
-    width: 5rem;
-}
-
 .email-wrap,
 .email-add {
     display: flex;
@@ -203,7 +199,8 @@ button.btn.btn-primary:hover {
     outline: solid 2px #20c997;
 }
 
-.email-del:hover {
+.email-del:hover,
+.email-add:hover {
     cursor: pointer;
     outline: solid 1px red;
 }
@@ -217,12 +214,7 @@ button.btn.btn-primary:hover {
     justify-content: center;
 }
 
-.email-add:hover {
-    cursor: pointer;
-    outline: solid 1px red;
-}
-
-/***DOWNLOAD PAGE****/
+/* *Bouton Télécharger* */
 
 .button-container {
     display: flex;

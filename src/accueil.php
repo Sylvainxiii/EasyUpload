@@ -1,12 +1,10 @@
 	<div class="form">
 		<form id="uploadForm" method="post" enctype="multipart/form-data">
-			<!-- stockage du chemin du dossier racine pour utilisation en js --> 
 			<input type="hidden" name="action" value="create">
 			<div class="mb-3">
 				<div class="custom-file">
 					<label class="custom-file-label" for="fichier" id="fileNameLabel">Choisir des fichiers</label>
 					<input type="file" class="custom-file-input" id="fichier" name="files[]" multiple required onchange='updateFileName()'>
-
 				</div>
 			</div>
 			<div class="mb-3">
