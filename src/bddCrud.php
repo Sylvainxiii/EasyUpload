@@ -1,10 +1,21 @@
 <?php
 
-function insertBdd($emmeteur, $destinataire, $date, $repositoryPath)
-{
+function connexionBDD(){
     try {
         $db = new PDO($_ENV['DB_CONNECTION'] . ':' . '../' . $_ENV['DB_DATABASE']);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+    } catch (PDOException $e) {
+        echo "Connection failed: " . $e->getMessage();
+        exit;
+    }
+    return $db;
+}
+
+function insertPieceJointe($emmeteur, $destinataire, $date, $repositoryPath)
+{
+    try {
+        $db = connexionBDD();
         $stmt = $db->prepare("INSERT INTO piece_jointe (email_emmeteur, email_destinataire, date_creation, chemin) VALUES (:emmeteur, :destinataire, :date_creation, :chemin)");
         $stmt->bindParam(':emmeteur', $emmeteur);
         $stmt->bindParam(':destinataire', $destinataire);
@@ -12,36 +23,32 @@ function insertBdd($emmeteur, $destinataire, $date, $repositoryPath)
         $stmt->bindParam(':chemin', $repositoryPath);
         $stmt->execute();
     } catch (PDOException $e) {
-        echo "Connection failed: " . $e->getMessage();
+        echo "Upload failed: " . $e->getMessage();
         exit;
     }
 }  
 
+function deletePieceJointe(){
+    $db = connexionBDD();
+    // Durée de vie des enregistrements en secondes (7 jours)
+    $duration = 60 * 60 * 24 * 7;
+    // Date limite de suppression des enregistrements
+    $expiration = time() - $duration;
 
-// // READ
-// $stmt = $db->query("SELECT * FROM piece_jointe");
-// $pieces_jointes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // Convertir la date limite en format SQL
+    $expirationDate = date('Y-m-d H:i:s', $expiration);
 
-// // UPDATE
-// if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['action'] === 'update') {
-//     $id = securize($_POST['id']);
-//     $emmeteur = securize($_POST['user_email']);
-//     $destinataire = securize($_POST['recipient_email']);
+    // Requête pour supprimer les enregistrements expirés
+    $stmt = $db->prepare("DELETE FROM piece_jointe WHERE date_creation < :expirationDate");
+    $stmt->bindParam(':expirationDate', $expirationDate);
+    $stmt->execute();
 
-//     $stmt = $db->prepare("UPDATE piece_jointe SET email_emmeteur = :emmeteur, email_destinataire = :destinataire WHERE id = :id");
-//     $stmt->bindParam(':emmeteur', $emmeteur);
-//     $stmt->bindParam(':destinataire', $destinataire);
-//     $stmt->bindParam(':id', $id);
+    echo "Les enregistrements ont été supprimés avec succès.";
 
-//     $stmt->execute();
-// }
+    $handle = fopen('log.txt', 'a+');
+    fwrite($handle, date('Y-m-d H:i:s') . " Les enregistrements ont été supprimés avec succès.\n");
+    fclose($handle);
 
-// // DELETE
-// if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['action'] === 'delete') {
-//     $id = securize($_POST['id']);
+}
 
-//     $stmt = $db->prepare("DELETE FROM piece_jointe WHERE id = :id");
-//     $stmt->bindParam(':id', $id);
 
-//     $stmt->execute();
-// }

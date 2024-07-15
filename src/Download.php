@@ -2,8 +2,6 @@
 if (isset($_REQUEST["file"])){
 	$file = urldecode($_REQUEST["file"]);
 
-		// echo "Nom de fichier décodé : $file<br>";
-
 	if(preg_match('/^[^.][-a-z0-9_.]*$/i', $file)){
 		$filepath = "../uploads/".$file.'/'.$file.'.zip';
 		if (file_exists($filepath)) {
