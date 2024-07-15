@@ -13,14 +13,14 @@ $dotenv->load();
 
 function envoieMail($sendTo, $sendFrom, $downloadFile)
 {
-    $sendToD = explode(',', $sendTo);
-    $mail = eMailSetting();
+    $destinataires = explode(',', $sendTo);
+    $expediteur = eMailSetting();
     $error = 'noerror';
     $countFail = 0;
 
-    foreach ($sendToD as $value) {
-        $error = sendToDestinataire($mail, $value, $sendFrom, $downloadFile);
-        $mail->clearAllRecipients();
+    foreach ($destinataires as $destinataire) {
+        $error = sendToDestinataire($expediteur, $destinataire, $sendFrom, $downloadFile);
+        $expediteur->clearAllRecipients();
         // concat message
         if ($error == 'noerror') {
             // code msg 'le lien de téléchargement de vos fichiers à bien été envoyé à ...'
@@ -31,26 +31,26 @@ function envoieMail($sendTo, $sendFrom, $downloadFile)
     }
 
     if ($countFail === 0) {
-        $messageSubject = 'Vos fichiers ont été correctement transférés!';
-        $messageBody = 'Bonjour ' . $sendFrom . ', le lien de téléchargement de vos fichiers à bien été envoyé à ' . $sendTo . '.<br>Merci d\'avoir utilisé CloneTransfert.';
+        $messageSubject = "Vos fichiers ont été correctement transférés!";
+        $messageBody = "Bonjour $sendFrom, le lien de téléchargement de vos fichiers à bien été envoyé à $sendTo <br>Merci d'avoir utilisé CloneTransfert.";
     } else if ($countFail ===  count($sendTo)) {
-        $messageSubject = 'Vos fichiers n\'ont pus être transférés!';
-        $messageBody = 'Bonjour ' . $sendFrom . ', suite à une erreur, le lien de téléchargement de vos fichiers n\'à pas pu être envoyé à ' . $sendTo .
-            '.<br>Merci de bien vouloir réessayer ou de contacter notre service technique.';
+        $messageSubject = "Vos fichiers n'ont pus être transférés!";
+        $messageBody = "Bonjour $sendFrom, suite à une erreur, le lien de téléchargement de vos fichiers n'à pas pu être envoyé à " . $sendTo .
+            "<br>Merci de bien vouloir réessayer ou de contacter notre service technique.";
     } else {
-        $messageSubject = 'Vos fichiers n\'ont été partiellement transférés!';
+        $messageSubject = "Vos fichiers n\'ont été partiellement transférés!";
         $messageBody = 'Bonjour ' . $sendFrom . ', suite à une erreur, le lien de téléchargement de vos fichiers n\'à pas pu être envoyé à ' . $sendTo .
             '.<br>Merci de bien vouloir réessayer ou de contacter notre service technique.';
     }
 
     //Envoie du second mail
-    $mail->clearAllRecipients();
-    $mail->addAddress($sendFrom, '');
-    $mail->Subject = $messageSubject;
-    $mail->Body = $messageBody;
+    $expediteur->clearAllRecipients();
+    $expediteur->addAddress($sendFrom, '');
+    $expediteur->Subject = $messageSubject;
+    $expediteur->Body = $messageBody;
 
-    if (!$mail->send()) {
-        echo 'Erreur lors de l\'envoi du deuxième e-mail : ' . $mail->ErrorInfo;
+    if (!$expediteur->send()) {
+        echo 'Erreur lors de l\'envoi du deuxième e-mail : ' . $expediteur->ErrorInfo;
     }
 }
 
