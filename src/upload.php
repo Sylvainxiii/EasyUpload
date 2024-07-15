@@ -19,10 +19,10 @@ function securize($data)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_FILES['files'])) {
 
-        $emmeteur = securize($_POST['sourceEmail']);
+        $emetteur = securize($_POST['sourceEmail']);
         $destinataire = securize($_POST['destEmail']);
         $date = date("Y-m-d H:i:s");
-        $repositoryName = md5($emmeteur.$destinataire.$date, false);
+        $repositoryName = md5($emetteur.$destinataire.$date, false);
         $repositoryPath = '../uploads/' . $repositoryName;
 
         mkdir($repositoryPath, 0777, true);
@@ -57,9 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $zipFiles = glob($repositoryPath . "/*");
         createZip($repositoryPath, $repositoryName, $zipFiles);
-        insertBdd($emmeteur, $destinataire, $date, $repositoryPath);
+        insertPieceJointe($emetteur, $destinataire, $date, $repositoryPath);
 
-        envoieMail($destinataire, $emmeteur, $repositoryName);
+        envoieMail($destinataire, $emetteur, $repositoryName);
         
         if ($errors) print_r($errors);
     }
