@@ -12,12 +12,12 @@ function connexionBDD(){
     return $db;
 }
 
-function insertPieceJointe($emmeteur, $destinataire, $date, $repositoryPath)
+function insertPieceJointe($emetteur, $destinataire, $date, $repositoryPath)
 {
     try {
         $db = connexionBDD();
-        $stmt = $db->prepare("INSERT INTO piece_jointe (email_emmeteur, email_destinataire, date_creation, chemin) VALUES (:emmeteur, :destinataire, :date_creation, :chemin)");
-        $stmt->bindParam(':emmeteur', $emmeteur);
+        $stmt = $db->prepare("INSERT INTO piece_jointe (email_emmeteur, email_destinataire, date_creation, chemin) VALUES (:emetteur, :destinataire, :date_creation, :chemin)");
+        $stmt->bindParam(':emetteur', $emetteur);
         $stmt->bindParam(':destinataire', $destinataire);
         $stmt->bindParam(':date_creation', $date);
         $stmt->bindParam(':chemin', $repositoryPath);

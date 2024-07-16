@@ -1,17 +1,15 @@
-
 <?php
 
-use Dotenv\Dotenv;
 use App\Service\PHPMailService;
 
+include_once 'src/_functionDotEnv.php';
+
+dotEnv(__DIR__);
 //Load Composer's autoloader
 require '../vendor/autoload.php';
 
-$dotenv = Dotenv::createImmutable('../');
-$dotenv->load();
 
-function emailSetting()
-{
+function emailSetting(){
     //Create an instance; passing `true` enables exceptions
     $mail = new PHPMailService;
     //Content
@@ -22,8 +20,7 @@ function emailSetting()
     return $mail;
 }
 
-function sendToDestinataire($mail, $sendTo, $sendFrom, $downloadFile)
-{
+function sendToDestinataire($mail, $sendTo, $sendFrom, $downloadFile){
     $delais = 7;
     $downloadLink = '<a href=' . $_ENV['WEB_URL'] . '/src/downloadPage.php?file=' . $downloadFile . ">Télécharger</a>";
 
@@ -43,8 +40,7 @@ function sendToDestinataire($mail, $sendTo, $sendFrom, $downloadFile)
     }
 }
 
-function envoieMail($sendTo, $sendFrom, $downloadFile)
-{
+function envoieMail($sendTo, $sendFrom, $downloadFile){
     $destinataires = explode(',', $sendTo);
     $expediteur = emailSetting();
     $countFail = 0;
@@ -84,5 +80,3 @@ function envoieMail($sendTo, $sendFrom, $downloadFile)
         echo 'Erreur lors de l\'envoi du deuxième e-mail : ' . $expediteur->ErrorInfo;
     }
 }
-
-
