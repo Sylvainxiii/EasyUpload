@@ -1,9 +1,8 @@
 <?php 
 
 require '../vendor/autoload.php';
-include_once 'src/_functionDotEnv.php';
-
-dotEnv(__DIR__);
+include_once 'dotEnv.php';
+dotEnv("../");
 
 include('FileZip.php');
 include('bddCrud.php');

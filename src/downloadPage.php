@@ -1,8 +1,7 @@
 <?php
-use Dotenv\Dotenv;
 require '../vendor/autoload.php';
-$dotenv = Dotenv::createImmutable('../');
-$dotenv->load();
+include_once 'dotEnv.php';
+dotEnv("../");
 
 $title = 'Télécharger';
 include '_header.php';

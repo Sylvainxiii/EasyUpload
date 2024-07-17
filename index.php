@@ -1,9 +1,11 @@
 <?php
 
 require 'vendor/autoload.php';
-include_once 'src/_functionDotEnv.php';
 
+include_once 'src/dotEnv.php';
 dotEnv(__DIR__);
+
+
 $title = $_ENV['MAIL_FROM_NAME'];
 include 'src/_header.php';
 ?>
@@ -11,6 +13,7 @@ include 'src/_header.php';
 	<div class="form">
 		<form id="uploadForm" method="post" enctype="multipart/form-data">
 			<!-- stockage du chemin du dossier racine pour utilisation en js -->
+			<input type="hidden" id="weburl" value="<?= $_ENV['WEB_URL'] ?>">
 			<input type="hidden" name="action" value="create">
 			<div class="mb-3">
 				<div class="custom-file">

@@ -2,9 +2,8 @@
 
 use App\Service\PHPMailService;
 
-include_once 'src/_functionDotEnv.php';
-
-dotEnv(__DIR__);
+include_once 'dotEnv.php';
+dotEnv("../");
 //Load Composer's autoloader
 require '../vendor/autoload.php';
 
