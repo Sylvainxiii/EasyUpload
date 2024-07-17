@@ -1,9 +1,10 @@
 <?php 
 
 require '../vendor/autoload.php';
-include_once 'src/_functionDotEnv.php';
+use Dotenv\Dotenv;
 
-dotEnv(__DIR__);
+$dotenv = Dotenv::createImmutable('../');
+$dotenv->load();
 
 include('FileZip.php');
 include('bddCrud.php');

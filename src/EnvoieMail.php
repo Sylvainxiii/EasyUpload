@@ -2,9 +2,10 @@
 
 use App\Service\PHPMailService;
 
-include_once 'src/_functionDotEnv.php';
+use Dotenv\Dotenv;
 
-dotEnv(__DIR__);
+$dotenv = Dotenv::createImmutable('../');
+$dotenv->load();
 //Load Composer's autoloader
 require '../vendor/autoload.php';
 

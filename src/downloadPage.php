@@ -1,6 +1,6 @@
 <?php
-use Dotenv\Dotenv;
 require '../vendor/autoload.php';
+use Dotenv\Dotenv;
 $dotenv = Dotenv::createImmutable('../');
 $dotenv->load();
 
