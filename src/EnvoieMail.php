@@ -15,22 +15,17 @@ function emailSetting(){
     $mail->isHTML(true);                                  //Set email format to HTML
     $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
     //To load the French version
-    $mail->setLanguage('fr', '/optional/path/to/language/directory/');
+    $mail->setLanguage('fr', 'vendor/phpmailer/phpmailer/language/phpmailer.lang-fr.php');
     return $mail;
 }
 
 function sendToDestinataire($mail, $sendTo, $sendFrom, $downloadFile){
     $delais = 7;
-    $downloadLink = '<a href=' . $_ENV['WEB_URL'] . '/src/downloadPage.php?file=' . $downloadFile . ">Télécharger</a>";
-
-    $message = "<p>Bonjour $sendTo,<br>";
-    $message .= "$sendFrom souhaite vous transmettre des documents. Pour les télécharger, veuillez cliquer sur le lien suivant:<br>";
-    $message .= "$downloadLink<br>";
-    $message .= "Veuillez noter que ce lien sera valide pendant $delais jours. Passé ce délai, vos documents ne seront plus disponibles.<br> Merci.</p>";
-
+    $downloadLink = $_ENV['WEB_URL'] . '/src/downloadPage.php?file=' . $downloadFile;
     $mail->addAddress($sendTo, '');     //Add a recipient
     $mail->Subject = 'EasyUpload: Réception de Fichiers';
-    $mail->Body    = $message;
+    $mailTemplate = destiMailTemplate($sendTo, $sendFrom, $downloadLink, $delais);
+    $mail->Body    = $mailTemplate;
 
     if (!$mail->send()) {
         return $mail->ErrorInfo;
@@ -39,43 +34,196 @@ function sendToDestinataire($mail, $sendTo, $sendFrom, $downloadFile){
     }
 }
 
-function envoieMail($sendTo, $sendFrom, $downloadFile){
-    $destinataires = explode(',', $sendTo);
-    $expediteur = emailSetting();
+function envoieMail($sendTo, $sendFrom, $downloadFile)
+{
+    $sendToD = explode(',', $sendTo);
+    $mail = eMailSetting();
+    $error = 'noerror';
     $countFail = 0;
 
-    foreach ($destinataires as $destinataire) {
-        $error = sendToDestinataire($expediteur, $destinataire, $sendFrom, $downloadFile);
-        $expediteur->clearAllRecipients();
+    foreach ($sendToD as $value) {
+        $error = sendToDestinataire($mail, $value, $sendFrom, $downloadFile);
+        $mail->clearAllRecipients();
         // concat message
-        if ($error === 'noerror') {
+        if ($error == 'noerror') {
             // code msg 'le lien de téléchargement de vos fichiers à bien été envoyé à ...'
         } else {
-            $countFail++;
+            $countFail += 1;
             // code msg 'suite à une erreur, le lien de téléchargement de vos fichiers n\'à pas pu être envoyé à ...'
         }
     }
-
+    $case = false;
     if ($countFail === 0) {
-        $messageSubject = "Vos fichiers ont été correctement transférés!";
-        $messageBody = "Bonjour $sendFrom, le lien de téléchargement de vos fichiers à bien été envoyé à $sendTo <br>Merci d'avoir utilisé CloneTransfert.";
+        $case = true;
+        $messageSubject = 'Vos fichiers ont été correctement transférés!';
+        
     } else if ($countFail ===  count($sendTo)) {
-        $messageSubject = "Vos fichiers n'ont pus être transférés!";
-        $messageBody = "Bonjour $sendFrom, suite à une erreur, le lien de téléchargement de vos fichiers n'à pas pu être envoyé à " . $sendTo .
-            "<br>Merci de bien vouloir réessayer ou de contacter notre service technique.";
+        $case = false;
+        $messageSubject = 'Vos fichiers n\'ont pus être transférés!';
     } else {
-        $messageSubject = "Vos fichiers n\'ont été partiellement transférés!";
-        $messageBody = 'Bonjour ' . $sendFrom . ', suite à une erreur, le lien de téléchargement de vos fichiers n\'à pas pu être envoyé à ' . $sendTo .
-            '.<br>Merci de bien vouloir réessayer ou de contacter notre service technique.';
+        $case = false;
+        $messageSubject = 'Vos fichiers n\'ont été partiellement transférés!';
     }
-
+    $mailTemplate = expeMailTemplate($sendTo, $sendFrom, $case);
     //Envoie du second mail
-    $expediteur->clearAllRecipients();
-    $expediteur->addAddress($sendFrom, '');
-    $expediteur->Subject = $messageSubject;
-    $expediteur->Body = $messageBody;
+    $mail->clearAllRecipients();
+    $mail = eMailSetting();
+    $mail->addAddress($sendFrom, '');
+    $mail->Subject = $messageSubject;
+    $mail->Body    = $mailTemplate;
 
-    if (!$expediteur->send()) {
-        echo 'Erreur lors de l\'envoi du deuxième e-mail : ' . $expediteur->ErrorInfo;
+    if (!$mail->send()) {
+        echo 'Erreur lors de l\'envoi du deuxième e-mail : ' . $mail->ErrorInfo;
     }
 }
+
+function destiMailTemplate($sendTo, $sendFrom, $downloadLink, $delais) {   
+    $commonStyles = getCommonEmailStyles();
+    $link = $_ENV['WEB_URL'];
+    $template = <<<HTML
+    <!DOCTYPE html>
+    <html lang="fr">
+    <head>
+        <style>
+            $commonStyles
+            .downloadButton {
+                display: inline-block;
+                padding: 10px 20px;
+                border-radius: 5px;
+                text-decoration: none;
+                color: #292929 !important;
+                font-weight: bold;
+                background-color: antiquewhite;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+        <div class="box">
+        <table>
+            <tr>
+                <!-- 
+                Il pourrait être pertinant d'avoir le lien vers le logo dans une variable d'environnement 
+                mais si le site est déployer on pourrait utiliser l'image stockée dans le serveur plutôt 
+                que de faire une requête à un serveur externe
+                -->
+                <td align="right"><img src="https://i.goopics.net/kn2ydb.png" class="logo" alt="logo de EasyUpload"></td>
+                <td valign="bottom" align="left"><h2>Easy Upload</h2></td>
+            </tr>
+            <tr>
+                <td colspan="2"><h2>Bonjour $sendTo,</h2></td>
+            </tr>
+            <tr>
+                <td colspan="2"><p>$sendFrom souhaite vous transmettre des documents. Pour les télécharger, veuillez cliquer sur le lien suivant:</p></td>
+            </tr>
+            <tr>
+                <td colspan="2"><p style="text-align:center; margin: 20px 0;"><a href="$downloadLink" class="downloadButton">Télécharger les documents</a></p></td>
+            </tr>
+            <tr>
+                <td colspan="2"><p>Veuillez noter que ce lien sera valide pendant $delais jours. Passé ce délai, vos documents ne seront plus disponibles. Merci.</p></td>
+            </tr>
+            <tr>
+                <td colspan="2"><p>L'équipe EasyUpload.</p></td>
+            </tr>
+            </div>
+            <tr>
+                <td align="center"><a href="$link">Lien vers EasyUpload</a></td>
+            </tr>
+        </table>
+        </div>
+    </body>
+    </html>
+    HTML;
+    return $template;
+    }
+    
+    function expeMailTemplate($sendTo, $sendFrom, $case) {
+    $case ? $content = 
+        "Vos fichiers ont été correctement transférés! Le lien de téléchargement de vos fichiers à bien été envoyé à $sendTo." 
+        : $content = "Suite à une erreur, le lien de téléchargement de vos fichiers n'a pas pu être envoyé à $sendTo. Merci de bien vouloir réessayer ou de contacter notre service technique.";
+    $commonStyles = getCommonEmailStyles();
+    $link = $_ENV['WEB_URL'];
+    $template = <<<HTML
+    <!DOCTYPE html>
+    <html lang="fr">
+    <head>
+        <style>
+            $commonStyles
+            .downloadButton {
+                display: inline-block;
+                padding: 10px 20px;
+                border-radius: 5px;
+                text-decoration: none;
+                color: #292929 !important;
+                font-weight: bold;
+                background-color: antiquewhite;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+        <div class="box">
+        <table>
+            <tr>
+                <!-- 
+                Il pourrait être pertinant d'avoir le lien vers le logo dans une variable d'environnement 
+                mais si le site est déployer on pourrait utiliser l'image stockée dans le serveur plutôt 
+                que de faire une requête à un serveur externe
+                -->
+                <td align="right"><img src="https://i.goopics.net/kn2ydb.png" class="logo" alt="logo de EasyUpload"></td>
+                <td valign="bottom" align="left"><h2>Easy Upload</h2></td>
+            </tr>
+            <tr>
+                <td colspan="2"><h2>Bonjour $sendFrom,</h2></td>
+            </tr>
+            <tr>
+                <td colspan="2"><p>$content</p></td>
+            </tr>
+            <tr>
+                <td colspan="2"><p>Merci d'avoir utilisé EasyUpload.</p></td>
+            </tr>
+            <tr>
+                <td colspan="2"><p>L'équipe EasyUpload.</p></td>
+            </tr>
+            </div>
+            <tr>
+                <td align="center"><a href="$link">Lien vers EasyUpload</a></td>
+            </tr>
+        </table>
+        </div>
+    </body>
+    </html>
+    HTML;
+    return $template;
+    }
+    
+    
+    function getCommonEmailStyles() {
+        return "
+        .container {
+            background-color: #292929;
+            padding: 50px;
+        }
+        .box {
+            max-width: 600px;
+            border: 1px solid antiquewhite;
+            border-radius: 5px;
+            margin: 0 auto 20px auto;
+            padding: 20px;
+    
+        }
+        .logo {
+            width: 100px;
+            height: auto;
+        }
+        h2, p {
+            color: antiquewhite;
+        }
+        a {
+            color: #83b4f3 !important;
+        }
+        tr, table, tbody {
+            width: 100%;
+        }
+        ";
+    }
