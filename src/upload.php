@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 require '../vendor/autoload.php';
 include_once 'dotEnv.php';
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $emetteur = securize($_POST['sourceEmail']);
         $destinataire = securize($_POST['destEmail']);
         $date = date("Y-m-d H:i:s");
-        $repositoryName = md5($emetteur.$destinataire.$date, false);
+        $repositoryName = md5($emetteur . $destinataire . $date, false);
         $repositoryPath = '../uploads/' . $repositoryName;
 
         mkdir($repositoryPath, 0777, true);
@@ -40,10 +40,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $file_name = $_FILES['files']['name'][$i];
             $file_tmp = $_FILES['files']['tmp_name'][$i];
             $file_type = $_FILES['files']['type'][$i];
-            $file_size = $_FILES['files']['size'][$i]; 
+            $file_size = $_FILES['files']['size'][$i];
 
             $file = $repositoryPath . $file_name;
-            
+
             if ($file_size > 536870912) {
                 $errors[] = 'File size exceeds limit: ' . $file_name . ' ' . $file_type;
             }
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         insertPieceJointe($emetteur, $destinataire, $date, $repositoryPath);
 
         envoieMail($destinataire, $emetteur, $repositoryName);
-        
+
         if ($errors) print_r($errors);
     }
 }
