@@ -85,9 +85,10 @@ function destiMailTemplate($sendTo, $sendFrom, $downloadLink, $delais) {
     <html lang="fr">
     <head>
         <style>
-            $commonStyles
+            {$commonStyles}
             .downloadButton {
                 display: inline-block;
+                text-align: center;
                 padding: 10px 20px;
                 border-radius: 5px;
                 text-decoration: none;
@@ -111,13 +112,13 @@ function destiMailTemplate($sendTo, $sendFrom, $downloadLink, $delais) {
                 <td valign="bottom" align="left"><h2>Easy Upload</h2></td>
             </tr>
             <tr>
-                <td colspan="2"><h2>Bonjour $sendTo,</h2></td>
+                <td colspan="2"><h2>Bonjour {$sendTo},</h2></td>
             </tr>
             <tr>
-                <td colspan="2"><p>$sendFrom souhaite vous transmettre des documents. Pour les télécharger, veuillez cliquer sur le lien suivant:</p></td>
+                <td colspan="2" ><p>{$sendFrom} souhaite vous transmettre des documents. Pour les télécharger, veuillez cliquer sur le lien suivant:</p></td>
             </tr>
             <tr>
-                <td colspan="2"><p style="text-align:center; margin: 20px 0;"><a href="$downloadLink" class="downloadButton">Télécharger les documents</a></p></td>
+                <td colspan="2"><p style="text-align:center; margin: 20px 0;"><a href="{$downloadLink}" class="downloadButton">Télécharger les documents</a></p></td>
             </tr>
             <tr>
                 <td colspan="2"><p>Veuillez noter que ce lien sera valide pendant $delais jours. Passé ce délai, vos documents ne seront plus disponibles. Merci.</p></td>
@@ -127,7 +128,7 @@ function destiMailTemplate($sendTo, $sendFrom, $downloadLink, $delais) {
             </tr>
             </div>
             <tr>
-                <td align="center"><a href="$link">Lien vers EasyUpload</a></td>
+                <td colspan="2" align="center"><a href="{$link}">Lien vers EasyUpload</a></td>
             </tr>
         </table>
         </div>
@@ -138,9 +139,17 @@ function destiMailTemplate($sendTo, $sendFrom, $downloadLink, $delais) {
     }
     
     function expeMailTemplate($sendTo, $sendFrom, $case) {
+    $emails = explode(',', $sendTo); // Sépare les emails dans un tableau
+    if (count($emails) >= 2) {
+        // Réassemble les emails avec <br> entre chaque email
+        $formattedEmails = implode('<br>', $emails);
+    } else {
+        // Utilise la chaîne telle quelle si un seul email
+        $formattedEmails = $sendTo;
+    }
     $case ? $content = 
-        "Vos fichiers ont été correctement transférés! Le lien de téléchargement de vos fichiers à bien été envoyé à $sendTo." 
-        : $content = "Suite à une erreur, le lien de téléchargement de vos fichiers n'a pas pu être envoyé à $sendTo. Merci de bien vouloir réessayer ou de contacter notre service technique.";
+    "Vos fichiers ont été correctement transférés! Le lien de téléchargement de vos fichiers à bien été envoyé à : $formattedEmails." 
+    : $content = "Suite à une erreur, le lien de téléchargement de vos fichiers n'a pas pu être envoyé à $formattedEmails. Merci de bien vouloir réessayer ou de contacter notre service technique.";
     $commonStyles = getCommonEmailStyles();
     $link = $_ENV['WEB_URL'];
     $template = <<<HTML
@@ -148,7 +157,7 @@ function destiMailTemplate($sendTo, $sendFrom, $downloadLink, $delais) {
     <html lang="fr">
     <head>
         <style>
-            $commonStyles
+            {$commonStyles}
             .downloadButton {
                 display: inline-block;
                 padding: 10px 20px;
@@ -163,7 +172,7 @@ function destiMailTemplate($sendTo, $sendFrom, $downloadLink, $delais) {
     <body>
         <div class="container">
         <div class="box">
-        <table>
+        <table  >
             <tr>
                 <!-- 
                 Il pourrait être pertinant d'avoir le lien vers le logo dans une variable d'environnement 
@@ -174,10 +183,10 @@ function destiMailTemplate($sendTo, $sendFrom, $downloadLink, $delais) {
                 <td valign="bottom" align="left"><h2>Easy Upload</h2></td>
             </tr>
             <tr>
-                <td colspan="2"><h2>Bonjour $sendFrom,</h2></td>
+                <td colspan="2"><h2>Bonjour {$sendFrom},</h2></td>
             </tr>
-            <tr>
-                <td colspan="2"><p>$content</p></td>
+            <tr >
+                <td colspan="2" ><p>{$content}</p></td>
             </tr>
             <tr>
                 <td colspan="2"><p>Merci d'avoir utilisé EasyUpload.</p></td>
@@ -187,7 +196,7 @@ function destiMailTemplate($sendTo, $sendFrom, $downloadLink, $delais) {
             </tr>
             </div>
             <tr>
-                <td align="center"><a href="$link">Lien vers EasyUpload</a></td>
+                <td colspan="2" align="center"><a href="{$link}">Lien vers EasyUpload</a></td>
             </tr>
         </table>
         </div>
@@ -210,6 +219,7 @@ function destiMailTemplate($sendTo, $sendFrom, $downloadLink, $delais) {
             border-radius: 5px;
             margin: 0 auto 20px auto;
             padding: 20px;
+            overflow: hidden;
     
         }
         .logo {
@@ -225,5 +235,22 @@ function destiMailTemplate($sendTo, $sendFrom, $downloadLink, $delais) {
         tr, table, tbody {
             width: 100%;
         }
+
+        @media screen and (max-width: 600px) {
+            .container {
+                padding: 40px 20px;
+            }
+            .box {
+                padding: 20px 10px;
+            }
+            .logo {
+                width: 80px;
+            }
+            h2 {
+                font-size: 1.2em;
+            }
+        }
+        
         ";
+        
     }
