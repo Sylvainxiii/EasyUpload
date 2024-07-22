@@ -3,6 +3,8 @@
 require 'vendor/autoload.php';
 
 include_once 'src/dotEnv.php';
+include_once 'src/log.php';
+
 dotEnv(__DIR__);
 
 
@@ -19,7 +21,6 @@ include 'src/_header.php';
 			<div class="custom-file">
 				<label class="custom-file-label" for="fichier" id="fileNameLabel">Choisir des fichiers</label>
 				<input type="file" class="custom-file-input" id="fichier" name="files[]" multiple required>
-
 			</div>
 		</div>
 		<div class="mb-3">

@@ -7,7 +7,6 @@ dotEnv("../");
 include('FileZip.php');
 include('bddCrud.php');
 include('EnvoieMail.php');
-
 // Sécuriser les données entrantes
 function securize($data)
 {
