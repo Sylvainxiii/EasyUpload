@@ -1,12 +1,14 @@
 <?php
 
+require 'log.php';
 function connexionBDD(){
     try {
         $db = new PDO($_ENV['DB_CONNECTION'] . ':' . '../' . $_ENV['DB_DATABASE']);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        
+        setLog(1,'Connexion à la base de données');
     } catch (PDOException $e) {
-        echo "Connection failed: " . $e->getMessage();
+        setLog(5,"Connection failed: " . $e->getMessage());
+        //echo "Connection failed: " . $e->getMessage();
         exit;
     }
     return $db;
