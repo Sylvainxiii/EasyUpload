@@ -16,6 +16,7 @@ function securize($data)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_FILES['files'])) {
 
+        $messageperso = securize($_POST['messageEmail']);
         $emetteur = securize($_POST['sourceEmail']);
         $destinataire = securize($_POST['destEmail']);
         $date = date("Y-m-d H:i:s");
@@ -56,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         createZip($repositoryPath, $repositoryName, $zipFiles);
         insertPieceJointe($emetteur, $destinataire, $date, $repositoryPath);
 
-        envoieMail($destinataire, $emetteur, $repositoryName);
+        envoieMail($destinataire, $emetteur, $repositoryName, $messageperso);
 
         if ($errors) print_r($errors);
     }

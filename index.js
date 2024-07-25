@@ -22,11 +22,12 @@ function main() {
      */
     const range = document.createRange();
     const sendBtn = document.querySelector("#send");
-    const eMailDom = document.querySelector('#destEmail');
+    const emailDestinataireDom = document.querySelector('#destEmail');
+    const emailExpediteurDom = document.querySelector('#expediteurEmail');
     const eMailListDom = document.querySelector('.email-list');
-    const sourceEmailDom = document.querySelector('#sourceEmail');
     const fichierDom = document.querySelector("#fichier");
     const form = document.querySelector('form');
+    const messageEmailTextareaDom = document.querySelector('#messageEmailTextarea');
     // Défini l'URL et le formulaire
     const url = `${location.origin}/src/upload.php`;
 
@@ -40,7 +41,7 @@ function main() {
             updateFileName();
         }
 
-        if (event.target.id === eMailDom.id) {
+        if (event.target.id === emailDestinataireDom.id) {
             if (isEmailValid(event.target.value)) {
                 eMailListUpdate(event);
             } else {
@@ -63,16 +64,15 @@ function main() {
     });
 
     // `Enter` event add email to list
-    eMailDom.addEventListener('keydown', (event) => {
+    emailDestinataireDom.addEventListener('keydown', (event) => {
         const eventCode = event.code === 'Enter' || event.code === 'NumpadEnter';
-        if (eventCode && isEmailValid(eMailDom.value)) {
+        if (eventCode && isEmailValid(emailDestinataireDom.value)) {
             event.preventDefault();
             eMailListUpdate(event);
         } else if (eventCode) {
             event.preventDefault();
-            eMailDom.reportValidity();
+            emailDestinataireDom.reportValidity();
         }
-
         enableSendBtn();
     });
 
@@ -88,6 +88,7 @@ function main() {
 
         formData.append('destEmail', destEmail);
         formData.append('sourceEmail', sourceEmailDom.value);
+        formData.append('messageEmail', messageEmailTextareaDom.value);
 
         // Ajoute chaque fichier dans la variable files
         for (let i = 0; i < files.length; i++) {
@@ -145,7 +146,7 @@ function main() {
         eMailListDom.appendChild(range.createContextualFragment(stringHtml));
 
         eMailCountDomUpdate();
-        eMailDom.value = '';
+        emailDestinataireDom.value = '';
     }
 
     // update eMailCountDom
@@ -157,16 +158,17 @@ function main() {
 
     // Reset le formulaire
     function resetForm() {
-        eMailDom.value = "";
-        sourceEmailDom.value = "";
+        emailDestinataireDom.value = "";
+        emailExpediteurDom.value = "";
         document.getElementById('fileNameLabel').textContent = "Choisir des fichiers";
         eMailListDom.replaceChildren();
         eMailCountDomUpdate();
+        messageEmailTextareaDom.value = "";
     }
 
     // Enable btn send
     function enableSendBtn() {
-        if (fichierDom.files[0] && sourceEmailDom.value && eMailListDom.childNodes.length > 0) {
+        if (fichierDom.files[0] && emailExpediteurDom.value && eMailListDom.childNodes.length > 0) {
             sendBtn.disabled = false;
         } else {
             sendBtn.disabled = true;

@@ -8,7 +8,8 @@ dotEnv("../");
 require '../vendor/autoload.php';
 
 
-function emailSetting(){
+function emailSetting()
+{
     //Create an instance; passing `true` enables exceptions
     $mail = new PHPMailService;
     //Content
@@ -19,12 +20,13 @@ function emailSetting(){
     return $mail;
 }
 
-function sendToDestinataire($mail, $sendTo, $sendFrom, $downloadFile){
+function sendToDestinataire($mail, $sendTo, $sendFrom, $downloadFile, $messageperso)
+{
     $delais = 7;
     $downloadLink = $_ENV['WEB_URL'] . '/src/downloadPage.php?file=' . $downloadFile;
     $mail->addAddress($sendTo, '');     //Add a recipient
     $mail->Subject = 'EasyUpload: Réception de Fichiers';
-    $mailTemplate = destiMailTemplate($sendTo, $sendFrom, $downloadLink, $delais);
+    $mailTemplate = destiMailTemplate($sendTo, $sendFrom, $downloadLink, $delais, $messageperso);
     $mail->Body    = $mailTemplate;
 
     if (!$mail->send()) {
@@ -34,7 +36,7 @@ function sendToDestinataire($mail, $sendTo, $sendFrom, $downloadFile){
     }
 }
 
-function envoieMail($sendTo, $sendFrom, $downloadFile)
+function envoieMail($sendTo, $sendFrom, $downloadFile, $messageperso)
 {
     $sendToD = explode(',', $sendTo);
     $mail = eMailSetting();
@@ -42,7 +44,7 @@ function envoieMail($sendTo, $sendFrom, $downloadFile)
     $countFail = 0;
 
     foreach ($sendToD as $value) {
-        $error = sendToDestinataire($mail, $value, $sendFrom, $downloadFile);
+        $error = sendToDestinataire($mail, $value, $sendFrom, $downloadFile, $messageperso);
         $mail->clearAllRecipients();
         // concat message
         if ($error == 'noerror') {
@@ -56,7 +58,6 @@ function envoieMail($sendTo, $sendFrom, $downloadFile)
     if ($countFail === 0) {
         $case = true;
         $messageSubject = 'Vos fichiers ont été correctement transférés!';
-        
     } else if ($countFail ===  count($sendTo)) {
         $case = false;
         $messageSubject = 'Vos fichiers n\'ont pus être transférés!';
@@ -67,7 +68,7 @@ function envoieMail($sendTo, $sendFrom, $downloadFile)
     $mailTemplate = expeMailTemplate($sendTo, $sendFrom, $case);
     //Envoie du second mail
     $mail->clearAllRecipients();
-    $mail = eMailSetting();
+    $mail = eMailSetting(); // a supprimé déjat init ligne 42
     $mail->addAddress($sendFrom, '');
     $mail->Subject = $messageSubject;
     $mail->Body    = $mailTemplate;
@@ -77,7 +78,22 @@ function envoieMail($sendTo, $sendFrom, $downloadFile)
     }
 }
 
-function destiMailTemplate($sendTo, $sendFrom, $downloadLink, $delais) {   
+function destiMailTemplate($sendTo, $sendFrom, $downloadLink, $delais, $messageperso)
+{
+
+    if (!empty($messageperso)) {
+        $messageperso = <<<HTML
+            <tr>
+                <td colspan="2">
+                    <fieldset>
+                        <legend>Message de {$sendFrom}</legend>
+                        <pre>{$messageperso}</pre>
+                    </fieldset>
+                </td>
+            </tr>
+        HTML;
+    }
+
     $commonStyles = getCommonEmailStyles();
     $link = $_ENV['WEB_URL'];
     $template = <<<HTML
@@ -126,6 +142,7 @@ function destiMailTemplate($sendTo, $sendFrom, $downloadLink, $delais) {
             <tr>
                 <td colspan="2"><p>L'équipe EasyUpload.</p></td>
             </tr>
+                {$messageperso}
             </div>
             <tr>
                 <td colspan="2" align="center"><a href="{$link}">Lien vers EasyUpload</a></td>
@@ -136,9 +153,10 @@ function destiMailTemplate($sendTo, $sendFrom, $downloadLink, $delais) {
     </html>
     HTML;
     return $template;
-    }
-    
-    function expeMailTemplate($sendTo, $sendFrom, $case) {
+}
+
+function expeMailTemplate($sendTo, $sendFrom, $case)
+{
     $emails = explode(',', $sendTo); // Sépare les emails dans un tableau
     if (count($emails) >= 2) {
         // Réassemble les emails avec <br> entre chaque email
@@ -147,9 +165,9 @@ function destiMailTemplate($sendTo, $sendFrom, $downloadLink, $delais) {
         // Utilise la chaîne telle quelle si un seul email
         $formattedEmails = $sendTo;
     }
-    $case ? $content = 
-    "Vos fichiers ont été correctement transférés! Le lien de téléchargement de vos fichiers à bien été envoyé à : $formattedEmails." 
-    : $content = "Suite à une erreur, le lien de téléchargement de vos fichiers n'a pas pu être envoyé à $formattedEmails. Merci de bien vouloir réessayer ou de contacter notre service technique.";
+    $case ? $content =
+        "Vos fichiers ont été correctement transférés! Le lien de téléchargement de vos fichiers à bien été envoyé à : $formattedEmails."
+        : $content = "Suite à une erreur, le lien de téléchargement de vos fichiers n'a pas pu être envoyé à $formattedEmails. Merci de bien vouloir réessayer ou de contacter notre service technique.";
     $commonStyles = getCommonEmailStyles();
     $link = $_ENV['WEB_URL'];
     $template = <<<HTML
@@ -204,11 +222,12 @@ function destiMailTemplate($sendTo, $sendFrom, $downloadLink, $delais) {
     </html>
     HTML;
     return $template;
-    }
-    
-    
-    function getCommonEmailStyles() {
-        return "
+}
+
+
+function getCommonEmailStyles()
+{
+    return "
         .container {
             background-color: #292929;
             padding: 50px;
@@ -226,7 +245,7 @@ function destiMailTemplate($sendTo, $sendFrom, $downloadLink, $delais) {
             width: 100px;
             height: auto;
         }
-        h2, p {
+        h2, p, pre, fieldset, legend {
             color: antiquewhite;
         }
         a {
@@ -252,5 +271,4 @@ function destiMailTemplate($sendTo, $sendFrom, $downloadLink, $delais) {
         }
         
         ";
-        
-    }
+}
