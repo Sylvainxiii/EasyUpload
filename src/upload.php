@@ -1,5 +1,5 @@
 <?php
-
+require_once 'log.php';
 require '../vendor/autoload.php';
 include_once 'dotEnv.php';
 dotEnv("../");
@@ -16,8 +16,9 @@ function securize($data)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_FILES['files'])) {
 
-        $emetteur = securize($_POST['sourceEmail']);
+        $emetteur = securize($_POST['expediteurEmail']);
         $destinataire = securize($_POST['destEmail']);
+        setLog('Modifie les datas en caractères HTML','TRACE');
         $date = date("Y-m-d H:i:s");
         $repositoryName = md5($emetteur . $destinataire . $date, false);
         $repositoryPath = '../uploads/' . $repositoryName;

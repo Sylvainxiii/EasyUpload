@@ -1,14 +1,13 @@
 <?php
 
-require 'log.php';
+require_once 'log.php';
 function connexionBDD(){
     try {
         $db = new PDO($_ENV['DB_CONNECTION'] . ':' . '../' . $_ENV['DB_DATABASE']);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        setLog(1,'Connexion à la base de données');
+        setLog('Connexion à la base de données','TRACE');
     } catch (PDOException $e) {
-        setLog(5,"Connection failed: " . $e->getMessage());
-        //echo "Connection failed: " . $e->getMessage();
+        echo "Connection failed: " . $e->getMessage();
         exit;
     }
     return $db;
@@ -24,6 +23,7 @@ function insertPieceJointe($emetteur, $destinataire, $date, $repositoryPath)
         $stmt->bindParam(':date_creation', $date);
         $stmt->bindParam(':chemin', $repositoryPath);
         $stmt->execute();
+        setLog("Succès de l'envoi du mail de $emetteur à $destinataire",'TRACE');
     } catch (PDOException $e) {
         echo "Upload failed: " . $e->getMessage();
         exit;
