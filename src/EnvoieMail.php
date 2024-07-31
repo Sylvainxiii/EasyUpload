@@ -2,6 +2,7 @@
 
 use App\Service\PHPMailService;
 
+require_once 'log.php';
 include_once 'dotEnv.php';
 dotEnv("../");
 //Load Composer's autoloader
@@ -12,6 +13,7 @@ function emailSetting()
 {
     //Create an instance; passing `true` enables exceptions
     $mail = new PHPMailService;
+    setLog("Parametres d'emails", 'TRACE');
     //Content
     $mail->isHTML(true);                                  //Set email format to HTML
     $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
@@ -28,7 +30,7 @@ function sendToDestinataire($mail, $sendTo, $sendFrom, $downloadFile, $messagepe
     $mail->Subject = 'EasyUpload: Réception de Fichiers';
     $mailTemplate = destiMailTemplate($sendTo, $sendFrom, $downloadLink, $delais, $messageperso);
     $mail->Body    = $mailTemplate;
-
+    setLog("Envoi du mail au destinataire", 'TRACE');
     if (!$mail->send()) {
         return $mail->ErrorInfo;
     } else {
@@ -42,7 +44,7 @@ function envoieMail($sendTo, $sendFrom, $downloadFile, $messageperso)
     $mail = eMailSetting();
     $error = 'noerror';
     $countFail = 0;
-
+    setLog("Envoi du mail à l'expéditeur", 'TRACE');
     foreach ($sendToD as $value) {
         $error = sendToDestinataire($mail, $value, $sendFrom, $downloadFile, $messageperso);
         $mail->clearAllRecipients();
@@ -95,6 +97,7 @@ function destiMailTemplate($sendTo, $sendFrom, $downloadLink, $delais, $messagep
     }
 
     $commonStyles = getCommonEmailStyles();
+    setLog("Template du mail du destinataire", 'TRACE');
     $link = $_ENV['WEB_URL'];
     $template = <<<HTML
     <!DOCTYPE html>
@@ -157,6 +160,7 @@ function destiMailTemplate($sendTo, $sendFrom, $downloadLink, $delais, $messagep
 
 function expeMailTemplate($sendTo, $sendFrom, $case)
 {
+    setLog("Template du mail de l'expéditeur", 'TRACE');
     $emails = explode(',', $sendTo); // Sépare les emails dans un tableau
     if (count($emails) >= 2) {
         // Réassemble les emails avec <br> entre chaque email

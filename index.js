@@ -87,7 +87,7 @@ function main() {
         const formData = new FormData();
 
         formData.append('destEmail', destEmail);
-        formData.append('sourceEmail', sourceEmailDom.value);
+        formData.append('expediteurEmail', emailExpediteurDom.value);
         formData.append('messageEmail', messageEmailTextareaDom.value);
 
         // Ajoute chaque fichier dans la variable files

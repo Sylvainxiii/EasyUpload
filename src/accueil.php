@@ -25,6 +25,6 @@
 	</div>
 
 	<div>
-		<button type="submit" form="uploadForm" class="btn btn-primary" id="send" name="submit" value="send" disabled>Envoyer</button>
+		<button type="submit" form="uploadForm" class="btn btn-primary" id="send" name="submit" value="Envoyer" disabled>Envoyer</button>
 	</div>
 </div>

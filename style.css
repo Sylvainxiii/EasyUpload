@@ -286,6 +286,10 @@ main {
     color: var(--color-1);
 }
 
+#send{
+    background-color: antiquewhite;
+    color: #292929;
+}
 @media (max-width: 675px) {
     .title h1 {
         font-size: 3.44em;

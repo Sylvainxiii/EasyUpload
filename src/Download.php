@@ -1,9 +1,11 @@
 <?php
+require_once 'log.php';
 if (isset($_REQUEST["file"])){
 	$file = urldecode($_REQUEST["file"]);
-
+	
 	if(preg_match('/^[^.][-a-z0-9_.]*$/i', $file)){
 		$filepath = "../uploads/".$file.'/'.$file.'.zip';
+		setLog('Page Download.php','TRACE');
 		if (file_exists($filepath)) {
 			// Désactiver la sortie buffer pour télécharger le fichier zip
 			if (ob_get_level()) {
