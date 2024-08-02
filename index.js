@@ -27,6 +27,7 @@ function main() {
     const eMailListDom = document.querySelector('.email-list');
     const fichierDom = document.querySelector("#fichier");
     const form = document.querySelector('form');
+    const messageEmailTextareaDom = document.querySelector('#messageEmailTextarea');
     // Défini l'URL et le formulaire
     const url = `${location.origin}/src/upload.php`;
 
@@ -72,7 +73,6 @@ function main() {
             event.preventDefault();
             emailDestinataireDom.reportValidity();
         }
-
         enableSendBtn();
     });
 
@@ -88,6 +88,7 @@ function main() {
 
         formData.append('destEmail', destEmail);
         formData.append('expediteurEmail', emailExpediteurDom.value);
+        formData.append('messageEmail', messageEmailTextareaDom.value);
 
         // Ajoute chaque fichier dans la variable files
         for (let i = 0; i < files.length; i++) {
@@ -95,9 +96,11 @@ function main() {
             formData.append('files[]', file);
         }
 
-        resetForm();
+
         displaySpinner();
-        isEmptyFile();
+        resetForm();
+
+        
 
         await fetch(url, {
             method: 'POST',
@@ -157,11 +160,14 @@ function main() {
 
     // Reset le formulaire
     function resetForm() {
+        var fileInput = document.getElementById('fichier');
+        fileInput.value = '';
         emailDestinataireDom.value = "";
         emailExpediteurDom.value = "";
         document.getElementById('fileNameLabel').textContent = "Choisir des fichiers";
         eMailListDom.replaceChildren();
         eMailCountDomUpdate();
+        messageEmailTextareaDom.value = "";
     }
 
     // Enable btn send
