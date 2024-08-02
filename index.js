@@ -96,9 +96,11 @@ function main() {
             formData.append('files[]', file);
         }
 
-        resetForm();
+
         displaySpinner();
-        isEmptyFile();
+        resetForm();
+
+        
 
         await fetch(url, {
             method: 'POST',
@@ -158,6 +160,8 @@ function main() {
 
     // Reset le formulaire
     function resetForm() {
+        var fileInput = document.getElementById('fichier');
+        fileInput.value = '';
         emailDestinataireDom.value = "";
         emailExpediteurDom.value = "";
         document.getElementById('fileNameLabel').textContent = "Choisir des fichiers";
