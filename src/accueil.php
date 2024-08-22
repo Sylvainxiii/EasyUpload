@@ -1,3 +1,8 @@
+<?php
+$title = 'Accueil';
+ob_start();
+?>
+
 <div class="form">
 	<form id="uploadForm" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="action" value="create">
@@ -28,3 +33,8 @@
 		<button type="submit" form="uploadForm" class="btn btn-primary" id="send" name="submit" value="Envoyer" disabled>Envoyer</button>
 	</div>
 </div>
+
+<?php
+$content = ob_get_clean();
+include_once 'layout.php';
+?>
