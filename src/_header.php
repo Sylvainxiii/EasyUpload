@@ -15,8 +15,10 @@
 	<div>
 		<header>
 			<div>
-				<img src="<?= (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]/favicon.ico" ?>" alt="logo">
-				<h1><?= strtoupper($_ENV['MAIL_FROM_NAME']) ?></h1>
+				<a href="/">
+					<img src="<?= (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]/favicon.ico" ?>" alt="logo">
+					<h1><?= strtoupper($_ENV['MAIL_FROM_NAME']) ?></h1>
+				</a>
 			</div>
 
 			<button class="btn btn-primary btn-connexion" disabled>
