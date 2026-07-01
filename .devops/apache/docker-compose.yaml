@@ -1,0 +1,21 @@
+services:
+  apache:
+    build: ./
+    restart: always
+
+    # userns_mode: "keep-id"
+    # user: "${UID}:${GID}"
+
+    working_dir: /app
+
+    volumes:
+      - ${PWD}/.:/app:rw,z
+
+    ports:
+      - ${PORT}:80
+
+    networks:
+      - easy_upload
+
+    stdin_open: true
+    tty: true

@@ -1,5 +1,8 @@
 vendor/
 .env
-bdd.db
+./bdd.db
 .dev_local/
 var/
+.vscode
+.php-cs-fixer.*
+*.sqbpro

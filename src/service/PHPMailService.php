@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
 
 class PHPMailService extends PHPMailer
 {
@@ -18,5 +19,9 @@ class PHPMailService extends PHPMailer
         $this->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
         $this->Port       = $_ENV['MAIL_PORT'];
         $this->setFrom($_ENV['MAIL_FROM'], $_ENV['MAIL_FROM_NAME']);
+        // debugmode
+        if ($_ENV['ENVIRONMENT'] == "DEV" || $_ENV['ENVIRONMENT'] == "DEBUG") {
+            $this->SMTPDebug = SMTP::DEBUG_SERVER;
+        }
     }
 }

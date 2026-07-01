@@ -30,7 +30,7 @@ function getCurrentFileLog(){
 
 function setLog(string $message, string $level="TRACE"){
     try{
-        $directory = '../var/logs/';
+        $directory = '../storage/logs/';
         $filePath = "$directory/log.log";
         $currentFile = getCurrentFileLog();
         $user = get_current_user();

@@ -1,6 +1,6 @@
 </main>
 <footer>
-    <p>🄯 2024</p>
+    <p>🄯 2024-2026</p>
 </footer>
 </div>
 <!-- FIN DIV BACKGROUND -->
