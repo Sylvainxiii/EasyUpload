@@ -1,0 +1,7 @@
+include:
+  - ${PWD}/.devops/composer/docker-compose.yaml
+  - ${PWD}/.devops/apache/docker-compose.yaml
+
+networks:
+  easy_upload:
+    driver: bridge

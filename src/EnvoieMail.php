@@ -6,13 +6,13 @@ require_once 'log.php';
 include_once 'dotEnv.php';
 dotEnv("../");
 //Load Composer's autoloader
-require '../vendor/autoload.php';
+require_once '../vendor/autoload.php';
 
 
-function emailSetting()
+function emailSettings()
 {
     //Create an instance; passing `true` enables exceptions
-    $mail = new PHPMailService;
+    $mail = new PHPMailService();
     setLog("Parametres d'emails", 'TRACE');
     //Content
     $mail->isHTML(true);                                  //Set email format to HTML
@@ -24,24 +24,33 @@ function emailSetting()
 
 function sendToDestinataire($mail, $sendTo, $sendFrom, $downloadFile, $messageperso)
 {
-    $delais = 7;
-    $downloadLink = $_ENV['WEB_URL'] . '/src/downloadPage.php?file=' . $downloadFile;
-    $mail->addAddress($sendTo, '');     //Add a recipient
-    $mail->Subject = 'EasyUpload: Réception de Fichiers';
-    $mailTemplate = destiMailTemplate($sendTo, $sendFrom, $downloadLink, $delais, $messageperso);
-    $mail->Body    = $mailTemplate;
-    setLog("Envoi du mail au destinataire", 'TRACE');
-    if (!$mail->send()) {
-        return $mail->ErrorInfo;
-    } else {
-        return 'noerror';
+    try {
+
+        $delais = 7;
+        $downloadLink = $_ENV['WEB_URL'] . 'download/?file=' . $downloadFile;
+        $mail->addAddress($sendTo, '');     //Add a recipient
+        $mail->Subject = 'EasyUpload: Réception de Fichiers';
+        $mailTemplate = destiMailTemplate($sendTo, $sendFrom, $downloadLink, $delais, $messageperso);
+        $mail->Body    = $mailTemplate;
+        $sendSuccess = $mail->send();
+        if ($sendSuccess) {
+            setLog("Envoi email au(x) destinataire(s) " . $sendTo . " Ok", "TRACE");
+            return 'noerror';
+        }
+    } catch (Exception $e) {
+        setLog($mail->ErrorInfo, 'ERROR');
+        return $e->getMessage();
     }
 }
+
+/**
+ * TODO : Recoder l'envoi email, la fonction envoi 2 fois, il faut découpler
+ */
 
 function envoieMail($sendTo, $sendFrom, $downloadFile, $messageperso)
 {
     $sendToD = explode(',', $sendTo);
-    $mail = eMailSetting();
+    $mail = emailSettings();
     $error = 'noerror';
     $countFail = 0;
     setLog("Envoi du mail à l'expéditeur", 'TRACE');
@@ -60,7 +69,7 @@ function envoieMail($sendTo, $sendFrom, $downloadFile, $messageperso)
     if ($countFail === 0) {
         $case = true;
         $messageSubject = 'Vos fichiers ont été correctement transférés!';
-    } else if ($countFail ===  count($sendTo)) {
+    } elseif ($countFail ===  count($sendTo)) {
         $case = false;
         $messageSubject = 'Vos fichiers n\'ont pus être transférés!';
     } else {
@@ -70,7 +79,7 @@ function envoieMail($sendTo, $sendFrom, $downloadFile, $messageperso)
     $mailTemplate = expeMailTemplate($sendTo, $sendFrom, $case);
     //Envoie du second mail
     $mail->clearAllRecipients();
-    $mail = eMailSetting(); // a supprimé déjat init ligne 42
+    $mail = emailSettings(); // a supprimé déjat init ligne 42
     $mail->addAddress($sendFrom, '');
     $mail->Subject = $messageSubject;
     $mail->Body    = $mailTemplate;
@@ -119,38 +128,38 @@ function destiMailTemplate($sendTo, $sendFrom, $downloadLink, $delais, $messagep
     </head>
     <body>
         <div class="container">
-        <div class="box">
-        <table>
-            <tr>
-                <!-- 
-                Il pourrait être pertinant d'avoir le lien vers le logo dans une variable d'environnement 
-                mais si le site est déployer on pourrait utiliser l'image stockée dans le serveur plutôt 
-                que de faire une requête à un serveur externe
-                -->
-                <td align="right"><img src="https://i.goopics.net/kn2ydb.png" class="logo" alt="logo de EasyUpload"></td>
-                <td valign="bottom" align="left"><h2>Easy Upload</h2></td>
-            </tr>
-            <tr>
-                <td colspan="2"><h2>Bonjour {$sendTo},</h2></td>
-            </tr>
-            <tr>
-                <td colspan="2" ><p>{$sendFrom} souhaite vous transmettre des documents. Pour les télécharger, veuillez cliquer sur le lien suivant:</p></td>
-            </tr>
-            <tr>
-                <td colspan="2"><p style="text-align:center; margin: 20px 0;"><a href="{$downloadLink}" class="downloadButton">Télécharger les documents</a></p></td>
-            </tr>
-            <tr>
-                <td colspan="2"><p>Veuillez noter que ce lien sera valide pendant $delais jours. Passé ce délai, vos documents ne seront plus disponibles. Merci.</p></td>
-            </tr>
-            <tr>
-                <td colspan="2"><p>L'équipe EasyUpload.</p></td>
-            </tr>
-                {$messageperso}
+            <div class="box">
+                <table>
+                    <tr>
+                        <!-- 
+                        Il pourrait être pertinant d'avoir le lien vers le logo dans une variable d'environnement 
+                        mais si le site est déployer on pourrait utiliser l'image stockée dans le serveur plutôt 
+                        que de faire une requête à un serveur externe
+                        -->
+                        <td align="right"><img src="https://i.goopics.net/kn2ydb.png" class="logo" alt="logo de EasyUpload"></td>
+                        <td valign="bottom" align="left"><h2>Easy Upload</h2></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><h2>Bonjour {$sendTo},</h2></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" ><p>{$sendFrom} souhaite vous transmettre des documents. Pour les télécharger, veuillez cliquer sur le lien suivant:</p></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><p style="text-align:center; margin: 20px 0;"><a href="{$downloadLink}" class="downloadButton">Télécharger les documents</a></p></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><p>Veuillez noter que ce lien sera valide pendant $delais jours. Passé ce délai, vos documents ne seront plus disponibles. Merci.</p></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><p>L'équipe EasyUpload.</p></td>
+                    </tr>
+                        {$messageperso}
+                    <tr>
+                        <td colspan="2" align="center"><a href="{$link}">Lien vers EasyUpload</a></td>
+                    </tr>
+                </table>
             </div>
-            <tr>
-                <td colspan="2" align="center"><a href="{$link}">Lien vers EasyUpload</a></td>
-            </tr>
-        </table>
         </div>
     </body>
     </html>
@@ -169,8 +178,8 @@ function expeMailTemplate($sendTo, $sendFrom, $case)
         // Utilise la chaîne telle quelle si un seul email
         $formattedEmails = $sendTo;
     }
-    $case ? $content =
-        "Vos fichiers ont été correctement transférés! Le lien de téléchargement de vos fichiers à bien été envoyé à : $formattedEmails."
+    $case ? $content
+        = "Vos fichiers ont été correctement transférés! Le lien de téléchargement de vos fichiers à bien été envoyé à : $formattedEmails."
         : $content = "Suite à une erreur, le lien de téléchargement de vos fichiers n'a pas pu être envoyé à $formattedEmails. Merci de bien vouloir réessayer ou de contacter notre service technique.";
     $commonStyles = getCommonEmailStyles();
     $link = $_ENV['WEB_URL'];
